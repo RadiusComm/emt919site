@@ -22,23 +22,16 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
   padding: 0 5vw; background: rgba(8, 17, 31, .96); color: white; position: sticky; top: 0; z-index: 20;
   border-bottom: 1px solid rgba(255,255,255,.12); backdrop-filter: blur(18px);
 }
-.brand { display: flex; align-items: center; gap: 11px; font: 900 29px/1 "Barlow Condensed", sans-serif; letter-spacing: .025em; }
-.brand-shield {
-  position: relative; isolation: isolate; flex: 0 0 48px; width: 48px; height: 54px; display: grid; place-items: center;
-  overflow: hidden; background: linear-gradient(145deg,#2675ff 0%,#0b5cff 58%,#0646c9 100%);
-  clip-path: polygon(0 0,100% 0,100% 71%,50% 100%,0 71%); color: transparent; font-size: 0;
-  filter: drop-shadow(0 7px 12px rgba(0,45,145,.35));
+.brand {
+  position: relative; flex: 0 0 190px; width: 190px; height: 70px; display: block;
+  background: url("/emt919-logo.png") left center/contain no-repeat; color: transparent; line-height: 0;
+  filter: drop-shadow(0 8px 14px rgba(0,0,0,.2));
 }
-.brand-shield::before {
-  content: "#919"; position: absolute; z-index: 2; inset: 0 0 8px; display: grid; place-items: center;
-  color: white; font: 900 14px/1 "Barlow Condensed",sans-serif; letter-spacing: -.02em;
+.brand > span {
+  position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important;
+  margin: -1px !important; overflow: hidden !important; clip: rect(0,0,0,0) !important;
+  clip-path: inset(50%) !important; white-space: nowrap !important; border: 0 !important;
 }
-.brand-shield::after {
-  content: ""; position: absolute; z-index: 1; inset: 4px 4px 7px; border: 1px solid rgba(255,255,255,.42);
-  clip-path: polygon(0 0,100% 0,100% 69%,50% 100%,0 69%);
-}
-.brand > span:last-child { display: inline-flex; align-items: baseline; white-space: nowrap; text-shadow: 0 3px 14px rgba(0,0,0,.22); }
-.brand-accent { margin-left: 2px; color: #57a8ff; }
 nav { display: flex; gap: 30px; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; }
 nav a:hover { color: #72b7ff; }
 
@@ -296,9 +289,7 @@ td { color: #4e5b6c; }
 @media (max-width: 680px) {
   .site-header { padding: 12px 20px 0; }
   .site-header .button { min-height: 38px; padding: 0 12px; font-size: 10px; }
-  .brand { font-size: 24px; }
-  .brand-shield { flex-basis: 40px; width: 40px; height: 45px; }
-  .brand-shield::before { inset: 0 0 6px; font-size: 12px; }
+  .brand { flex-basis: 150px; width: 150px; height: 58px; }
   .hero { padding: 65px 24px; min-height: auto; }
   h1 { font-size: 64px; }
   .hero-lede { font-size: 16px; }
