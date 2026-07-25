@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Security and Trust Center | EMT919</title>
+  <meta name="description" content="EMT919 security architecture, controls, subprocessors, retention, responsible AI boundaries, and incident response.">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<header class="site-header">
+  <a class="brand" href="/"><span class="brand-shield">919</span><span>EMT<span class="brand-accent">919</span></span></a>
+  <nav aria-label="Primary"><a href="/how-it-works.html">How it works</a><a href="/solutions.html">Solutions</a><a href="/procurement.html">Procurement</a><a href="/company.html">Company</a></nav>
+  <a class="button button-small" href="/demo.html">Request a demo</a>
+</header>
+<main id="main-content">
+  <section class="page-hero"><p class="eyebrow"><span></span>Trust center</p><h1>Built for agency review.</h1><p>Clear controls, named subprocessors, documented retention, and a formal incident-response process&mdash;without overstating certifications.</p></section>
+  <article class="section content-page">
+    <div class="notice"><strong>Certification boundary:</strong> Fast Dial, Inc. d/b/a City919 does not currently hold its own SOC 2 report. EMT919 is built on SOC 2-certified provider infrastructure. Provider certifications apply to the named providers.</div>
+    <div class="trust-links">
+      <a href="/privacy.html"><strong>Privacy &amp; retention</strong><span>Collection, use, access, deletion, and retention</span></a>
+      <a href="/government-data.html"><strong>Government data</strong><span>Ownership, public records, retention, and restricted-data boundaries</span></a>
+      <a href="/responsible-ai.html"><strong>Responsible AI</strong><span>Human boundaries, limitations, and escalation</span></a>
+      <a href="/subprocessors.html"><strong>Subprocessors</strong><span>Named providers and service roles</span></a>
+      <a href="/vulnerability-disclosure.html"><strong>Vulnerability disclosure</strong><span>Authorized reporting and testing boundaries</span></a>
+      <a href="/accessibility.html"><strong>Accessibility</strong><span>Current standard and contact path</span></a>
+    </div>
+    <h2>Platform controls</h2>
+    <div class="content-grid">
+      <div class="content-card"><h3>Encryption</h3><p>TLS 1.2 or higher protects service traffic in transit. AWS/Supabase-managed AES-256 encryption protects stored platform data and backups.</p></div>
+      <div class="content-card"><h3>Access</h3><p>MFA is enforced across administrative systems. Officer access is bound to registered telephone numbers, and transcript access requires per-access SMS verification.</p></div>
+      <div class="content-card"><h3>Isolation and logging</h3><p>Agency records are logically segregated with database row-level security. Session, administrative, telephony, and transcript-access events are logged.</p></div>
+      <div class="content-card"><h3>AI data use</h3><p>Customer audio, transcripts, and call narratives are not used to train Fast Dial or subprocessor AI models.</p></div>
+    </div>
+    <h2>Review-ready evidence</h2>
+    <div class="content-grid">
+      <div class="content-card"><h3>Release verification</h3><p>Application releases are checked against a documented 51-scenario internal QA suite, including safety-critical gates and regression checks. This is an internal control, not an independent certification.</p></div>
+      <div class="content-card"><h3>Adversarial testing</h3><p>Automated internal testing regularly probes prompt extraction, injection, impersonation, webhook forgery, and access-control bypass scenarios. Results and control evidence are available for authorized agency review.</p></div>
+      <div class="content-card"><h3>Quarterly controls</h3><p>Webhook-signature rejection, administrative MFA attestation, and transcript-access controls are re-verified quarterly under the incident-response policy.</p></div>
+      <div class="content-card"><h3>Annual exercises</h3><p>The incident-response policy calls for annual review and at least one tabletop exercise each year.</p></div>
+    </div>
+    <h2>How a call moves</h2>
+    <div class="process-flow" aria-label="EMT919 service flow"><span>Authorized agency phone</span><b aria-hidden="true">&rarr;</b><span>Twilio or Bandwidth voice services</span><b aria-hidden="true">&rarr;</b><span>EMT919 application services</span><b aria-hidden="true">&rarr;</b><span>Translated audio or EMT Live interpreter</span></div>
+    <h2>Infrastructure</h2>
+    <p>Current service providers include Bandwidth and Twilio for voice communications and telephony, EMT Live for qualified live interpretation, Supabase on AWS for application hosting and database services, and Resend for transactional email. Customer platform data is stored and processed in the United States.</p>
+    <h2>Retention and response</h2>
+    <p>Voice audio follows a 30-day rolling deletion cycle by default. Transcript retention is governed by the agency agreement; longer transcript retention is available when the agency selects the additional storage option. Audit logs are retained for 12 months. Legal and agency preservation holds override ordinary deletion. A formal response policy defines severity, containment, forensics, evidence preservation, post-incident review, and affected-agency notification within 72 hours of confirming a breach involving agency data.</p>
+    <h2>Request the review package</h2>
+    <p>Detailed assessment responses, control evidence, the incident-response policy, and the retention policy are available to authorized agency reviewers.</p>
+    <p><a class="button" href="mailto:security@city919.com?subject=EMT919%20security%20review%20package">Request security materials</a></p>
+  </article>
+</main>
+</body>
+</html>
