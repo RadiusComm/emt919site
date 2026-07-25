@@ -23,15 +23,16 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
   border-bottom: 1px solid rgba(255,255,255,.12); backdrop-filter: blur(18px);
 }
 .brand {
-  position: relative; flex: 0 0 190px; width: 190px; height: 70px; display: block;
-  background: url("/emt919-logo.png") left center/contain no-repeat; color: transparent; line-height: 0;
-  filter: drop-shadow(0 8px 14px rgba(0,0,0,.2));
+  display: flex; align-items: center; gap: 10px; height: 70px; color: #f7fbff;
+  font: 900 31px/1 "Barlow Condensed",sans-serif; letter-spacing: .025em;
 }
-.brand > span {
-  position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important;
-  margin: -1px !important; overflow: hidden !important; clip: rect(0,0,0,0) !important;
-  clip-path: inset(50%) !important; white-space: nowrap !important; border: 0 !important;
+.brand-shield {
+  flex: 0 0 60px; width: 60px; height: 60px; overflow: hidden;
+  background: url("/emt919-responder-shield-header.png") center/contain no-repeat;
+  color: transparent; font-size: 0; filter: drop-shadow(0 8px 14px rgba(0,42,120,.42));
 }
+.brand > span:last-child { display: inline-flex; align-items: baseline; white-space: nowrap; text-shadow: 0 3px 14px rgba(0,0,0,.3); }
+.brand-accent { margin-left: 3px; color: #96e338; text-shadow: 0 0 18px rgba(150,227,56,.18); }
 nav { display: flex; gap: 30px; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; }
 nav a:hover { color: #72b7ff; }
 
@@ -289,7 +290,8 @@ td { color: #4e5b6c; }
 @media (max-width: 680px) {
   .site-header { padding: 12px 20px 0; }
   .site-header .button { min-height: 38px; padding: 0 12px; font-size: 10px; }
-  .brand { flex-basis: 150px; width: 150px; height: 58px; }
+  .brand { height: 58px; gap: 8px; font-size: 26px; }
+  .brand-shield { flex-basis: 48px; width: 48px; height: 48px; }
   .hero { padding: 65px 24px; min-height: auto; }
   h1 { font-size: 64px; }
   .hero-lede { font-size: 16px; }
