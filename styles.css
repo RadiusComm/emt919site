@@ -390,10 +390,11 @@ td { color: #4e5b6c; }
   .first-minute strong { font-size: 22px; }
   .statement { padding: 55px 24px; display: grid; }
   .statement h2 { text-align: left; }
-  .service-video .section-heading { grid-template-columns: 1fr; }
+  .service-video .section-heading { display: block; grid-template-columns: 1fr; }
   .service-video .section-heading .eyebrow { grid-column: auto; }
   .section { padding: 68px 24px; }
   .section-heading { display: block; }
+  .section-heading > p:last-child { grid-column: auto; }
   .section-heading h2 { margin-bottom: 25px; }
   .steps, .scenario-grid, .trust-grid, .security-controls, .provider-rail > div, .call-actions, .demo-form form, .scenario-photos, .evidence-strip, .first-minute-banner, .evidentiary-points, .neutrality-grid, .qa-scoreboard, .language-grid { grid-template-columns: 1fr; }
   .qa-scoreboard div { border-right: 0; border-bottom: 1px solid var(--line); }
