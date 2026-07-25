@@ -140,6 +140,18 @@ h1 { font-size: clamp(68px, 8vw, 124px); line-height: .82; letter-spacing: -.035
 .scenario-photos img { display: block; width: 100%; height: 100%; min-height: 300px; object-fit: cover; transition: transform .25s ease; }
 .scenario-photos a:hover img { transform: scale(1.025); }
 .scenario-photos span { position: absolute; left: 0; right: 0; bottom: 0; padding: 55px 22px 20px; background: linear-gradient(transparent,rgba(4,10,18,.92)); color: white; font: 800 29px "Barlow Condensed"; text-transform: uppercase; }
+.news { background: #e9edf3; }
+.news-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; }
+.news-grid article { min-width: 0; background: white; border-top: 5px solid var(--blue); box-shadow: 0 16px 45px rgba(8,17,31,.08); }
+.news-grid article > div { padding: 28px; }
+.news-grid small { color: var(--blue); font-size: 10px; font-weight: 900; letter-spacing: .15em; }
+.news-grid h2, .news-grid h3 { margin: 14px 0; font: 800 31px/1 "Barlow Condensed"; text-transform: uppercase; }
+.news-grid p { color: #5d6979; line-height: 1.6; }
+.news-image { display: block; overflow: hidden; aspect-ratio: 16 / 9; background: var(--ink); }
+.news-image img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .25s ease; }
+.news-image:hover img { transform: scale(1.025); }
+.news-grid .dark-link { margin-top: 10px; }
+.news-archive { margin-bottom: 45px; }
 
 .outcomes { display: grid; grid-template-columns: .85fr 1.15fr; gap: 9vw; }
 .outcome-intro > p:last-child { max-width: 460px; }
@@ -346,6 +358,7 @@ td { color: #4e5b6c; }
   .step-icon { margin-bottom: 38px; }
   .scenario-photos a, .scenario-photos img { min-height: 360px; }
   .scenario-grid article { min-height: 220px; }
+  .news-grid { gap: 26px; }
   .outcomes { gap: 7vw; }
   .security { gap: clamp(60px,7vw,120px); }
   .pricing { gap: 8vw; }
@@ -398,16 +411,35 @@ td { color: #4e5b6c; }
   .statement h2 { text-align: left; }
   .service-video .section-heading { display: block; grid-template-columns: 1fr; }
   .service-video .section-heading .eyebrow { grid-column: auto; }
+  .service-video { padding-block: 60px; }
+  .service-video .section-heading { margin-bottom: 30px; }
+  .service-video .section-heading h2 { font-size: clamp(48px,13vw,62px); }
+  .video-frame { width: min(100%,300px); margin-inline: auto; border-radius: 12px; }
+  .video-note { width: min(100%,300px); margin: 13px auto 0; }
   .section { padding: 68px 24px; }
   .section-heading { display: block; }
   .section-heading > p:last-child { grid-column: auto; }
   .section-heading h2 { margin-bottom: 25px; }
-  .steps, .scenario-grid, .trust-grid, .security-controls, .provider-rail > div, .call-actions, .demo-form form, .scenario-photos, .evidence-strip, .first-minute-banner, .evidentiary-points, .neutrality-grid, .qa-scoreboard, .language-grid { grid-template-columns: 1fr; }
+  .steps, .scenario-grid, .trust-grid, .security-controls, .provider-rail > div, .call-actions, .demo-form form, .news-grid, .evidence-strip, .first-minute-banner, .evidentiary-points, .neutrality-grid, .qa-scoreboard, .language-grid { grid-template-columns: 1fr; }
   .qa-scoreboard div { border-right: 0; border-bottom: 1px solid var(--line); }
   .qa-scoreboard div:last-child { border-bottom: 0; }
   .evidentiary-points .button { grid-column: auto; }
   .first-minute-banner a { text-align: left; }
-  .scenario-photos a, .scenario-photos img { min-height: 250px; }
+  .scenario-photos {
+    grid-template-columns: repeat(3,minmax(245px,72vw));
+    gap: 14px;
+    margin: 0 -24px 36px;
+    padding: 0 24px 8px;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-width: thin;
+  }
+  .scenario-photos a { min-height: 180px; height: 180px; scroll-snap-align: start; }
+  .scenario-photos img { min-height: 180px; height: 180px; }
+  .scenario-photos span { padding: 42px 17px 15px; font-size: 23px; }
+  .news-grid { gap: 16px; }
+  .news-grid article > div { padding: 23px; }
+  .news-image { width: min(100%,280px); margin: 0 auto; }
   .eyebrow { font-size: 12px; }
   .call-demo li { max-width: 92%; }
   .full-field { grid-column: auto; }
