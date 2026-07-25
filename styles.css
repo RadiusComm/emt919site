@@ -23,16 +23,29 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
   border-bottom: 1px solid rgba(255,255,255,.12); backdrop-filter: blur(18px);
 }
 .brand {
-  display: flex; align-items: center; gap: 10px; height: 70px; color: #f7fbff;
-  font: 900 31px/1 "Montserrat","Arial Black",sans-serif; letter-spacing: -.055em;
+  display: flex; align-items: center; gap: 0; height: 70px; color: #f7fbff;
+  font: 900 31px/1 "Montserrat","Arial Black",sans-serif; letter-spacing: -.06em;
 }
 .brand-shield {
-  flex: 0 0 60px; width: 60px; height: 60px; overflow: hidden;
-  background: url("/emt919-responder-shield-header.png") center/contain no-repeat;
+  flex: 0 0 58px; width: 58px; height: 58px; margin-right: -3px; overflow: hidden;
+  background: url("/emt919-responder-shield-header.png") center/112% no-repeat;
   color: transparent; font-size: 0; filter: drop-shadow(0 8px 14px rgba(0,42,120,.42));
 }
-.brand > span:last-child { display: inline-flex; align-items: baseline; white-space: nowrap; text-shadow: 0 3px 14px rgba(0,0,0,.3); }
-.brand-accent { margin-left: 2px; color: #96e338; text-shadow: 0 0 18px rgba(150,227,56,.18); }
+.brand > span:last-child {
+  position: relative; display: inline-flex; align-items: baseline; white-space: nowrap;
+  text-shadow: 0 3px 14px rgba(0,0,0,.3);
+}
+.brand > span:last-child::after {
+  content: "FIRST RESPONSE COMMUNICATION"; position: absolute; top: calc(100% + 5px); left: 2px;
+  color: #91acd0; font: 700 6px/1 "Inter",Arial,sans-serif; letter-spacing: .12em;
+  text-shadow: none; white-space: nowrap;
+}
+.brand-accent {
+  margin-left: 2px; color: transparent;
+  background: linear-gradient(180deg,#c8ff5c 0%,#8cdd2e 50%,#4ba916 100%);
+  background-clip: text; -webkit-background-clip: text;
+  text-shadow: none; filter: drop-shadow(0 0 10px rgba(150,227,56,.16));
+}
 nav { display: flex; gap: 30px; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; }
 nav a:hover { color: #72b7ff; }
 
@@ -290,8 +303,9 @@ td { color: #4e5b6c; }
 @media (max-width: 680px) {
   .site-header { padding: 12px 20px 0; }
   .site-header .button { min-height: 38px; padding: 0 12px; font-size: 10px; }
-  .brand { height: 58px; gap: 7px; font-size: 24px; }
-  .brand-shield { flex-basis: 48px; width: 48px; height: 48px; }
+  .brand { height: 58px; font-size: 23px; }
+  .brand-shield { flex-basis: 46px; width: 46px; height: 46px; margin-right: -2px; }
+  .brand > span:last-child::after { top: calc(100% + 4px); font-size: 5px; letter-spacing: .1em; }
   .hero { padding: 65px 24px; min-height: auto; }
   h1 { font-size: 64px; }
   .hero-lede { font-size: 16px; }
