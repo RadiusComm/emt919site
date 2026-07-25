@@ -17,13 +17,15 @@
     <div class="table-wrap"><table>
       <thead><tr><th>Provider</th><th>Service role</th><th>Data context</th></tr></thead>
       <tbody>
+        <tr><td>Bandwidth</td><td>Voice communications and messaging transport</td><td>Call-routing, voice, messaging, and network data needed to deliver configured communications</td></tr>
         <tr><td>Twilio</td><td>Telephony transport and call handling</td><td>Call-routing and voice-service data required to deliver the call</td></tr>
-        <tr><td>ElevenLabs</td><td>Speech processing</td><td>Audio segments needed to provide configured speech services</td></tr>
         <tr><td>Supabase on AWS</td><td>Application hosting, database, authentication, and storage services</td><td>Application records, agency configuration, access data, and retained service content</td></tr>
         <tr><td>Resend</td><td>Transactional email</td><td>Delivery metadata and message content needed for service notifications</td></tr>
         <tr><td>Propio Language Services</td><td>Qualified live interpretation</td><td>Conversation audio and context when a live interpreter is used</td></tr>
       </tbody>
     </table></div>
+    <h2>Retention boundary</h2>
+    <p>Voice audio follows a 30-day default. Transcript retention is defined in the agency agreement, and longer transcript retention requires the additional storage option. Contract terms and legal or agency preservation holds control when they differ from ordinary deletion.</p>
     <h2>Data location and use</h2>
     <p>Customer platform data is stored and processed in the United States. Customer audio, transcripts, and call narratives are not used to train Fast Dial or subprocessor AI models.</p>
     <h2>Change review</h2>

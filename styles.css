@@ -102,6 +102,14 @@ h1 { font-size: clamp(68px, 8vw, 124px); line-height: .82; letter-spacing: -.035
 .statement { padding: 75px 7vw; background: var(--blue); color: white; display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; }
 .statement p { margin: 0; color: #cfe0ff; line-height: 1.5; }
 .statement h2 { font-size: clamp(42px, 5vw, 74px); line-height: .95; text-align: right; max-width: 720px; }
+.service-video { background: #081323; color: white; }
+.service-video .section-heading { display: grid; grid-template-columns: 1fr 1fr; align-items: end; gap: 30px; margin-bottom: 38px; }
+.service-video .section-heading .eyebrow { grid-column: 1 / -1; }
+.service-video .section-heading h2 { margin: 0; }
+.service-video .section-heading > p:last-child { color: #9eabbd; line-height: 1.7; max-width: 620px; margin: 0 0 7px; }
+.video-frame { position: relative; overflow: hidden; aspect-ratio: 16 / 9; border: 1px solid rgba(255,255,255,.16); border-radius: 18px; box-shadow: 0 30px 80px rgba(0,0,0,.35); background: #02060c; }
+.video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.video-note { margin: 15px 0 0; color: #7e8fa6; font-size: 12px; }
 .experience { background: white; }
 .call-demo { max-width: 1050px; margin: auto; background: #07101e; color: white; border: 1px solid #1d304b; box-shadow: 0 28px 90px rgba(8,17,31,.2); }
 .call-status { display: flex; gap: 11px; align-items: center; padding: 20px 26px; border-bottom: 1px solid rgba(255,255,255,.13); font-size: 11px; letter-spacing: .12em; }
@@ -169,240 +177,4 @@ h1 { font-size: clamp(68px, 8vw, 124px); line-height: .82; letter-spacing: -.035
 .provider-note { display: block; color: #728198; line-height: 1.5; }
 .proof-policy { display: grid; grid-template-columns: 1fr 1fr; gap: 10vw; background: #e8edf5; align-items: end; }
 .proof-policy h2 { font-size: clamp(52px,6vw,86px); line-height: .9; }
-.proof-policy > div:last-child { color: #465466; font-size: 18px; line-height: 1.7; }
-.dark-link { display: inline-flex; margin-top: 20px; color: var(--ink); }
-.evidence-strip { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: #c9d1dc; padding-top: 1px; padding-bottom: 1px; }
-.evidence-strip > div { display: grid; gap: 8px; padding: 30px; background: #f7f8fa; }
-.evidence-strip strong { color: var(--blue); font: 900 47px/1 "Barlow Condensed"; }
-.evidence-strip span { color: #4e5b6c; font-size: 12px; line-height: 1.5; }
-.evidence-strip > p { grid-column: 1/-1; margin: 0; padding: 22px 30px; background: #e5eaf1; color: #526173; font-size: 12px; line-height: 1.6; }
-.evidence-strip a { color: var(--blue); font-weight: 800; }
-.neutrality-promo {
-  display: grid; grid-template-columns: .9fr 1.1fr; gap: 8vw; align-items: center;
-  background: radial-gradient(circle at 82% 20%,rgba(89,155,255,.18),transparent 34%),#0b1729; color: white;
-}
-.neutrality-promo h2 { font-size: clamp(54px,6.6vw,92px); line-height: .88; }
-.neutrality-promo p:not(.eyebrow) { max-width: 610px; color: #a7b6ca; font-size: 18px; line-height: 1.7; }
-.neutrality-grid { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid rgba(255,255,255,.16); border-left: 1px solid rgba(255,255,255,.16); }
-.neutrality-grid article { min-height: 180px; padding: 28px; border-right: 1px solid rgba(255,255,255,.16); border-bottom: 1px solid rgba(255,255,255,.16); }
-.neutrality-grid strong { font: 800 28px "Barlow Condensed"; text-transform: uppercase; }
-.neutrality-grid p { color: #8fa0b6; font-size: 13px; line-height: 1.6; }
-
-.pricing { display: grid; grid-template-columns: 1fr 470px; gap: 10vw; align-items: center; }
-.pricing-copy { max-width: 500px; font-size: 18px; }
-.buying-points { display: grid; gap: 14px; margin-top: 35px; font-weight: 700; font-size: 14px; }
-.price-card { padding: 46px; background: white; border-top: 7px solid var(--blue); box-shadow: 0 30px 80px rgba(8,17,31,.12); }
-.price-card > p { font-size: 11px; font-weight: 900; letter-spacing: .17em; color: #667382; }
-.service-option-card h3 { margin: 20px 0 0; font-size: 40px; line-height: .95; }
-.price { font: 900 100px/1 "Barlow Condensed"; margin-top: 22px; }
-.price sup { font-size: 40px; vertical-align: top; }
-.price-card > strong { color: #667382; font-size: 13px; }
-.price-card hr { border: 0; border-top: 1px solid var(--line); margin: 30px 0; }
-.price-card ul { list-style: none; padding: 0; display: grid; gap: 15px; color: #465262; font-size: 14px; }
-.price-card li::before { content: "âœ“"; color: var(--blue); margin-right: 10px; font-weight: 900; }
-.price-card .button { width: 100%; margin-top: 25px; }
-.evidentiary-promo {
-  display: grid; grid-template-columns: .9fr 1.1fr; gap: 9vw; align-items: center;
-  background: radial-gradient(circle at 84% 18%,rgba(11,92,255,.25),transparent 36%),#07101e; color: white;
-}
-.evidentiary-promo h2 { font-size: clamp(58px,7vw,96px); line-height: .87; }
-.evidentiary-promo p:not(.eyebrow) { max-width: 620px; color: #aebcce; font-size: 18px; line-height: 1.7; }
-.evidentiary-points { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid rgba(255,255,255,.16); border-left: 1px solid rgba(255,255,255,.16); }
-.evidentiary-points span { min-height: 105px; display: grid; align-content: center; gap: 8px; padding: 24px; color: #6faeff; border-right: 1px solid rgba(255,255,255,.16); border-bottom: 1px solid rgba(255,255,255,.16); font: 800 12px "Inter",Arial,sans-serif; }
-.evidentiary-points b { color: white; font: 800 25px "Barlow Condensed"; text-transform: uppercase; }
-.evidentiary-points .button { grid-column: 1/-1; margin-top: 24px; }
-
-.trust { background: white; }
-.trust-grid { display: grid; grid-template-columns: repeat(3,1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
-.trust-grid a { padding: 30px; min-height: 105px; display: flex; justify-content: space-between; align-items: end; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); font: 800 24px "Barlow Condensed"; text-transform: uppercase; }
-.trust-grid a:hover { background: var(--blue); color: white; }
-.trust-grid b { color: var(--blue); }
-.trust-grid a:hover b { color: white; }
-.demo-form { display: grid; grid-template-columns: .85fr 1.15fr; gap: 9vw; background: #f4f2ec; }
-.demo-form h2 { font-size: clamp(58px,7vw,94px); line-height: .87; }
-.demo-form > div > p:last-child { color: #5f6c7a; max-width: 500px; line-height: 1.7; }
-.demo-form form { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 38px; background: white; box-shadow: 0 22px 70px rgba(8,17,31,.1); }
-.demo-form label { display: grid; gap: 8px; color: #344052; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
-.demo-form input, .demo-form select, .demo-form textarea { width: 100%; border: 1px solid #cbd2dc; background: #fafbfc; padding: 14px; color: var(--ink); font: 15px Inter,Arial,sans-serif; }
-.demo-form input:focus, .demo-form select:focus, .demo-form textarea:focus { outline: 3px solid rgba(11,92,255,.18); border-color: var(--blue); }
-.full-field { grid-column: 1/-1; }
-.hidden-field { position: absolute; left: -9999px; }
-.demo-form form > small { color: #697687; line-height: 1.5; }
-.faq { background: #edf1f6; }
-.faq-list { max-width: 1000px; margin: auto; border-top: 2px solid var(--ink); }
-.faq-list details { border-bottom: 1px solid rgba(8,17,31,.18); }
-.faq-list summary { cursor: pointer; list-style: none; padding: 24px 44px 24px 0; position: relative; font: 800 25px "Barlow Condensed"; text-transform: uppercase; }
-.faq-list summary::after { content: "+"; position: absolute; right: 8px; color: var(--blue); font-size: 30px; }
-.faq-list details[open] summary::after { content: "âˆ’"; }
-.faq-list p { margin: 0; padding: 0 60px 25px 0; color: #536174; line-height: 1.7; }
-
-.cta { position: relative; overflow: hidden; padding: 120px 7vw; background: var(--ink); color: white; text-align: center; }
-.cta .eyebrow { justify-content: center; }
-.cta h2 { position: relative; font-size: clamp(68px,9vw,128px); line-height: .82; }
-.cta > p:not(.eyebrow) { position: relative; color: #9baabc; margin: 30px auto; max-width: 600px; }
-.cta .button { position: relative; }
-footer { background: #050a12; color: white; padding: 70px 7vw 35px; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 60px; }
-footer > div:not(.footer-brand) { display: grid; align-content: start; gap: 12px; font-size: 13px; color: #9cabbc; }
-footer strong { color: white; font-size: 10px; letter-spacing: .14em; margin-bottom: 10px; }
-.footer-brand p { color: #7e8d9f; line-height: 1.6; font-size: 13px; }
-.copyright { grid-column: 1 / -1; border-top: 1px solid rgba(255,255,255,.12); padding-top: 25px; color: #5c6878; font-size: 11px; }
-.page-hero { padding: 110px 7vw 90px; background: var(--ink); color: white; }
-.page-hero h1 { max-width: 1050px; }
-.page-hero > p:last-child { max-width: 720px; color: #aebacd; font-size: 19px; line-height: 1.7; }
-.content-page { max-width: 1180px; margin: auto; }
-.content-page h2 { margin: 70px 0 20px; font-size: clamp(42px,5vw,70px); line-height: .92; }
-.content-page h3 { margin: 32px 0 12px; font-size: 29px; }
-.content-page p, .content-page li { color: #4e5b6c; line-height: 1.75; }
-.content-page a { color: var(--blue); font-weight: 700; }
-.content-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 24px; margin: 34px 0; }
-.content-card { padding: 30px; background: white; border-top: 4px solid var(--blue); box-shadow: 0 12px 36px rgba(8,17,31,.08); }
-.content-card h3 { margin-top: 0; }
-.content-page .featured-product-card { border-top-color: #69bd25; color: var(--ink); background: linear-gradient(145deg,#f8fff2,#fff); }
-.content-page .featured-product-card strong { color: #397f14; }
-.product-kicker { display: block; margin-bottom: 15px; color: #4f981f; font-size: 10px; font-weight: 900; letter-spacing: .15em; text-transform: uppercase; }
-.evidentiary-hero { background: radial-gradient(circle at 80% 20%,rgba(105,189,37,.16),transparent 30%),radial-gradient(circle at 68% 55%,rgba(11,92,255,.22),transparent 40%),var(--ink); }
-.neutrality-hero { background: radial-gradient(circle at 82% 18%,rgba(79,159,255,.22),transparent 34%),radial-gradient(circle at 66% 72%,rgba(73,169,26,.12),transparent 35%),var(--ink); }
-.language-hero { background: radial-gradient(circle at 78% 24%,rgba(11,92,255,.25),transparent 38%),var(--ink); }
-.evidence-feature-grid .content-card { border-top-color: #69bd25; }
-.evidence-feature-grid .content-card:nth-child(even) { border-top-color: var(--blue); }
-.qa-scoreboard { display: grid; grid-template-columns: repeat(4,1fr); margin: 0 0 28px; border: 1px solid var(--line); background: white; }
-.qa-scoreboard div { min-height: 135px; display: grid; align-content: center; gap: 9px; padding: 24px; border-right: 1px solid var(--line); }
-.qa-scoreboard div:last-child { border-right: 0; }
-.qa-scoreboard strong { color: var(--blue); font: 900 42px/1 "Barlow Condensed"; text-transform: uppercase; }
-.qa-scoreboard span { color: #596779; font-size: 12px; line-height: 1.5; }
-.language-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; margin: 28px 0 65px; padding: 1px; background: #cbd3de; }
-.language-grid span { min-height: 68px; display: grid; place-items: center; padding: 16px; background: white; color: #26364a; font-weight: 700; text-align: center; }
-.notice { padding: 24px; background: #e7edf7; border-left: 4px solid var(--blue); }
-.metadata { display: flex; flex-wrap: wrap; gap: 18px; color: #657386; font-size: 12px; text-transform: uppercase; letter-spacing: .08em; }
-.resource-list { display: grid; gap: 16px; margin-top: 30px; }
-.resource-list a { display: flex; justify-content: space-between; padding: 24px; background: white; color: var(--ink); border: 1px solid var(--line); font: 800 25px "Barlow Condensed"; text-transform: uppercase; }
-.scenario-hero { display: block; width: 100%; max-height: 620px; object-fit: cover; aspect-ratio: 16 / 8; box-shadow: 0 24px 70px rgba(8,17,31,.16); }
-.trust-links { display: grid; grid-template-columns: repeat(2,1fr); gap: 1px; margin: 35px 0 70px; background: var(--line); border: 1px solid var(--line); }
-.trust-links a { display: grid; gap: 8px; min-height: 125px; padding: 27px; background: white; color: var(--ink); }
-.trust-links a:hover { background: #f0f5ff; }
-.trust-links strong { font: 800 28px "Barlow Condensed"; text-transform: uppercase; }
-.trust-links span { color: #5b6878; font-size: 13px; line-height: 1.5; }
-.process-flow { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr; align-items: center; gap: 14px; margin: 28px 0 60px; }
-.process-flow span { min-height: 110px; display: grid; place-items: center; padding: 20px; background: var(--ink); color: white; text-align: center; font: 800 22px "Barlow Condensed"; text-transform: uppercase; }
-.process-flow b { color: var(--blue); font-size: 27px; }
-.five-step-flow { grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr auto 1fr; align-items: stretch; }
-.five-step-flow > div { min-width: 0; padding: 24px 19px; background: white; border-top: 4px solid var(--blue); box-shadow: 0 12px 34px rgba(8,17,31,.08); }
-.five-step-flow > div b { color: var(--blue); font: 900 12px "Inter",Arial,sans-serif; letter-spacing: .14em; }
-.five-step-flow > div h3 { margin: 18px 0 10px; font-size: 25px; }
-.five-step-flow > div p { margin: 0; font-size: 13px; line-height: 1.55; }
-.five-step-flow > span { min-height: 0; padding: 0; background: transparent; color: var(--blue); font-size: 24px; }
-.table-wrap { margin: 35px 0; overflow-x: auto; box-shadow: 0 14px 40px rgba(8,17,31,.08); }
-table { width: 100%; border-collapse: collapse; background: white; }
-th, td { padding: 20px; border: 1px solid var(--line); text-align: left; vertical-align: top; line-height: 1.55; }
-th { background: var(--ink); color: white; font: 800 18px "Barlow Condensed"; text-transform: uppercase; letter-spacing: .04em; }
-td { color: #4e5b6c; }
-.checklist { list-style: none; padding: 0; display: grid; gap: 12px; }
-.checklist li { position: relative; padding: 17px 18px 17px 50px; background: white; border: 1px solid var(--line); }
-.checklist li::before { content: "âœ“"; position: absolute; left: 19px; top: 15px; color: var(--blue); font-weight: 900; }
-.price-summary { max-width: 520px; padding: 42px; margin: 0 auto 70px; display: grid; background: white; border-top: 7px solid var(--blue); box-shadow: 0 28px 75px rgba(8,17,31,.13); }
-.price-summary > span { color: #637084; font-size: 11px; font-weight: 900; letter-spacing: .16em; text-transform: uppercase; }
-.price-summary > strong { font: 900 110px/1 "Barlow Condensed"; margin-top: 15px; }
-.price-summary sup { font-size: 42px; }
-.price-summary > b { color: #566376; font-size: 13px; text-transform: uppercase; letter-spacing: .08em; }
-.standalone-form { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; margin-top: 30px; padding: 38px; background: white; box-shadow: 0 22px 70px rgba(8,17,31,.1); }
-.standalone-form label { display: grid; gap: 8px; color: #344052; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
-.standalone-form input, .standalone-form select, .standalone-form textarea { width: 100%; border: 1px solid #cbd2dc; background: #fafbfc; padding: 14px; color: var(--ink); font: 15px Inter,Arial,sans-serif; }
-.standalone-form input:focus, .standalone-form select:focus, .standalone-form textarea:focus { outline: 3px solid rgba(11,92,255,.18); border-color: var(--blue); }
-.sheet { width: min(1040px,calc(100% - 48px)); margin: 45px auto; padding: 54px; background: white; box-shadow: 0 25px 85px rgba(8,17,31,.14); }
-.sheet-head { display: grid; grid-template-columns: 1fr 150px; gap: 35px; align-items: start; border-bottom: 4px solid var(--blue); padding-bottom: 30px; }
-.sheet h1 { color: var(--ink); font-size: clamp(62px,8vw,98px); }
-.sheet-mark { width: 135px; height: 150px; display: grid; place-items: center; background: var(--blue); color: white; clip-path: polygon(0 0,100% 0,100% 72%,50% 100%,0 72%); font: 900 35px "Barlow Condensed"; }
-.sheet-lede { color: #425064; font-size: 18px; line-height: 1.7; margin: 30px 0; }
-.sheet-columns { display: grid; grid-template-columns: repeat(2,1fr); gap: 24px; }
-.sheet-columns section { padding: 25px; background: #f4f6f9; border-top: 4px solid var(--ink); }
-.sheet-columns h2 { margin: 0 0 14px; font-size: 35px; }
-.sheet-columns p, .sheet-columns li { color: #475568; line-height: 1.6; }
-.sheet-price { color: var(--ink) !important; font: 900 58px "Barlow Condensed"; margin: 0; }
-.sheet-price small { display: block; font: 800 14px Inter,Arial,sans-serif; text-transform: uppercase; }
-.sheet-footer { margin: 30px 0 0; padding: 25px 0 0; display: flex; justify-content: space-between; gap: 30px; background: transparent; color: var(--ink); border-top: 1px solid var(--line); font-size: 12px; }
-.sheet-footer a { color: var(--blue); }
-.print-help { padding: 17px; background: #e7edf7; color: #4e5b6c; text-align: center; font-size: 12px; }
-
-@media (max-width: 1000px) {
-  .site-header { flex-wrap: wrap; height: auto; min-height: 78px; padding-top: 14px; }
-  .site-header nav { order: 3; width: 100%; display: flex; overflow-x: auto; gap: 22px; padding: 13px 0 15px; scrollbar-width: thin; }
-  .site-header nav a { white-space: nowrap; }
-  .hero { grid-template-columns: 1fr; padding-top: 80px; }
-  .security { grid-template-columns: 1fr; }
-  .proof-policy, .demo-form { grid-template-columns: 1fr; }
-  .scenario-photos { grid-template-columns: 1fr 1fr; }
-  .evidence-strip { grid-template-columns: 1fr 1fr; }
-  .hero-device { min-height: 650px; }
-  .section-heading { grid-template-columns: 1fr 1fr; }
-  .section-heading > p:last-child { grid-column: 2; }
-  .scenario-grid { grid-template-columns: repeat(2,1fr); }
-  .outcomes, .pricing, .evidentiary-promo, .neutrality-promo { grid-template-columns: 1fr; }
-  .price-card { max-width: 520px; }
-  .process-flow { grid-template-columns: 1fr; }
-  .process-flow b { transform: rotate(90deg); text-align: center; }
-  .five-step-flow > span { transform: rotate(90deg); }
-  .qa-scoreboard, .language-grid { grid-template-columns: 1fr 1fr; }
-}
-
-@media (max-width: 680px) {
-  .site-header { padding: 12px 20px 0; }
-  .site-header .button { min-height: 38px; padding: 0 12px; font-size: 10px; }
-  .brand { height: 58px; font-size: 23px; }
-  .brand-shield { flex-basis: 46px; width: 46px; height: 46px; margin-right: -2px; }
-  .brand > span:last-child::after { top: calc(100% + 4px); font-size: 5px; letter-spacing: .1em; }
-  .hero { padding: 65px 24px; min-height: auto; }
-  h1 { font-size: 64px; }
-  .hero-lede { font-size: 16px; }
-  .hero-actions { align-items: stretch; flex-direction: column; }
-  .hero-proof { gap: 12px; }
-  .hero-proof div { padding-right: 12px; }
-  .hero-proof strong { font-size: 22px; }
-  .hero-device { transform: scale(.86); margin: -30px -30px; }
-  .statement { padding: 55px 24px; display: grid; }
-  .statement h2 { text-align: left; }
-  .section { padding: 80px 24px; }
-  .section-heading { display: block; }
-  .section-heading h2 { margin-bottom: 25px; }
-  .steps, .scenario-grid, .trust-grid, .security-controls, .provider-rail > div, .call-actions, .demo-form form, .scenario-photos, .evidence-strip, .first-minute-banner, .evidentiary-points, .neutrality-grid, .qa-scoreboard, .language-grid { grid-template-columns: 1fr; }
-  .qa-scoreboard div { border-right: 0; border-bottom: 1px solid var(--line); }
-  .qa-scoreboard div:last-child { border-bottom: 0; }
-  .evidentiary-points .button { grid-column: auto; }
-  .first-minute-banner a { text-align: left; }
-  .scenario-photos a, .scenario-photos img { min-height: 250px; }
-  .eyebrow { font-size: 13px; }
-  .hero-proof span { font-size: 12px; }
-  .call-demo li { max-width: 92%; }
-  .full-field { grid-column: auto; }
-  .steps article { border-right: 0; border-bottom: 1px solid var(--line); }
-  .scenario-grid { border-left: 0; }
-  .pricing { gap: 55px; }
-  .price-card { padding: 35px 25px; }
-  .price { font-size: 82px; }
-  footer { grid-template-columns: 1fr; }
-  .content-grid, .trust-links, .standalone-form, .sheet-columns { grid-template-columns: 1fr; }
-  .scenario-hero { aspect-ratio: 4 / 3; }
-  .sheet { width: 100%; margin: 0; padding: 35px 24px; box-shadow: none; }
-  .sheet-head { grid-template-columns: 1fr; }
-  .sheet-mark { width: 95px; height: 105px; }
-  .sheet-footer { display: grid; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  *, *::before, *::after { transition: none !important; }
-}
-
-@media print {
-  @page { size: letter; margin: .4in; }
-  body { background: white; }
-  .no-print, .skip-link { display: none !important; }
-  .sheet { width: 100%; margin: 0; padding: 0; box-shadow: none; }
-  .sheet h1 { font-size: 60px; }
-  .sheet-lede { font-size: 14px; }
-  .sheet-columns { gap: 12px; }
-  .sheet-columns section { padding: 14px; break-inside: avoid; }
-  .sheet-columns h2 { font-size: 25px; }
-  .sheet-columns p, .sheet-columns li { font-size: 11px; }
-  .notice { font-size: 11px; padding: 14px; }
-  .sheet-footer { padding-top: 14px; margin-top: 15px; }
-}
+.proof-policy > div:last-child { col×Žµ¶‰žËkºwµçe¹”µ¡•¥¡Ðè€¸àÜìô(¹‘•µ¼µ™½É´€ø‘¥Ø€øÀé±…ÍÐµ¡¥±ì½±½Èè€ŒÕ˜ÙŒÝ„ìµ…àµÝ¥‘Ñ è€ÔÀÁÁàì±¥¹”µ¡•¥¡Ðè€Ä¸Üìô(¹‘•µ¼µ™½É´™½É´ì‘¥ÍÁ±…äèÉ¥ìÉ¥µÑ•µÁ±…Ñ”µ½±Õµ¹Ìè€Å™È€Å™Èì…Àè€ÈÁÁàìÁ…‘‘¥¹œè€ÌáÁàì‰…­É½Õ¹èÝ¡¥Ñ”ì‰½àµÍ¡…‘½Üè€À€ÈÉÁà€ÜÁÁàÉ‰„ à°ÄÜ°ÌÄ°¸Ä¤ìô(¹‘•µ¼µ™½É´±…‰•°ì‘¥ÍÁ±…äèÉ¥ì…Àè€áÁàì½±½Èè€ŒÌÐÐÀÔÈì™½¹ÐµÍ¥é”è€ÄÉÁàì™½¹ÐµÝ•¥¡Ðè€àÀÀìÑ•áÐµÑÉ…¹Í™½É´èÕÁÁ•É…Í”ì±•ÑÑ•ÈµÍÁ…¥¹œè€¸Àá•´ìô(¹‘•µ¼µ™½É´¥¹ÁÕÐ°€¹‘•µ¼µ™½É´Í•±•Ð°€¹‘•µ¼µ™½É´Ñ•áÑ…É•„ìÝ¥‘Ñ è€ÄÀÀ”ì‰½É‘•Èè€ÅÁàÍ½±¥€‰É‘Œì‰…­É½Õ¹è€™…™‰™ŒìÁ…‘‘¥¹œè€ÄÑÁàì½±½ÈèÙ…È ´µ¥¹¬¤ì™½¹Ðè€ÄÕÁà%¹Ñ•È±É¥…°±Í…¹ÌµÍ•É¥˜ìô(¹‘•µ¼µ™½É´¥¹ÁÕÐé™½ÕÌ°€¹‘•µ¼µ™½É´Í•±•Ðé™½ÕÌ°€¹‘•µ¼µ™½É´Ñ•áÑ…É•„é™½ÕÌì½ÕÑ±¥¹”è€ÍÁàÍ½±¥É‰„ ÄÄ°äÈ°ÈÔÔ°¸Äà¤ì‰½É‘•Èµ½±½ÈèÙ…È ´µ‰±Õ”¤ìô(¹™Õ±°µ™¥•±ìÉ¥µ½±Õµ¸è€Ä¼´Äìô(¹¡¥‘‘•¸µ™¥•±ìÁ½Í¥Ñ¥½¸è…‰Í½±ÕÑ”ì±•™Ðè€´äääåÁàìô(¹‘•µ¼µ™½É´™½É´€øÍµ…±°ì½±½Èè€ŒØäÜØàÜì±¥¹”µ¡•¥¡Ðè€Ä¸Ôìô(¹™…Äì‰…­É½Õ¹è€•‘˜Å˜Øìô(¹™…Äµ±¥ÍÐìµ…àµÝ¥‘Ñ è€ÄÀÀÁÁàìµ…É¥¸è…ÕÑ¼ì‰½É‘•ÈµÑ½Àè€ÉÁàÍ½±¥Ù…È ´µ¥¹¬¤ìô(¹™…Äµ±¥ÍÐ‘•Ñ…¥±Ìì‰½É‘•Èµ‰½ÑÑ½´è€ÅÁàÍ½±¥É‰„ à°ÄÜ°ÌÄ°¸Äà¤ìô(¹™…Äµ±¥ÍÐÍÕµµ…ÉäìÕÉÍ½ÈèÁ½¥¹Ñ•Èì±¥ÍÐµÍÑå±”è¹½¹”ìÁ…‘‘¥¹œè€ÈÑÁà€ÐÑÁà€ÈÑÁà€ÀìÁ½Í¥Ñ¥½¸èÉ•±…Ñ¥Ù”ì™½¹Ðè€àÀÀ€ÈÕÁà€‰	…É±½Ü½¹‘•¹Í•ˆìÑ•áÐµÑÉ…¹Í™½É´èÕÁÁ•É…Í”ìô(¹™…Äµ±¥ÍÐÍÕµµ…Éäèé…™Ñ•Èì½¹Ñ•¹Ðè€ˆ¬ˆìÁ½Í¥Ñ¥½¸è…‰Í½±ÕÑ”ìÉ¥¡Ðè€áÁàì½±½ÈèÙ…È ´µ‰±Õ”¤ì™½¹ÐµÍ¥é”è€ÌÁÁàìô(¹™…Äµ±¥ÍÐ‘•Ñ…¥±Ím½Á•¹tÍÕµµ…Éäèé…™Ñ•Èì½¹Ñ•¹Ðè€‹Š"Hˆìô(¹™…Äµ±¥ÍÐÀìµ…É¥¸è€ÀìÁ…‘‘¥¹œè€À€ØÁÁà€ÈÕÁà€Àì½±½Èè€ŒÔÌØÄÜÐì±¥¹”µ¡•¥¡Ðè€Ä¸Üìô((¹Ñ„ìÁ½Í¥Ñ¥½¸èÉ•±…Ñ¥Ù”ì½Ù•É™±½Üè¡¥‘‘•¸ìÁ…‘‘¥¹œè€ÄÈÁÁà€ÝÙÜì‰…­É½Õ¹èÙ…È ´µ¥¹¬¤ì½±½ÈèÝ¡¥Ñ”ìÑ•áÐµ…±¥¸è•¹Ñ•Èìô(¹Ñ„€¹•å•‰É½Üì©ÕÍÑ¥™äµ½¹Ñ•¹Ðè•¹Ñ•Èìô(¹Ñ„ ÈìÁ½Í¥Ñ¥½¸èÉ•±…Ñ¥Ù”ì™½¹ÐµÍ¥é”è±…µÀ ØáÁà°åÙÜ°ÄÈáÁà¤ì±¥¹”µ¡•¥¡Ðè€¸àÈìô(¹Ñ„€øÀé¹½Ð ¹•å•‰É½Ü¤ìÁ½Í¥Ñ¥½¸èÉ•±…Ñ¥Ù”ì½±½Èè€Œå‰……‰Œìµ…É¥¸è€ÌÁÁà…ÕÑ¼ìµ…àµÝ¥‘Ñ è€ØÀÁÁàìô(¹Ñ„€¹‰ÕÑÑ½¸ìÁ½Í¥Ñ¥½¸èÉ•±…Ñ¥Ù”ìô)™½½Ñ•Èì‰…­É½Õ¹è€ŒÀÔÁ„ÄÈì½±½ÈèÝ¡¥Ñ”ìÁ…‘‘¥¹œè€ÜÁÁà€ÝÙÜ€ÌÕÁàì‘¥ÍÁ±…äèÉ¥ìÉ¥µÑ•µÁ±…Ñ”µ½±Õµ¹Ìè€É™È€Å™È€Å™Èì…Àè€ØÁÁàìô)™½½Ñ•È€ø‘¥Øé¹½Ð ¹™½½Ñ•Èµ‰É…¹¤ì‘¥ÍÁ±…äèÉ¥ì…±¥¸µ½¹Ñ•¹ÐèÍÑ…ÉÐì…Àè€ÄÉÁàì™½¹ÐµÍ¥é”è€ÄÍÁàì½±½Èè€Œå…‰‰Œìô)™½½Ñ•ÈÍÑÉ½¹œì½±½ÈèÝ¡¥Ñ”ì™½¹ÐµÍ¥é”è€ÄÁÁàì±•ÑÑ•ÈµÍÁ…¥¹œè€¸ÄÑ•´ìµ…É¥¸µ‰½ÑÑ½´è€ÄÁÁàìô(¹™½½Ñ•Èµ‰É…¹Àì½±½Èè€ŒÝ”áå˜ì±¥¹”µ¡•¥¡Ðè€Ä¸Øì™½¹ÐµÍ¥é”è€ÄÍÁàìô(¹½ÁåÉ¥¡ÐìÉ¥µ½±Õµ¸è€Ä€¼€´Äì‰½É‘•ÈµÑ½Àè€ÅÁàÍ½±¥É‰„ ÈÔÔ°ÈÔÔ°ÈÔÔ°¸ÄÈ¤ìÁ…‘‘¥¹œµÑ½Àè€ÈÕÁàì½±½Èè€ŒÕŒØàÜàì™½¹ÐµÍ¥é”è€ÄÅÁàìô(¹Á…”µ¡•É¼ìÁ…‘‘¥¹œè€ÄÄÁÁà€ÝÙÜ€äÁÁàì‰…­É½Õ¹èÙ…È ´µ¥¹¬¤ì½±½ÈèÝ¡¥Ñ”ìô(¹Á…”µ¡•É¼ Äìµ…àµÝ¥‘Ñ è€ÄÀÔÁÁàìô(¹Á…”µ¡•É¼€øÀé±…ÍÐµ¡¥±ìµ…àµÝ¥‘Ñ è€ÜÈÁÁàì½±½Èè€…•‰…ì™½¹ÐµÍ¥é”è€ÄåÁàì±¥¹”µ¡•¥¡Ðè€Ä¸Üìô(¹½¹Ñ•¹ÐµÁ…”ìµ…àµÝ¥‘Ñ è€ÄÄàÁÁàìµ…É¥¸è…ÕÑ¼ìô(¹½¹Ñ•¹ÐµÁ…” Èìµ…É¥¸è€ÜÁÁà€À€ÈÁÁàì™½¹ÐµÍ¥é”è±…µÀ ÐÉÁà°ÕÙÜ°ÜÁÁà¤ì±¥¹”µ¡•¥¡Ðè€¸äÈìô(¹½¹Ñ•¹ÐµÁ…” Ììµ…É¥¸è€ÌÉÁà€À€ÄÉÁàì™½¹ÐµÍ¥é”è€ÈåÁàìô(¹½¹Ñ•¹ÐµÁ…”À°€¹½¹Ñ•¹ÐµÁ…”±¤ì½±½Èè€ŒÑ”ÕˆÙŒì±¥¹”µ¡•¥¡Ðè€Ä¸ÜÔìô(¹½¹Ñ•¹ÐµÁ…”„ì½±½ÈèÙ…È ´µ‰±Õ”¤ì™½¹ÐµÝ•¥¡Ðè€ÜÀÀìô(¹½¹Ñ•¹ÐµÉ¥ì‘¥ÍÁ±…äèÉ¥ìÉ¥µÑ•µÁ±…Ñ”µ½±Õµ¹ÌèÉ•Á•…Ð È°Å™È¤ì…Àè€ÈÑÁàìµ…É¥¸è€ÌÑÁà€Àìô(¹½¹Ñ•¹Ðµ…ÉìÁ…‘‘¥¹œè€ÌÁÁàì‰…­É½Õ¹èÝ¡¥Ñ”ì‰½É‘•ÈµÑ½Àè€ÑÁàÍ½±¥Ù…È ´µ‰±Õ”¤ì‰½àµÍ¡…‘½Üè€À€ÄÉÁà€ÌÙÁàÉ‰„ à°ÄÜ°ÌÄ°¸Àà¤ìô(¹½¹Ñ•¹Ðµ…É Ììµ…É¥¸µÑ½Àè€Àìô(¹½¹Ñ•¹ÐµÁ…”€¹™•…ÑÕÉ•µÁÉ½‘ÕÐµ…Éì‰½É‘•ÈµÑ½Àµ½±½Èè€ŒØå‰ÈÔì½±½ÈèÙ…È ´µ¥¹¬¤ì‰…­É½Õ¹è±¥¹•…ÈµÉ…‘¥•¹Ð ÄÐÕ‘•œ°˜á™™˜È°™™˜¤ìô(¹½¹Ñ•¹ÐµÁ…”€¹™•…ÑÕÉ•µÁÉ½‘ÕÐµ…ÉÍÑÉ½¹œì½±½Èè€ŒÌäÝ˜ÄÐìô(¹ÁÉ½‘ÕÐµ­¥­•Èì‘¥ÍÁ±…äè‰±½¬ìµ…É¥¸µ‰½ÑÑ½´è€ÄÕÁàì½±½Èè€ŒÑ˜äàÅ˜ì™½¹ÐµÍ¥é”è€ÄÁÁàì™½¹ÐµÝ•¥¡Ðè€äÀÀì±•ÑÑ•ÈµÍÁ…¥¹œè€¸ÄÕ•´ìÑ•áÐµÑÉ…¹Í™½É´èÕÁÁ•É…Í”ìô(¹•Ù¥‘•¹Ñ¥…Éäµ¡•É¼ì‰…­É½Õ¹èÉ…‘¥…°µÉ…‘¥•¹Ð¡¥É±”…Ð€àÀ”€ÈÀ”±É‰„ ÄÀÔ°Äàä°ÌÜ°¸ÄØ¤±ÑÉ…¹ÍÁ…É•¹Ð€ÌÀ”¤±É…‘¥…°µÉ…‘¥•¹Ð¡¥É±”…Ð€Øà”€ÔÔ”±É‰„ ÄÄ°äÈ°ÈÔÔ°¸ÈÈ¤±ÑÉ…¹ÍÁ…É•¹Ð€ÐÀ”¤±Ù…È ´µ¥¹¬¤ìô(¹¹•ÕÑÉ…±¥Ñäµ¡•É¼ì‰…­É½Õ¹èÉ…‘¥…°µÉ…‘¥•¹Ð¡¥É±”…Ð€àÈ”€Äà”±É‰„ Üä°ÄÔä°ÈÔÔ°¸ÈÈ¤±ÑÉ…¹ÍÁ…É•¹Ð€ÌÐ”¤±É…‘¥…°µÉ…‘¥•¹Ð¡¥É±”…Ð€ØØ”€ÜÈ”±É‰„ ÜÌ°ÄØä°ÈØ°¸ÄÈ¤±ÑÉ…¹ÍÁ…É•¹Ð€ÌÔ”¤±Ù…È ´µ¥¹¬¤ìô(¹±…¹Õ…”µ¡•É¼ì‰…­É½Õ¹èÉ…‘¥…°µÉ…‘¥•¹Ð¡¥É±”…Ð€Üà”€ÈÐ”±É‰„ ÄÄ°äÈ°ÈÔÔ°¸ÈÔ¤±ÑÉ…¹ÍÁ…É•¹Ð€Ìà”¤±Ù…È ´µ¥¹¬¤ìô(¹•Ù¥‘•¹”µ™•…ÑÕÉ”µÉ¥€¹½¹Ñ•¹Ðµ…Éì‰½É‘•ÈµÑ½Àµ½±½Èè€ŒØå‰ÈÔìô(¹•Ù¥‘•¹”µ™•…ÑÕÉ”µÉ¥€¹½¹Ñ•¹Ðµ…Éé¹Ñ µ¡¥±¡•Ù•¸¤ì‰½É‘•ÈµÑ½Àµ½±½ÈèÙ…È ´µ‰±Õ”¤ìô(¹Å„µÍ½É•‰½…Éì‘¥ÍÁ±…äèÉ¥ìÉ¥µÑ•µÁ±…Ñ”µ½±Õµ¹ÌèÉ•Á•…Ð Ð°Å™È¤ìµ…É¥¸è€À€À€ÈáÁàì‰½É‘•Èè€ÅÁàÍ½±¥Ù…È ´µ±¥¹”¤ì‰…­É½Õ¹èÝ¡¥Ñ”ìô(¹Å„µÍ½É•‰½…É‘¥Øìµ¥¸µ¡•¥¡Ðè€ÄÌÕÁàì‘¥ÍÁ±…äèÉ¥ì…±¥¸µ½¹Ñ•¹Ðè•¹Ñ•Èì…Àè€åÁàìÁ…‘‘¥¹œè€ÈÑÁàì‰½É‘•ÈµÉ¥¡Ðè€ÅÁàÍ½±¥Ù…È ´µ±¥¹”¤ìô(¹Å„µÍ½É•‰½…É‘¥Øé±…ÍÐµ¡¥±ì‰½É‘•ÈµÉ¥¡Ðè€Àìô(¹Å„µÍ½É•‰½…ÉÍÑÉ½¹œì½±½ÈèÙ…È ´µ‰±Õ”¤ì™½¹Ðè€äÀÀ€ÐÉÁà¼Ä€‰	…É±½Ü½¹‘•¹Í•ˆìÑ•áÐµÑÉ…¹Í™½É´èÕÁÁ•É…Í”ìô(¹Å„µÍ½É•‰½…ÉÍÁ…¸ì½±½Èè€ŒÔäØÜÜäì™½¹ÐµÍ¥é”è€ÄÉÁàì±¥¹”µ¡•¥¡Ðè€Ä¸Ôìô(¹±…¹Õ…”µÉ¥ì‘¥ÍÁ±…äèÉ¥ìÉ¥µÑ•µÁ±…Ñ”µ½±Õµ¹ÌèÉ•Á•…Ð Ð°Å™È¤ì…Àè€ÅÁàìµ…É¥¸è€ÈáÁà€À€ØÕÁàìÁ…‘‘¥¹œè€ÅÁàì‰…­É½Õ¹è€‰Í‘”ìô(¹±…¹Õ…”µÉ¥ÍÁ…¸ìµ¥¸µ¡•¥¡Ðè€ØáÁàì‘¥ÍÁ±…äèÉ¥ìÁ±…”µ¥Ñ•µÌè•¹Ñ•ÈìÁ…‘‘¥¹œè€ÄÙÁàì‰…­É½Õ¹èÝ¡¥Ñ”ì½±½Èè€ŒÈØÌØÑ„ì™½¹ÐµÝ•¥¡Ðè€ÜÀÀìÑ•áÐµ…±¥¸è•¹Ñ•Èìô(¹¹½Ñ¥”ìÁ…‘‘¥¹œè€ÈÑÁàì‰…­É½Õ¹è€”Ý•‘˜Üì‰½É‘•Èµ±•™Ðè€ÑÁàÍ½±¥Ù…È ´µ‰±Õ”¤ìô(¹µ•Ñ…‘…Ñ„ì‘¥ÍÁ±…äè™±•àì™±•àµÝÉ…ÀèÝÉ…Àì…Àè€ÄáÁàì½±½Èè€ŒØÔÜÌàØì™½¹ÐµÍ¥é”è€ÄÉÁàìÑ•áÐµÑÉ…¹Í™½É´èÕÁÁ•É…Í”ì±•ÑÑ•ÈµÍÁ…¥¹œè€¸Àá•´ìô(¹É•Í½ÕÉ”µ±¥ÍÐì‘¥ÍÁ±…äèÉ¥ì…Àè€ÄÙÁàìµ…É¥¸µÑ½Àè€ÌÁÁàìô(¹É•Í½ÕÉ”µ±¥ÍÐ„ì‘¥ÍÁ±…äè™±•àì©ÕÍÑ¥™äµ½¹Ñ•¹ÐèÍÁ…”µ‰•ÑÝ••¸ìÁ…‘‘¥¹œè€ÈÑÁàì‰…­É½Õ¹èÝ¡¥Ñ”ì½±½ÈèÙ…È ´µ¥¹¬¤ì‰½É‘•Èè€ÅÁàÍ½±¥Ù…È ´µ±¥¹”¤ì™½¹Ðè€àÀÀ€ÈÕÁà€‰	…É±½Ü½¹‘•¹Í•ˆìÑ•áÐµÑÉ…¹Í™½É´èÕÁÁ•É…Í”ìô(¹Í•¹…É¥¼µ¡•É¼ì‘¥ÍÁ±…äè‰±½¬ìÝ¥‘Ñ è€ÄÀÀ”ìµ…àµ¡•¥¡Ðè€ØÈÁÁàì½‰©•Ðµ™¥Ðè½Ù•Èì…ÍÁ•ÐµÉ…Ñ¥¼è€ÄØ€¼€àì‰½àµÍ¡…‘½Üè€À€ÈÑÁà€ÜÁÁàÉ‰„ à°ÄÜ°ÌÄ°¸ÄØ¤ìô(¹ÑÉÕÍÐµ±¥¹­Ìì‘¥ÍÁ±…äèÉ¥ìÉ¥µÑ•µÁ±…Ñ”µ½±Õµ¹ÌèÉ•Á•…Ð È°Å™È¤ì…Àè€ÅÁàìµ…É¥¸è€ÌÕÁà€À€ÜÁÁàì‰…­É½Õ¹èÙ…È ´µ±¥¹”¤ì‰½É‘•Èè€ÅÁàÍ½±¥Ù…È ´µ±¥¹”¤ìô(¹ÑÉÕÍÐµ±¥¹­Ì„ì‘¥ÍÁ±…äèÉ¥ì…Àè€áÁàìµ¥¸µ¡•¥¡Ðè€ÄÈÕÁàìÁ…‘‘¥¹œè€ÈÝÁàì‰…­É½Õ¹èÝ¡¥Ñ”ì½±½ÈèÙ…È ´µ¥¹¬¤ìô(¹ÑÉÕÍÐµ±¥¹­Ì„é¡½Ù•Èì‰…­É½Õ¹è€˜Á˜Õ™˜ìô(¹ÑÉÕÍÐµ±¥¹­ÌÍÑÉ½¹œì™½¹Ðè€àÀÀ€ÈáÁà€‰	…É±½Ü½¹‘•¹Í•ˆìÑ•áÐµÑÉ…¹Í™½É´èÕÁÁ•É…Í”ìô(¹ÑÉÕÍÐµ±¥¹­ÌÍÁ…¸ì½±½Èè€ŒÕˆØàÜàì™½¹ÐµÍ¥é”è€ÄÍÁàì±¥¹”µ¡•¥¡Ðè€Ä¸Ôìô(¹ÁÉ½•ÍÌµ™±½Üì‘¥ÍÁ±…äèÉ¥ìÉ¥µÑ•µÁ±…Ñ”µ½±Õµ¹Ìè€Å™È…ÕÑ¼€Å™È…ÕÑ¼€Å™È…ÕÑ¼€Å™Èì…±¥¸µ¥Ñ•µÌè•¹Ñ•Èì…Àè€ÄÑÁàìµ…É¥¸è€ÈáÁà€À€ØÁÁàìô(¹ÁÉ½•ÍÌµ™±½ÜÍÁ…¸ìµ¥¸µ¡•¥¡Ðè€ÄÄÁÁàì‘¥ÍÁ±…äèÉ¥ìÁ±…”µ¥Ñ•µÌè•¹Ñ•ÈìÁ…‘‘¥¹œè€ÈÁÁàì‰…­É½Õ¹èÙ…È ´µ¥¹¬¤ì½±½ÈèÝ¡¥Ñ”ìÑ•áÐµ…±¥¸è•¹Ñ•Èì™½¹Ðè€àÀÀ€ÈÉÁà€‰	…É±½Ü½¹‘•¹Í•ˆìÑ•áÐµÑÉ…¹Í™½É´èÕÁÁ•É…Í”ìô(¹ÁÉ½•ÍÌµ™±½Üˆì½±½ÈèÙ…È ´µ‰±Õ”¤ì™½¹ÐµÍ¥é”è€ÈÝÁàìô(¹™¥Ù”µÍÑ•Àµ™±½ÜìÉ¥µÑ•µÁ±…Ñ”µ½±Õµ¹Ìè€Å™È…ÕÑ¼€Å™È…ÕÑ¼€Å™È…ÕÑ¼€Å™È…ÕÑ¼€Å™Èì…±¥¸µ¥Ñ•µÌèÍÑÉ•Ñ ìô(¹™¥Ù”µÍÑ•Àµ™±½Ü€ø‘¥Øìµ¥¸µÝ¥‘Ñ è€ÀìÁ…‘‘¥¹œè€ÈÑÁà€ÄåÁàì‰…­É½Õ¹èÝ¡¥Ñ”ì‰½É‘•ÈµÑ½Àè€ÑÁàÍ½±¥Ù…È ´µ‰±Õ”¤ì‰½àµÍ¡…‘½Üè€À€ÄÉÁà€ÌÑÁàÉ‰„ à°ÄÜ°ÌÄ°¸Àà¤ìô(¹™¥Ù”µÍÑ•Àµ™±½Ü€ø‘¥Øˆì½±½ÈèÙ…È ´µ‰±Õ”¤ì™½¹Ðè€äÀÀ€ÄÉÁà€‰%¹Ñ•Èˆ±É¥…°±Í…¹ÌµÍ•É¥˜ì±•ÑÑ•ÈµÍÁ…¥¹œè€¸ÄÑ•´ìô(¹™¥Ù”µÍÑ•Àµ™±½Ü€ø‘¥Ø Ììµ…É¥¸è€ÄáÁà€À€ÄÁÁàì™½¹ÐµÍ¥é”è€ÈÕÁàìô(¹™¥Ù”µÍÑ•Àµ™±½Ü€ø‘¥ØÀìµ…É¥¸è€Àì™½¹ÐµÍ¥é”è€ÄÍÁàì±¥¹”µ¡•¥¡Ðè€Ä¸ÔÔìô(¹™¥Ù”µÍÑ•Àµ™±½Ü€øÍÁ…¸ìµ¥¸µ¡•¥¡Ðè€ÀìÁ…‘‘¥¹œè€Àì‰…­É½Õ¹èÑÉ…¹ÍÁ…É•¹Ðì½±½ÈèÙ…È ´µ‰±Õ”¤ì™½¹ÐµÍ¥é”è€ÈÑÁàìô(¹Ñ…‰±”µÝÉ…Àìµ…É¥¸è€ÌÕÁà€Àì½Ù•É™±½Üµàè…ÕÑ¼ì‰½àµÍ¡…‘½Üè€À€ÄÑÁà€ÐÁÁàÉ‰„ à°ÄÜ°ÌÄ°¸Àà¤ìô)Ñ…‰±”ìÝ¥‘Ñ è€ÄÀÀ”ì‰½É‘•Èµ½±±…ÁÍ”è½±±…ÁÍ”ì‰…­É½Õ¹èÝ¡¥Ñ”ìô)Ñ °ÑìÁ…‘‘¥¹œè€ÈÁÁàì‰½É‘•Èè€ÅÁàÍ½±¥Ù…È ´µ±¥¹”¤ìÑ•áÐµ…±¥¸è±•™ÐìÙ•ÉÑ¥…°µ…±¥¸èÑ½Àì±¥¹”µ¡•¥¡Ðè€Ä¸ÔÔìô)Ñ ì‰…­É½Õ¹èÙ…È ´µ¥¹¬¤ì½±½ÈèÝ¡¥Ñ”ì™½¹Ðè€àÀÀ€ÄáÁà€‰	…É±½Ü½¹‘•¹Í•ˆìÑ•áÐµÑÉ…¹Í™½É´èÕÁÁ•É…Í”ì±•ÑÑ•ÈµÍÁ…¥¹œè€¸ÀÑ•´ìô)Ñì½±½Èè€ŒÑ”ÕˆÙŒìô(¹¡•­±¥ÍÐì±¥ÍÐµÍÑå±”è¹½¹”ìÁ…‘‘¥¹œè€Àì‘¥ÍÁ±…äèÉ¥ì…Àè€ÄÉÁàìô(¹¡•­±¥ÍÐ±¤ìÁ½Í¥Ñ¥½¸èÉ•±…Ñ¥Ù”ìÁ…‘‘¥¹œè€ÄÝÁà€ÄáÁà€ÄÝÁà€ÔÁÁàì‰…­É½Õ¹èÝ¡¥Ñ”ì‰½É‘•Èè€ÅÁàÍ½±¥Ù…È ´µ±¥¹”¤ìô(¹¡•­±¥ÍÐ±¤èé‰•™½É”ì½¹Ñ•¹Ðè€‹ŠrLˆìÁ½Í¥Ñ¥½¸è…‰Í½±ÕÑ”ì±•™Ðè€ÄåÁàìÑ½Àè€ÄÕÁàì½±½ÈèÙ…È ´µ‰±Õ”¤ì™½¹ÐµÝ•¥¡Ðè€äÀÀìô(¹ÁÉ¥”µÍÕµµ…Éäìµ…àµÝ¥‘Ñ è€ÔÈÁÁàìÁ…‘‘¥¹œè€ÐÉÁàìµ…É¥¸è€À…ÕÑ¼€ÜÁÁàì‘¥ÍÁ±…äèÉ¥ì‰…­É½Õ¹èÝ¡¥Ñ”ì‰½É‘•ÈµÑ½Àè€ÝÁàÍ½±¥Ù…È ´µ‰±Õ”¤ì‰½àµÍ¡…‘½Üè€À€ÈáÁà€ÜÕÁàÉ‰„ à°ÄÜ°ÌÄ°¸ÄÌ¤ìô(¹ÁÉ¥”µÍÕµµ…Éä€øÍÁ…¸ì½±½Èè€ŒØÌÜÀàÐì™½¹ÐµÍ¥é”è€ÄÅÁàì™½¹ÐµÝ•¥¡Ðè€äÀÀì±•ÑÑ•ÈµÍÁ…¥¹œè€¸ÄÙ•´ìÑ•áÐµÑÉ…¹Í™½É´èÕÁÁ•É…Í”ìô(¹ÁÉ¥”µÍÕµµ…Éä€øÍÑÉ½¹œì™½¹Ðè€äÀÀ€ÄÄÁÁà¼Ä€‰	…É±½Ü½¹‘•¹Í•ˆìµ…É¥¸µÑ½Àè€ÄÕÁàìô(¹ÁÉ¥”µÍÕµµ…ÉäÍÕÀì™½¹ÐµÍ¥é”è€ÐÉÁàìô(¹ÁÉ¥”µÍÕµµ…Éä€øˆì½±½Èè€ŒÔØØÌÜØì™½¹ÐµÍ¥é”è€ÄÍÁàìÑ•áÐµÑÉ…¹Í™½É´èÕÁÁ•É…Í”ì±•ÑÑ•ÈµÍÁ…¥¹œè€¸Àá•´ìô(¹ÍÑ…¹‘…±½¹”µ™½É´ì‘¥ÍÁ±…äèÉ¥ìÉ¥µÑ•µÁ±…Ñ”µ½±Õµ¹ÌèÉ•Á•…Ð È°Å™È¤ì…Àè€ÈÁÁàìµ…É¥¸µÑ½Àè€ÌÁÁàìÁ…‘‘¥¹œè€ÌáÁàì‰…­É½Õ¹èÝ¡¥Ñ”ì‰½àµÍ¡…‘½Üè€À€ÈÉÁà€ÜÁÁàÉ‰„ à°ÄÜ°ÌÄ°¸Ä¤ìô(¹ÍÑ…¹‘…±½¹”µ™½É´±…‰•°ì‘¥ÍÁ±…äèÉ¥ì…Àè€áÁàì½±½Èè€ŒÌÐÐÀÔÈì™½¹ÐµÍ¥é”è€ÄÉÁàì™½¹ÐµÝ•¥¡Ðè€àÀÀìÑ•áÐµÑÉ…¹Í™½É´èÕÁÁ•É…Í”ì±•ÑÑ•ÈµÍÁ…¥¹œè€¸Àá•´ìô(¹ÍÑ…¹‘…±½¹”µ™½É´¥¹ÁÕÐ°€¹ÍÑ…¹‘…±½¹”µ™½É´Í•±•Ð°€¹ÍÑ…¹‘…±½¹”µ™½É´Ñ•áÑ…É•„ìÝ¥‘Ñ è€ÄÀÀ”ì‰½É‘•Èè€ÅÁàÍ½±¥€‰É‘Œì‰…­É½Õ¹è€™…™‰™ŒìÁ…‘‘¥¹œè€ÄÑÁàì½±½ÈèÙ…È ´µ¥¹¬¤ì™½¹Ðè€ÄÕÁà%¹Ñ•È±É¥…°±Í…¹ÌµÍ•É¥˜ìô(¹ÍÑ…¹‘…±½¹”µ™½É´¥¹ÁÕÐé™½ÕÌ°€¹ÍÑ…¹‘…±½¹”µ™½É´Í•±•Ðé™½ÕÌ°€¹ÍÑ…¹‘…±½¹”µ™½É´Ñ•áÑ…É•„é™½ÕÌì½ÕÑ±¥¹”è€ÍÁàÍ½±¥É‰„ ÄÄ°äÈ°ÈÔÔ°¸Äà¤ì‰½É‘•Èµ½±½ÈèÙ…È ´µ‰±Õ”¤ìô(¹Í¡••ÐìÝ¥‘Ñ èµ¥¸ ÄÀÐÁÁà±…±Œ ÄÀÀ”€´€ÐáÁà¤¤ìµ…É¥¸è€ÐÕÁà…ÕÑ¼ìÁ…‘‘¥¹œè€ÔÑÁàì‰…­É½Õ¹èÝ¡¥Ñ”ì‰½àµÍ¡…‘½Üè€À€ÈÕÁà€àÕÁàÉ‰„ à°ÄÜ°ÌÄ°¸ÄÐ¤ìô(¹Í¡••Ðµ¡•…ì‘¥ÍÁ±…äèÉ¥ìÉ¥µÑ•µÁ±…Ñ”µ½±Õµ¹Ìè€Å™È€ÄÔÁÁàì…Àè€ÌÕÁàì…±¥¸µ¥Ñ•µÌèÍÑ…ÉÐì‰½É‘•Èµ‰½ÑÑ½´è€ÑÁàÍ½±¥Ù…È ´µ‰±Õ”¤ìÁ…‘‘¥¹œµ‰½ÑÑ½´è€ÌÁÁàìô(¹Í¡••Ð Äì½±½ÈèÙ…È ´µ¥¹¬¤ì™½¹ÐµÍ¥é”è±…µÀ ØÉÁà°áÙÜ°äáÁà¤ìô(¹Í¡••Ðµµ…É¬ìÝ¥‘Ñ è€ÄÌÕÁàì¡•¥¡Ðè€ÄÔÁÁàì‘¥ÍÁ±…äèÉ¥ìÁ±…”µ¥Ñ•µÌè•¹Ñ•Èì‰…­É½Õ¹èÙ…È ´µ‰±Õ”¤ì½±½ÈèÝ¡¥Ñ”ì±¥ÀµÁ…Ñ èÁ½±å½¸ À€À°ÄÀÀ”€À°ÄÀÀ”€ÜÈ”°ÔÀ”€ÄÀÀ”°À€ÜÈ”¤ì™½¹Ðè€äÀÀ€ÌÕÁà€‰	…É±½Ü½¹‘•¹Í•ˆìô(¹Í¡••Ðµ±•‘”ì½±½Èè€ŒÐÈÔÀØÐì™½¹ÐµÍ¥é”è€ÄáÁàì±¥¹”µ¡•¥¡Ðè€Ä¸Üìµ…É¥¸è€ÌÁÁà€Àìô(¹Í¡••Ðµ½±Õµ¹Ìì‘¥ÍÁ±…äèÉ¥ìÉ¥µÑ•µÁ±…Ñ”µ½±Õµ¹ÌèÉ•Á•…Ð È°Å™È¤ì…Àè€ÈÑÁàìô(¹Í¡••Ðµ½±Õµ¹ÌÍ•Ñ¥½¸ìÁ…‘‘¥¹œè€ÈÕÁàì‰…­É½Õ¹è€˜Ñ˜Ù˜äì‰½É‘•ÈµÑ½Àè€ÑÁàÍ½±¥Ù…È ´µ¥¹¬¤ìô(¹Í¡••Ðµ½±Õµ¹Ì Èìµ…É¥¸è€À€À€ÄÑÁàì™½¹ÐµÍ¥é”è€ÌÕÁàìô(¹Í¡••Ðµ½±Õµ¹ÌÀ°€¹Í¡••Ðµ½±Õµ¹Ì±¤ì½±½Èè€ŒÐÜÔÔØàì±¥¹”µ¡•¥¡Ðè€Ä¸Øìô(¹Í¡••ÐµÁÉ¥”ì½±½ÈèÙ…È ´µ¥¹¬¤€…¥µÁ½ÉÑ…¹Ðì™½¹Ðè€äÀÀ€ÔáÁà€‰	…É±½Ü½¹‘•¹Í•ˆìµ…É¥¸è€Àìô(¹Í¡••ÐµÁÉ¥”Íµ…±°ì‘¥ÍÁ±…äè‰±½¬ì™½¹Ðè€àÀÀ€ÄÑÁà%¹Ñ•È±É¥…°±Í…¹ÌµÍ•É¥˜ìÑ•áÐµÑÉ…¹Í™½É´èÕÁÁ•É…Í”ìô(¹Í¡••Ðµ™½½Ñ•Èìµ…É¥¸è€ÌÁÁà€À€ÀìÁ…‘‘¥¹œè€ÈÕÁà€À€Àì‘¥ÍÁ±…äè™±•àì©ÕÍÑ¥™äµ½¹Ñ•¹ÐèÍÁ…”µ‰•ÑÝ••¸ì…Àè€ÌÁÁàì‰…­É½Õ¹èÑÉ…¹ÍÁ…É•¹Ðì½±½ÈèÙ…È ´µ¥¹¬¤ì‰½É‘•ÈµÑ½Àè€ÅÁàÍ½±¥Ù…È ´µ±¥¹”¤ì™½¹ÐµÍ¥é”è€ÄÉÁàìô(¹Í¡••Ðµ™½½Ñ•È„ì½±½ÈèÙ…È ´µ‰±Õ”¤ìô(¹ÁÉ¥¹Ðµ¡•±ÀìÁ…‘‘¥¹œè€ÄÝÁàì‰…­É½Õ¹è€”Ý•‘˜Üì½±½Èè€ŒÑ”ÕˆÙŒìÑ•áÐµ…±¥¸è•¹Ñ•Èì™½¹ÐµÍ¥é”è€ÄÉÁàìô()µ•‘¥„€¡µ…àµÝ¥‘Ñ è€ÄÀÀÁÁà¤ì(€€¹Í¥Ñ”µ¡•…‘•Èì™±•àµÝÉ…ÀèÝÉ…Àì¡•¥¡Ðè…ÕÑ¼ìµ¥¸µ¡•¥¡Ðè€ÜáÁàìÁ…‘‘¥¹œµÑ½Àè€ÄÑÁàìô(€€¹Í¥Ñ”µ¡•…‘•È¹…Øì½É‘•Èè€ÌìÝ¥‘Ñ è€ÄÀÀ”ì‘¥ÍÁ±…äè™±•àì½Ù•É™±½Üµàè…ÕÑ¼ì…Àè€ÈÉÁàìÁ…‘‘¥¹œè€ÄÍÁà€À€ÄÕÁàìÍÉ½±±‰…ÈµÝ¥‘Ñ èÑ¡¥¸ìô(€€¹Í¥Ñ”µ¡•…‘•È¹…Ø„ìÝ¡¥Ñ”µÍÁ…”è¹½ÝÉ…Àìô(€€¹¡•É¼ìÉ¥µÑ•µÁ±…Ñ”µ½±Õµ¹Ìè€Å™ÈìÁ…‘‘¥¹œµÑ½Àè€àÁÁàìô(€€¹Í•ÕÉ¥ÑäìÉ¥µÑ•µÁ±…Ñ”µ½±Õµ¹Ìè€Å™Èìô(€€¹ÁÉ½½˜µÁ½±¥ä°€¹‘•µ¼µ™½É´ìÉ¥µÑ•µÁ±…Ñ”µ½±Õµ¹Ìè€Å™Èìô(€€¹Í•¹…É¥¼µÁ¡½Ñ½ÌìÉ¥µÑ•µÁ±…Ñ”µ½±Õµ¹Ìè€Å™È€Å™Èìô(€€¹•Ù¥‘•¹”µÍÑÉ¥ÀìÉ¥µÑ•µÁ±…Ñ”µ½±Õµ¹Ìè€Å™È€Å™Èìô(€€¹¡•É¼µ‘•Ù¥”ìµ¥¸µ¡•¥¡Ðè€ØÔÁÁàìô(€€¹Í•Ñ¥½¸µ¡•…‘¥¹œìÉ¥µÑ•µÁ±…Ñ”µ½±Õµ¹Ìè€Å™È€Å™Èìô(€€¹Í•Ñ¥½¸µ¡•…‘¥¹œ€øÀé±…ÍÐµ¡¥±ìÉ¥µ½±Õµ¸è€Èìô(€€¹Í•¹…É¥¼µÉ¥ìÉ¥µÑ•µÁ±…Ñ”µ½±Õµ¹ÌèÉ•Á•…Ð È°Å™È¤ìô(€€¹½ÕÑ½µ•Ì°€¹ÁÉ¥¥¹œ°€¹•Ù¥‘•¹Ñ¥…ÉäµÁÉ½µ¼°€¹¹•ÕÑÉ…±¥ÑäµÁÉ½µ¼ìÉ¥µÑ•µÁ±…Ñ”µ½±Õµ¹Ìè€Å™Èìô(€€¹ÁÉ¥”µ…Éìµ…àµÝ¥‘Ñ è€ÔÈÁÁàìô(€€¹ÁÉ½•ÍÌµ™±½ÜìÉ¥µÑ•µÁ±…Ñ”µ½±Õµ¹Ìè€Å™Èìô(€€¹ÁÉ½•ÍÌµ™±½ÜˆìÑÉ…¹Í™½É´èÉ½Ñ…Ñ” äÁ‘•œ¤ìÑ•áÐµ…±¥¸è•¹Ñ•Èìô(€€¹™¥Ù”µÍÑ•Àµ™±½Ü€øÍÁ…¸ìÑÉ…¹Í™½É´èÉ½Ñ…Ñ” äÁ‘•œ¤ìô(€€¹Å„µÍ½É•‰½…É°€¹±…¹Õ…”µÉ¥ìÉ¥µÑ•µÁ±…Ñ”µ½±Õµ¹Ìè€Å™È€Å™Èìô)ô()µ•‘¥„€¡µ…àµÝ¥‘Ñ è€ØàÁÁà¤ì(€€¹Í¥Ñ”µ¡•…‘•ÈìÁ…‘‘¥¹œè€ÄÉÁà€ÈÁÁà€Àìô(€€¹Í¥Ñ”µ¡•…‘•È€¹‰ÕÑÑ½¸ìµ¥¸µ¡•¥¡Ðè€ÌáÁàìÁ…‘‘¥¹œè€À€ÄÉÁàì™½¹ÐµÍ¥é”è€ÄÁÁàìô(€€¹‰É…¹ì¡•¥¡Ðè€ÔáÁàì™½¹ÐµÍ¥é”è€ÈÍÁàìô(€€¹‰É…¹µÍ¡¥•±ì™±•àµ‰…Í¥Ìè€ÐÙÁàìÝ¥‘Ñ è€ÐÙÁàì¡•¥¡Ðè€ÐÙÁàìµ…É¥¸µÉ¥¡Ðè€´ÉÁàìô(€€¹‰É…¹€øÍÁ…¸é±…ÍÐµ¡¥±èé…™Ñ•ÈìÑ½Àè…±Œ ÄÀÀ”€¬€ÑÁà¤ì™½¹ÐµÍ¥é”è€ÕÁàì±•ÑÑ•ÈµÍÁ…¥¹œè€¸Å•´ìô(€€¹¡•É¼ìÁ…‘‘¥¹œè€ØÕÁà€ÈÑÁàìµ¥¸µ¡•¥¡Ðè…ÕÑ¼ìô(€ Äì™½¹ÐµÍ¥é”è€ØÑÁàìô(€€¹¡•É¼µ±•‘”ì™½¹ÐµÍ¥é”è€ÄÙÁàìô(€€¹¡•É¼µ…Ñ¥½¹Ìì…±¥¸µ¥Ñ•µÌèÍÑÉ•Ñ ì™±•àµ‘¥É•Ñ¥½¸è½±Õµ¸ìô(€€¹¡•É¼µÁÉ½½˜ì…Àè€ÄÉÁàìô(€€¹¡•É¼µÁÉ½½˜‘¥ØìÁ…‘‘¥¹œµÉ¥¡Ðè€ÄÉÁàìô(€€¹¡•É¼µÁÉ½½˜ÍÑÉ½¹œì™½¹ÐµÍ¥é”è€ÈÉÁàìô(€€¹¡•É¼µ‘•Ù¥”ìÑÉ…¹Í™½É´èÍ…±” ¸àØ¤ìµ…É¥¸è€´ÌÁÁà€´ÌÁÁàìô(€€¹ÍÑ…Ñ•µ•¹ÐìÁ…‘‘¥¹œè€ÔÕÁà€ÈÑÁàì‘¥ÍÁ±…äèÉ¥ìô(€€¹ÍÑ…Ñ•µ•¹Ð ÈìÑ•áÐµ…±¥¸è±•™Ðìô(€€¹Í•ÉÙ¥”µÙ¥‘•¼€¹Í•Ñ¥½¸µ¡•…‘¥¹œìÉ¥µÑ•µÁ±…Ñ”µ½±Õµ¹Ìè€Å™Èìô(€€¹Í•ÉÙ¥”µÙ¥‘•¼€¹Í•Ñ¥½¸µ¡•…‘¥¹œ€¹•å•‰É½ÜìÉ¥µ½±Õµ¸è…ÕÑ¼ìô(€€¹Í•Ñ¥½¸ìÁ…‘‘¥¹œè€àÁÁà€ÈÑÁàìô(€€¹Í•Ñ¥½¸µ¡•…‘¥¹œì‘¥ÍÁ±…äè‰±½¬ìô(€€¹Í•Ñ¥½¸µ¡•…‘¥¹œ Èìµ…É¥¸µ‰½ÑÑ½´è€ÈÕÁàìô(€€¹ÍÑ•ÁÌ°€¹Í•¹…É¥¼µÉ¥°€¹ÑÉÕÍÐµÉ¥°€¹Í•ÕÉ¥Ñäµ½¹ÑÉ½±Ì°€¹ÁÉ½Ù¥‘•ÈµÉ…¥°€ø‘¥Ø°€¹…±°µ…Ñ¥½¹Ì°€¹‘•µ¼µ™½É´™½É´°€¹Í•¹…É¥¼µÁ¡½Ñ½Ì°€¹•Ù¥‘•¹”µÍÑÉ¥À°€¹™¥ÉÍÐµµ¥¹ÕÑ”µ‰…¹¹•È°€¹•Ù¥‘•¹Ñ¥…ÉäµÁ½¥¹ÑÌ°€¹¹•ÕÑÉ…±¥ÑäµÉ¥°€¹Å„µÍ½É•‰½…É°€¹±…¹Õ…”µÉ¥ìÉ¥µÑ•µÁ±…Ñ”µ½±Õµ¹Ìè€Å™Èìô(€€¹Å„µÍ½É•‰½…É‘¥Øì‰½É‘•ÈµÉ¥¡Ðè€Àì‰½É‘•Èµ‰½ÑÑ½´è€ÅÁàÍ½±¥Ù…È ´µ±¥¹”¤ìô(€€¹Å„µÍ½É•‰½…É‘¥Øé±…ÍÐµ¡¥±ì‰½É‘•Èµ‰½ÑÑ½´è€Àìô(€€¹•Ù¥‘•¹Ñ¥…ÉäµÁ½¥¹ÑÌ€¹‰ÕÑÑ½¸ìÉ¥µ½±Õµ¸è…ÕÑ¼ìô(€€¹™¥ÉÍÐµµ¥¹ÕÑ”µ‰…¹¹•È„ìÑ•áÐµ…±¥¸è±•™Ðìô(€€¹Í•¹…É¥¼µÁ¡½Ñ½Ì„°€¹Í•¹…É¥¼µÁ¡½Ñ½Ì¥µœìµ¥¸µ¡•¥¡Ðè€ÈÔÁÁàìô(€€¹•å•‰É½Üì™½¹ÐµÍ¥é”è€ÄÍÁàìô(€€¹¡•É¼µÁÉ½½˜ÍÁ…¸ì™½¹ÐµÍ¥é”è€ÄÉÁàìô(€€¹…±°µ‘•µ¼±¤ìµ…àµÝ¥‘Ñ è€äÈ”ìô(€€¹™Õ±°µ™¥•±ìÉ¥µ½±Õµ¸è…ÕÑ¼ìô(€€¹ÍÑ•ÁÌ…ÉÑ¥±”ì‰½É‘•ÈµÉ¥¡Ðè€Àì‰½É‘•Èµ‰½ÑÑ½´è€ÅÁàÍ½±¥Ù…È ´µ±¥¹”¤ìô(€€¹Í•¹…É¥¼µÉ¥ì‰½É‘•Èµ±•™Ðè€Àìô(€€¹ÁÉ¥¥¹œì…Àè€ÔÕÁàìô(€€¹ÁÉ¥”µ…ÉìÁ…‘‘¥¹œè€ÌÕÁà€ÈÕÁàìô(€€¹ÁÉ¥”ì™½¹ÐµÍ¥é”è€àÉÁàìô(€™½½Ñ•ÈìÉ¥µÑ•µÁ±…Ñ”µ½±Õµ¹Ìè€Å™Èìô(€€¹½¹Ñ•¹ÐµÉ¥°€¹ÑÉÕÍÐµ±¥¹­Ì°€¹ÍÑ…¹‘…±½¹”µ™½É´°€¹Í¡••Ðµ½±Õµ¹ÌìÉ¥µÑ•µÁ±…Ñ”µ½±Õµ¹Ìè€Å™Èìô(€€¹Í•¹…É¥¼µ¡•É¼ì…ÍÁ•ÐµÉ…Ñ¥¼è€Ð€¼€Ììô(€€¹Í¡••ÐìÝ¥‘Ñ è€ÄÀÀ”ìµ…É¥¸è€ÀìÁ…‘‘¥¹œè€ÌÕÁà€ÈÑÁàì‰½àµÍ¡…‘½Üè¹½¹”ìô(€€¹Í¡••Ðµ¡•…ìÉ¥µÑ•µÁ±…Ñ”µ½±Õµ¹Ìè€Å™Èìô(€€¹Í¡••Ðµµ…É¬ìÝ¥‘Ñ è€äÕÁàì¡•¥¡Ðè€ÄÀÕÁàìô(€€¹Í¡••Ðµ™½½Ñ•Èì‘¥ÍÁ±…äèÉ¥ìô)ô()µ•‘¥„€¡ÁÉ•™•ÉÌµÉ•‘Õ•µµ½Ñ¥½¸èÉ•‘Õ”¤ì(€¡Ñµ°ìÍÉ½±°µ‰•¡…Ù¥½Èè…ÕÑ¼ìô(€€¨°€¨èé‰•™½É”°€¨èé…™Ñ•ÈìÑÉ…¹Í¥Ñ¥½¸è¹½¹”€…¥µÁ½ÉÑ…¹Ðìô)ô()µ•‘¥„ÁÉ¥¹Ðì(€Á…”ìÍ¥é”è±•ÑÑ•Èìµ…É¥¸è€¸Ñ¥¸ìô(€‰½‘äì‰…­É½Õ¹èÝ¡¥Ñ”ìô(€€¹¹¼µÁÉ¥¹Ð°€¹Í­¥Àµ±¥¹¬ì‘¥ÍÁ±…äè¹½¹”€…¥µÁ½ÉÑ…¹Ðìô(€€¹Í¡••ÐìÝ¥‘Ñ è€ÄÀÀ”ìµ…É¥¸è€ÀìÁ…‘‘¥¹œè€Àì‰½àµÍ¡…‘½Üè¹½¹”ìô(€€¹Í¡••Ð Äì™½¹ÐµÍ¥é”è€ØÁÁàìô(€€¹Í¡••Ðµ±•‘”ì™½¹ÐµÍ¥é”è€ÄÑÁàìô(€€¹Í¡••Ðµ½±Õµ¹Ìì…Àè€ÄÉÁàìô(€€¹Í¡••Ðµ½±Õµ¹ÌÍ•Ñ¥½¸ìÁ…‘‘¥¹œè€ÄÑÁàì‰É•…¬µ¥¹Í¥‘”è…Ù½¥ìô(€€¹Í¡••Ðµ½±Õµ¹Ì Èì™½¹ÐµÍ¥é”è€ÈÕÁàìô(€€¹Í¡••Ðµ½±Õµ¹ÌÀ°€¹Í¡••Ðµ½±Õµ¹Ì±¤ì™½¹ÐµÍ¥é”è€ÄÅÁàìô(€€¹¹½Ñ¥”ì™½¹ÐµÍ¥é”è€ÄÅÁàìÁ…‘‘¥¹œè€ÄÑÁàìô(€€¹Í¡••Ðµ™½½Ñ•ÈìÁ…‘‘¥¹œµÑ½Àè€ÄÑÁàìµ…É¥¸µÑ½Àè€ÄÕÁàìô)ô(

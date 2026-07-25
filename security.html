@@ -20,8 +20,10 @@
     <div class="notice"><strong>Certification boundary:</strong> Fast Dial, Inc. d/b/a City919 does not currently hold its own SOC 2 report. EMT919 is built on SOC 2-certified provider infrastructure. Provider certifications apply to the named providers.</div>
     <div class="trust-links">
       <a href="/privacy.html"><strong>Privacy &amp; retention</strong><span>Collection, use, access, deletion, and retention</span></a>
+      <a href="/government-data.html"><strong>Government data</strong><span>Ownership, public records, retention, and restricted-data boundaries</span></a>
       <a href="/responsible-ai.html"><strong>Responsible AI</strong><span>Human boundaries, limitations, and escalation</span></a>
       <a href="/subprocessors.html"><strong>Subprocessors</strong><span>Named providers and service roles</span></a>
+      <a href="/vulnerability-disclosure.html"><strong>Vulnerability disclosure</strong><span>Authorized reporting and testing boundaries</span></a>
       <a href="/accessibility.html"><strong>Accessibility</strong><span>Current standard and contact path</span></a>
     </div>
     <h2>Platform controls</h2>
@@ -39,14 +41,14 @@
       <div class="content-card"><h3>Annual exercises</h3><p>The incident-response policy calls for annual review and at least one tabletop exercise each year.</p></div>
     </div>
     <h2>How a call moves</h2>
-    <div class="process-flow" aria-label="EMT919 service flow"><span>Authorized agency phone</span><b aria-hidden="true">&rarr;</b><span>Twilio telephony</span><b aria-hidden="true">&rarr;</b><span>Speech and application services</span><b aria-hidden="true">&rarr;</b><span>Translated audio or live interpreter</span></div>
+    <div class="process-flow" aria-label="EMT919 service flow"><span>Authorized agency phone</span><b aria-hidden="true">&rarr;</b><span>Twilio or Bandwidth voice services</span><b aria-hidden="true">&rarr;</b><span>EMT919 application services</span><b aria-hidden="true">&rarr;</b><span>Translated audio or Propio live interpreter</span></div>
     <h2>Infrastructure</h2>
-    <p>Current service providers include Twilio for telephony, ElevenLabs for speech processing, Supabase on AWS for application hosting and database services, Resend for transactional email, and Propio Language Services for live interpretation. Customer platform data is stored and processed in the United States.</p>
+    <p>Current service providers include Bandwidth and Twilio for voice communications and telephony, Propio Language Services for qualified live interpretation, Supabase on AWS for application hosting and database services, and Resend for transactional email. Customer platform data is stored and processed in the United States.</p>
     <h2>Retention and response</h2>
-    <p>Voice audio follows a 30-day rolling deletion cycle by default and can be shortened on request. Audit logs are retained for 12 months. Agency-configurable transcript retention and deletion requests are supported. A formal response policy defines severity, containment, forensics, evidence preservation, post-incident review, and affected-agency notification within 72 hours of confirming a breach involving agency data.</p>
+    <p>Voice audio follows a 30-day rolling deletion cycle by default. Transcript retention is governed by the agency agreement; longer transcript retention is available when the agency selects the additional storage option. Audit logs are retained for 12 months. Legal and agency preservation holds override ordinary deletion. A formal response policy defines severity, containment, forensics, evidence preservation, post-incident review, and affected-agency notification within 72 hours of confirming a breach involving agency data.</p>
     <h2>Request the review package</h2>
     <p>Detailed assessment responses, control evidence, the incident-response policy, and the retention policy are available to authorized agency reviewers.</p>
-    <p><a class="button" href="mailto:contact@emt919.com?subject=EMT919%20security%20review%20package">Request security materials</a></p>
+    <p><a class="button" href="mailto:security@city919.com?subject=EMT919%20security%20review%20package">Request security materials</a></p>
   </article>
 </main>
 </body>
