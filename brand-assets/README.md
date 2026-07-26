@@ -11,6 +11,7 @@ These files are the approved EMT919 logo family, updated July 2026. The primary 
 - `EMT919_Logo_Approved_Native_2172x724.png`: approved native production asset on white.
 - `EMT919_Logo_Transparent_2172x724.png`: transparent digital master for light backgrounds.
 - `EMT919_Logo_Header_Burgundy_Color_2172x724.png`: preferred dark-header lockup; burgundy EMT, white tagline, and the approved full-color shield and 919.
+- `EMT919_Logo_Header_Burgundy_White919_2172x724.png`: website-header lockup; burgundy EMT, full-color shield, and white 919/tagline.
 - `EMT919_Logo_Header_White_Color_2172x724.png`: alternate dark-header lockup; white EMT/tagline with the approved full-color shield and 919.
 - `EMT919_Logo_Header_White_2172x724.png`: one-color white transparent lockup for approved dark surfaces.
 - `EMT919_Logo_Master_3x_6516x2172.png`: high-resolution print master.
