@@ -44,6 +44,12 @@ The badge represents:
 
 Upload the PNG directly in Zoom under **Settings > Background & effects**. Turn off **Mirror my video** if you want the logo to appear normally in your own self-view; other meeting participants generally see the correct orientation regardless.
 
+## LinkedIn company page
+
+`07-LinkedIn-Page` contains the current 400 x 400 Page logo, a 4200 x 700 branded company-page cover, a clean cover alternative, a compact legacy-size banner, the transparent horizontal lockup, and complete ready-to-paste LinkedIn Page content.
+
+Use the branded cover first. Preview on desktop and mobile before publishing because LinkedIn crops cover images differently across screen sizes.
+
 ## Core colors
 
 - Responder navy: `#020D23`
