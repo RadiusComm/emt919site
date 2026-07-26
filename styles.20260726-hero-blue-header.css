@@ -1,0 +1,17 @@
+@import url("/styles.20260726-footer-spacing.css");
+
+/* Match the header to the hero's dark navy base. */
+.site-header {
+  background: #08111f;
+  border-bottom-color: rgba(157, 201, 255, .18);
+  box-shadow: 0 7px 24px rgba(2, 9, 18, .28);
+}
+
+.site-header .header-cta { color: #08111f; }
+
+@media (max-width: 1000px) {
+  .mobile-menu[open] summary {
+    background: #122640;
+    border-color: #77a8df;
+  }
+}
