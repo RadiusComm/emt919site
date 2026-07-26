@@ -1,0 +1,17 @@
+{
+  "version": "1.0",
+  "updated": "2026-07-26",
+  "colors": {
+    "responderNavy": "#020D23",
+    "operationalNavy": "#072044",
+    "emtBurgundy": "#A80F2A",
+    "burgundyShadow": "#710018",
+    "responderBlue": "#0874F9",
+    "signalGreen": "#7EBB2A",
+    "white": "#FFFFFF"
+  },
+  "supportingTypography": {
+    "headlines": "Montserrat ExtraBold",
+    "bodyAndInterfaces": "Inter"
+  }
+}
