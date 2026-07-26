@@ -9,6 +9,21 @@
 
 .site-header .header-cta { color: #08111f; }
 
+/* Keep CTA labels legible when section-level link colors are more specific. */
+body a.button,
+body a.button:visited,
+body button.button {
+  color: #fff;
+  -webkit-text-fill-color: #fff;
+}
+
+/* The header CTA intentionally uses a white surface with dark copy. */
+.site-header a.header-cta,
+.site-header a.header-cta:visited {
+  color: #08111f;
+  -webkit-text-fill-color: #08111f;
+}
+
 @media (max-width: 1000px) {
   .mobile-menu[open] summary {
     background: #122640;
