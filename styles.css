@@ -27,6 +27,8 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
   display: flex; align-items: center; gap: 0; height: 70px; color: #f7fbff;
   font: 900 31px/1 "Montserrat","Arial Black",sans-serif; letter-spacing: -.06em;
 }
+.brand-lockup { height: 64px; min-width: 184px; }
+.brand-logo { display: block; width: auto; height: 58px; max-width: min(260px, 25vw); object-fit: contain; object-position: left center; }
 .brand-shield {
   flex: 0 0 58px; width: 58px; height: 58px; margin-right: -3px; overflow: hidden;
   background: url("/emt919-responder-shield-header.png") center/112% no-repeat;
@@ -479,3 +481,4 @@ td { color: #4e5b6c; }
   .sheet-footer { padding-top: 14px; margin-top: 15px; }
 }
 
+`n.brand-lockup{height:64px;min-width:184px}.brand-logo{display:block;width:auto;height:58px;max-width:min(260px,25vw);object-fit:contain;object-position:left center}`n@media(max-width:760px){.brand-lockup{min-width:146px;height:52px}.brand-logo{height:47px;max-width:190px}}`n
