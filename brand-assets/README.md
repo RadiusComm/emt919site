@@ -1,6 +1,6 @@
 # EMT919 approved branding kit
 
-These files are the approved EMT919 logo family, updated July 2026. The primary brand lockup uses burgundy `#9B1D32` for **EMT**, the full-color responder shield, white **919**, and a white tagline on a transparent background.
+These files are the approved EMT919 logo family, updated July 2026. The primary brand lockup uses burgundy `#9B1D32` for **EMT** and the six-point medical Star of Life, the full-color responder shield, white **919**, and a white tagline on a transparent background.
 
 Preserve the 3:1 aspect ratio, clear space, typography, shield artwork, and color relationships.
 
@@ -8,7 +8,7 @@ Preserve the 3:1 aspect ratio, clear space, typography, shield artwork, and colo
 
 Use this treatment on EMT919 navy, black, charcoal, dark photography, and other high-contrast dark surfaces.
 
-- `EMT919_Logo_Primary_Dark_Transparent_2172x724.png`: primary transparent master; burgundy EMT, full-color shield, white 919, and white tagline.
+- `EMT919_Logo_Primary_Dark_Transparent_2172x724.png`: primary transparent master; burgundy EMT and Star of Life, full-color shield, white 919, and white tagline.
 - `EMT919_Logo_Primary_Dark_Web_Small_600x200.png`: compact web and digital use.
 - `EMT919_Logo_Primary_Dark_Web_Standard_1200x400.png`: standard web and presentation use.
 - `EMT919_Logo_Primary_Dark_Web_Large_1800x600.png`: large web and high-density displays.
@@ -17,7 +17,7 @@ Minimum background recommendation: use on surfaces equivalent to `#08111F` or an
 
 ## Light and white backgrounds
 
-White 919 cannot be used on white or very light surfaces. Use the approved light-background variation with burgundy EMT, the full-color shield, green 919, and navy tagline.
+White 919 cannot be used on white or very light surfaces. Use the approved light-background variation with burgundy EMT and Star of Life, the full-color shield, green 919, and navy tagline.
 
 - `EMT919_Logo_Light_Transparent_2172x724.png`: transparent master for white and light neutral backgrounds.
 - `EMT919_Logo_Light_White_2172x724.png`: native logo on a white background.
@@ -36,6 +36,7 @@ White 919 cannot be used on white or very light surfaces. Use the approved light
 ## Core digital colors
 
 - EMT burgundy: `#9B1D32`
+- Medical Star of Life: `#9B1D32`
 - Primary 919 on dark backgrounds: `#FFFFFF`
 - Header navy: `#08111F`
 - Primary tagline on dark backgrounds: `#FFFFFF`
