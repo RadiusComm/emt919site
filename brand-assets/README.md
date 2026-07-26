@@ -2,7 +2,7 @@
 
 The current approved identity is the **EMT919 Responder Badge** system introduced in July 2026.
 
-Use `EMT919_Responder_Badge_Brand_Kit.zip` for all new website, presentation, email, social, and print work. The kit contains the primary dark-background logo, a dedicated light-background version, badge-only marks, social assets, color values, and the official usage guide.
+Use `EMT919_Responder_Badge_Brand_Kit.zip` for all new website, presentation, email, social, video-meeting, and print work. The kit contains the primary dark-background logo, a dedicated light-background version, badge-only marks, social assets, three Zoom backgrounds, color values, and the official usage guide.
 
 ## Current primary identity
 

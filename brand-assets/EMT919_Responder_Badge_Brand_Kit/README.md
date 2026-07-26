@@ -34,6 +34,16 @@ The badge represents:
 
 `04-Digital-Social` contains a square profile image, a 1200 x 630 social-sharing image, and email-ready dark and light lockups.
 
+## Zoom meeting backgrounds
+
+`06-Zoom-Backgrounds` contains three 1920 x 1080 virtual backgrounds with speaker-safe composition:
+
+- Executive Office: polished navy and walnut leadership setting
+- Operations Center: public-safety communications environment
+- Civic Workspace: bright, welcoming collaboration office
+
+Upload the PNG directly in Zoom under **Settings > Background & effects**. Turn off **Mirror my video** if you want the logo to appear normally in your own self-view; other meeting participants generally see the correct orientation regardless.
+
 ## Core colors
 
 - Responder navy: `#020D23`
