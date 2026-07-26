@@ -1,0 +1,33 @@
+@import url("/styles.20260726-transparent-v2.css");
+
+/* White transparent header lockup on the EMT919 blue brand bar. */
+.site-header {
+  background: #073b87;
+  color: white;
+  border-bottom-color: rgba(255, 255, 255, .18);
+  box-shadow: 0 7px 24px rgba(3, 30, 74, .24);
+}
+
+.site-header nav a:hover { color: #bfe2ff; }
+
+.site-header .header-cta {
+  background: white;
+  color: #073b87;
+  box-shadow: 0 8px 24px rgba(1, 21, 51, .22);
+}
+
+.site-header .header-cta:hover {
+  background: #eaf5ff;
+  color: #052d68;
+}
+
+@media (max-width: 1000px) {
+  .mobile-menu summary {
+    color: white;
+    border-color: rgba(255, 255, 255, .5);
+  }
+  .mobile-menu[open] summary {
+    background: #0a4a9f;
+    border-color: #9dcfff;
+  }
+}

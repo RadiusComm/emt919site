@@ -8,6 +8,7 @@ These files are the approved EMT919 logo family supplied July 2026. Preserve the
 - `EMT919_Logo_Email_900x300.png`: email signatures and email templates.
 - `EMT919_Logo_Approved_Native_2172x724.png`: approved native production asset.
 - `EMT919_Logo_Transparent_2172x724.png`: transparent digital master for web and screen layouts.
+- `EMT919_Logo_Header_White_2172x724.png`: white transparent lockup for approved blue or dark header surfaces.
 - `EMT919_Logo_Master_3x_6516x2172.png`: high-resolution print master.
 - `EMT919_Logo_Master_4x_8688x2896.png`: maximum-resolution archive and large-format print master.
 
