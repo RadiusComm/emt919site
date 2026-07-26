@@ -1,0 +1,37 @@
+@import url("/styles.20260726.css");
+
+/* Approved transparent EMT919 lockup treatment. */
+.brand-lockup {
+  position: relative;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  isolation: isolate;
+}
+
+.brand-lockup::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 7px -12px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, rgba(255,255,255,.96) 0%, rgba(255,255,255,.9) 72%, rgba(255,255,255,0) 100%);
+  filter: blur(.2px);
+}
+
+.brand-lockup .brand-logo {
+  position: relative;
+  filter: drop-shadow(0 2px 5px rgba(0,0,0,.14));
+}
+
+.footer-brand .brand-lockup::before {
+  inset: 8px -14px;
+  background: linear-gradient(90deg, rgba(255,255,255,.97) 0%, rgba(255,255,255,.91) 76%, rgba(255,255,255,0) 100%);
+}
+
+@media print {
+  .brand-lockup::before { display: none; }
+  .brand-lockup .brand-logo { filter: none; }
+}
