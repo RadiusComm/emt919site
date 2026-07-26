@@ -1,6 +1,6 @@
-@import url("/styles.20260726-footer-refined.css");
+@import url("/styles.20260726-footer-refined.css?v=2");
 
-/* Match the header to the hero's dark navy base. */
+/* EMT919 dark brand frame: shared by the header and refined footer. */
 .site-header {
   background: #08111f;
   border-bottom-color: rgba(157, 201, 255, .18);
