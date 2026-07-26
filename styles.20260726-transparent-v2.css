@@ -1,0 +1,57 @@
+@import url("/styles.20260726.css");
+
+/* True-transparent EMT919 lockups on high-contrast site surfaces. */
+.site-header {
+  background: rgba(248, 250, 253, .97);
+  color: var(--ink);
+  border-bottom-color: rgba(8, 17, 31, .14);
+  box-shadow: 0 6px 22px rgba(8, 17, 31, .08);
+}
+
+.brand-lockup {
+  position: relative;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.brand-lockup::before { display: none; }
+
+.brand-lockup .brand-logo {
+  position: relative;
+  filter: none;
+}
+
+.site-header nav a:hover { color: var(--blue); }
+
+footer {
+  background: #f7f9fc;
+  color: var(--ink);
+  border-top: 1px solid rgba(8, 17, 31, .12);
+}
+
+footer > div:not(.footer-brand) { color: #526071; }
+footer strong { color: var(--ink); }
+.footer-brand p { color: #526071; }
+.copyright {
+  color: #687588;
+  border-top-color: rgba(8, 17, 31, .14);
+}
+
+@media (max-width: 1000px) {
+  .mobile-menu summary {
+    color: var(--ink);
+    border-color: rgba(8, 17, 31, .28);
+  }
+  .mobile-menu[open] summary {
+    background: #eaf1fb;
+    border-color: #7da4d5;
+  }
+  .mobile-menu nav { color: white; }
+}
+
+@media print {
+  .site-header { box-shadow: none; }
+}
