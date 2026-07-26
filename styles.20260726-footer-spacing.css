@@ -1,0 +1,9 @@
+@import url("/styles.20260726-white-header.css");
+
+/* Tighter footer entry so the brand lockup anchors the section. */
+footer { padding-top: 38px; }
+.footer-brand .brand-lockup { margin-bottom: 10px; }
+
+@media (max-width: 680px) {
+  footer { padding-top: 30px; }
+}
