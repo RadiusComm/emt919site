@@ -1,6 +1,6 @@
 # EMT919 Responder Badge Brand Kit
 
-Version 1.3 - July 2026
+Version 1.4 - July 2026
 
 This is the approved EMT919 identity package for new public-facing work.
 
@@ -16,7 +16,7 @@ Use the 600-pixel file for compact web placement, the 1800-pixel file for high-d
 
 ### White or light backgrounds
 
-Use `02-Light-Background/EMT919_Light_Transparent_1200x400.png`. This rebuilt version uses signal green for 919, true open counters in both 9s, an open white badge interior, and black for the `Emergency Multi-Translator` descriptor. It is optimized for white dashboards and other pale surfaces.
+Use `02-Light-Background/EMT919_Light_Transparent_1200x400.png`. This rebuilt version uses a restrained forest green for 919, true open counters in both 9s, an open white badge interior, and black for the `Emergency Multi-Translator` descriptor. It is optimized for white dashboards and other pale surfaces.
 
 Do not place the primary white-919 logo on white or pale backgrounds.
 
@@ -60,6 +60,8 @@ Use the branded cover first. Preview on desktop and mobile before publishing bec
 - Burgundy shadow: `#710018`
 - Responder blue: `#0874F9`
 - Signal green: `#7EBB2A`
+- Dashboard forest green: `#4F8F22`
+- Dashboard green shadow: `#2F6F1A`
 - White: `#FFFFFF`
 
 ## Supporting typography

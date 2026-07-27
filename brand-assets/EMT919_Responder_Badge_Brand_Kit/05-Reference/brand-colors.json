@@ -1,5 +1,5 @@
 {
-  "version": "1.3",
+  "version": "1.4",
   "updated": "2026-07-27",
   "colors": {
     "responderNavy": "#020D23",
@@ -8,6 +8,8 @@
     "burgundyShadow": "#710018",
     "responderBlue": "#0874F9",
     "signalGreen": "#7EBB2A",
+    "dashboardForestGreen": "#4F8F22",
+    "dashboardGreenShadow": "#2F6F1A",
     "white": "#FFFFFF"
   },
   "supportingTypography": {
