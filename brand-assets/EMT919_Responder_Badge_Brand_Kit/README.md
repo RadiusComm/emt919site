@@ -1,8 +1,10 @@
 # EMT919 Responder Badge Brand Kit
 
-Version 1.0 - July 2026
+Version 1.1 - July 2026
 
 This is the approved EMT919 identity package for new public-facing work.
+
+Official expanded name: **Emergency Multi-Translator**.
 
 ## Which logo to use
 
