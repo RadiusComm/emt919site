@@ -1,0 +1,6 @@
+@import url("/styles.20260727-where-it-works.css");
+
+/* Separate social destinations from direct agency contact details. */
+.site-footer .footer-social-heading {
+  margin-top: 15px;
+}
