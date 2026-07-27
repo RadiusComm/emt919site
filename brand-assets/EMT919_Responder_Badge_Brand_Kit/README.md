@@ -1,6 +1,6 @@
 # EMT919 Responder Badge Brand Kit
 
-Version 1.1 - July 2026
+Version 1.2 - July 2026
 
 This is the approved EMT919 identity package for new public-facing work.
 
@@ -16,7 +16,7 @@ Use the 600-pixel file for compact web placement, the 1800-pixel file for high-d
 
 ### White or light backgrounds
 
-Use `02-Light-Background/EMT919_Light_Transparent_1200x400.png`. This version changes 919 and the descriptor to navy so every part remains legible.
+Use `02-Light-Background/EMT919_Light_Transparent_1200x400.png`. This version uses signal green for 919 and black for the `Emergency Multi-Translator` descriptor so the approved lockup remains clear on white dashboards and other pale surfaces.
 
 Do not place the primary white-919 logo on white or pale backgrounds.
 
