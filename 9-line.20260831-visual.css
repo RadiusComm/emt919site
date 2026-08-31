@@ -1,0 +1,113 @@
+@import url("/9-line.20260831-marketing.css");
+/* 9-Line visual edition: meaningful images, responsive diagrams, compact mobile rhythm. */
+.nine-hero { padding: 36px 0 54px; }
+.nine-hero-grid { grid-template-columns: 1.05fr 1fr; gap: 48px; }
+.nine-wordmark { font-size: clamp(60px,6vw,88px); margin-bottom: 22px; }
+.nine-breadcrumb { margin-bottom: 24px; }
+.nine-page h1 { font-size: clamp(32px,3vw,44px); }
+.nine-lead { line-height: 1.65; }
+.nine-photo { margin: 0; overflow: hidden; border-radius: 14px; border: 1px solid #40526a; background: #10223b; }
+.nine-photo img { display: block; width: 100%; height: auto; object-fit: cover; }
+.nine-hero-photo img { aspect-ratio: 4 / 3; }
+.nine-photo figcaption { padding: 14px 18px; color: #c8d9ed; font-size: 12px; line-height: 1.5; }
+.nine-photo figcaption span { display: block; color: white; font-size: 16px; font-weight: 600; margin-bottom: 3px; }
+.nine-photo figcaption small { font-size: 11px; }
+.nine-section { padding: 62px 0; }
+.nine-section-heading { display: grid; grid-template-columns: 1fr .65fr; gap: 50px; align-items: center; }
+.nine-section-heading h2 { margin-bottom: 0; }
+.nine-section-heading > p { color: #43566f; font-size: 16px; line-height: 1.7; }
+.nine-privacy { background: white; }
+.nine-connection { margin: 30px 0 0; border: 1px solid #cbd7e6; border-radius: 14px; overflow: hidden; }
+.nine-connection-route { display: grid; grid-template-columns: 1fr 60px 1.3fr 60px 1fr; align-items: center; padding: 26px; background: #f0f5fc; gap: 12px; }
+.nine-endpoint { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; color: #173451; }
+.nine-endpoint svg { width: 54px; height: 54px; color: #275d99; }
+.nine-endpoint strong { font-size: 18px; }
+.nine-endpoint span { font-size: 12px; line-height: 1.5; }
+.nine-connector { text-align: center; font-size: 36px; color: #356baa; }
+.nine-number-hub { display: flex; flex-direction: column; align-items: center; background: #10243f; color: white; padding: 20px; border-radius: 12px; text-align: center; }
+.nine-number-hub svg { width: 40px; height: 40px; color: #a8cbff; margin-bottom: 12px; }
+.nine-number-hub span { font-size: 10px; letter-spacing: .1em; color: #c8d9ed; }
+.nine-number-hub strong { font: 800 40px/1.2 "Barlow Condensed",sans-serif; }
+.nine-number-hub small { color: #d4e4f6; font-size: 12px; margin-top: 8px; }
+.nine-connection figcaption { padding: 16px 24px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; color: #243f60; font-size: 13px; }
+.nine-connection figcaption > span:last-child { margin-left: auto; font-size: 11px; color: #52647a; }
+.nine-lock svg { width: 24px; height: 24px; display: block; color: #861d39; }
+.nine-illustration-label { margin-top: -8px; }
+.nine-capability-grid { margin-top: 24px; }
+.nine-capability-grid .nine-card { padding: 0; border: 1px solid #cbd7e6; overflow: hidden; border-radius: 12px; }
+.nine-capability-art { display: flex; align-items: center; gap: 20px; min-height: 158px; padding: 24px; background: #10243f; color: #c0d9ff; }
+.nine-art-in { background: #392435; color: #f0bdd0; }
+.nine-art-message { background: #133b43; color: #abdce2; }
+.nine-capability-art > svg { width: 60px; height: 60px; flex-shrink: 0; }
+.nine-capability-art span { font-size: 9px; letter-spacing: .09em; display: block; }
+.nine-capability-art strong { font: 700 25px/1.15 "Barlow Condensed",sans-serif; display: block; color: white; margin: 9px 0; }
+.nine-capability-art i { display: block; width: 75px; height: 4px; border-radius: 3px; background: currentColor; opacity: .6; }
+.nine-card-copy { padding: 24px; }
+.nine-card-copy > p:not(.nine-number) { color: #43566f; font-size: 15px; line-height: 1.65; }
+.nine-card-copy .nine-example { margin-top: 18px; padding-top: 14px; }
+.nine-agency-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.nine-agency-photo img { aspect-ratio: 3 / 2; }
+.nine-agency-layout h2 { font-size: clamp(32px,3.4vw,46px); }
+.nine-agency-layout .nine-comparison article { margin-bottom: 22px; padding-bottom: 0; }
+.nine-agency-layout .nine-comparison p { margin-bottom: 10px; }
+.nine-timeline { gap: 30px; }
+.nine-timeline li { border: 0; background: transparent; padding: 0; display: block; }
+.nine-step-symbol { position: relative; display: block; margin-bottom: 22px; width: 78px; height: 78px; border-radius: 50%; background: #fff; border: 1px solid #bed0e4; padding: 15px; color: #24588f; z-index: 1; }
+.nine-step-symbol svg { width: 46px; height: 46px; }
+.nine-step-symbol b { position: absolute; bottom: -5px; right: -6px; color: white; background: #861d39; border-radius: 50%; width: 27px; height: 27px; display: grid; place-items: center; font-size: 10px; }
+.nine-timeline li:not(:last-child)::after { content: ""; position: absolute; top: 39px; left: 78px; right: -30px; height: 2px; background: #b0c2d9; }
+.nine-timeline h3 { font-size: 25px; }
+.nine-timeline p { margin: 0; max-width: 300px; }
+.nine-checklist li { margin-bottom: 16px; padding-bottom: 16px; }
+.nine-checklist h3 { font-size: 23px; }
+.nine-cta h2 { font-size: clamp(34px,4vw,52px); }
+@media (max-width: 1000px) {
+  .nine-hero-grid { gap: 30px; }
+  .nine-agency-layout { gap: 30px; }
+  .nine-capability-art { gap: 12px; padding: 20px; }
+  .nine-capability-art > svg { width: 42px; height: 42px; }
+}
+@media (max-width: 900px) {
+  .nine-hero-grid, .nine-section-heading, .nine-agency-layout { grid-template-columns: 1fr; gap: 26px; }
+  .nine-photo { max-width: 600px; width: 100%; margin: 0 auto; }
+  .nine-hero-photo img { height: 250px; object-position: center 35%; }
+  .nine-agency-photo img { height: 240px; }
+  .nine-section { padding: 42px 0; }
+  .nine-section-heading > p { margin: 0; }
+  .nine-capability-grid { gap: 18px; }
+  .nine-capability-art { min-height: 105px; }
+  .nine-card-copy { padding: 20px; }
+  .nine-card-copy .nine-number { margin-bottom: 10px; }
+  .nine-timeline { gap: 24px; }
+  .nine-timeline li { display: grid; grid-template-columns: 64px 1fr; gap: 20px; padding: 0; }
+  .nine-step-symbol { width: 64px; height: 64px; padding: 12px; margin: 0; }
+  .nine-step-symbol svg { width: 38px; height: 38px; }
+  .nine-timeline li:not(:last-child)::after { top: 64px; left: 31px; width: 2px; height: auto; bottom: -24px; right: auto; }
+  .nine-timeline p { max-width: none; }
+}
+@media (max-width: 600px) {
+  .nine-hero { padding: 24px 0 34px; }
+  .nine-breadcrumb { margin-bottom: 22px; }
+  .nine-wordmark { font-size: 60px; margin-bottom: 18px; }
+  .nine-hero .nine-kicker { font-size: 10px; margin-bottom: 12px; }
+  .nine-hero h1 { font-size: 30px; margin-bottom: 16px; }
+  .nine-hero .nine-lead { font-size: 15px; line-height: 1.6; }
+  .nine-actions { gap: 14px; margin-top: 20px; }
+  .nine-benefits { flex-direction: row; gap: 8px 14px; font-size: 11px; margin-top: 18px; }
+  .nine-hero-photo img { height: 230px; }
+  .nine-photo figcaption { padding: 10px 14px; }
+  .nine-connection-route { grid-template-columns: 1fr; gap: 8px; padding: 20px; }
+  .nine-endpoint { flex-direction: row; flex-wrap: wrap; gap: 8px 12px; justify-content: center; }
+  .nine-endpoint svg { width: 34px; height: 34px; }
+  .nine-endpoint span { width: 100%; }
+  .nine-connector { transform: rotate(90deg); font-size: 26px; line-height: 1.2; }
+  .nine-number-hub { padding: 16px; }
+  .nine-number-hub svg { display: none; }
+  .nine-number-hub strong { font-size: 34px; }
+  .nine-connection figcaption { padding: 14px; gap: 8px; }
+  .nine-connection figcaption > span:last-child { width: 100%; margin-left: 0; }
+  .nine-page h2 { font-size: 34px; }
+  .nine-agency-layout h2 { font-size: 32px; }
+  .nine-faq summary { font-size: 15px; padding: 18px 0; }
+  .nine-safety { margin-top: 24px; padding: 18px; }
+}
