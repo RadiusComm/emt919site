@@ -1,0 +1,30 @@
+@import url("/9-line.20260831.css");
+/* Benefit-led 9-Line presentation; existing header and footer stay unchanged. */
+.nine-benefits { display: flex; flex-wrap: wrap; gap: 10px 20px; list-style: none; padding: 0; margin: 28px 0 0; color: #cedcf0; font-size: 12px; line-height: 1.6; }
+.nine-benefits li::before { content: ""; display: inline-block; width: 6px; height: 6px; margin-right: 8px; border-radius: 50%; background: #9ac4ff; vertical-align: middle; }
+.nine-visual { transform: none; }
+.nine-private { display: flex; gap: 12px; align-items: center; border: 1px solid #6d86a9; border-radius: 9px; padding: 17px 14px; margin-top: 22px; background: #0b192c; }
+.nine-private svg { width: 24px; height: 24px; color: #b4d3ff; flex-shrink: 0; }
+.nine-private strong { display: block; color: #fff; font-size: 13px; }
+.nine-private small { display: block; color: #c6d4e7; margin-top: 6px; font-size: 12px; }
+.nine-journey { background: #e8eef6; }
+.nine-intro { max-width: 660px; font-size: 16px; line-height: 1.8; color: #43566f; }
+.nine-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; list-style: none; padding: 0; margin: 38px 0 0; counter-reset: none; }
+.nine-steps li { position: relative; padding: 26px 30px 30px; border-top: 3px solid #245fac; border-right: 1px solid #c5d0df; background: #fff; display: flex; flex-direction: column; align-items: flex-start; }
+.nine-steps li:last-child { border-right: 0; }
+.nine-step-number { font: 800 44px/1 "Barlow Condensed", sans-serif; color: #861d39; margin-bottom: 24px; }
+.nine-steps p { font-size: 15px; line-height: 1.8; color: #43566f; margin: 0 0 24px; }
+.nine-step-label { margin-top: auto; color: #17457e; background: #edf3fc; padding: 8px 10px; font-size: 10px; font-weight: 700; letter-spacing: .08em; }
+.nine-page #briefing, .nine-page #agency-review { scroll-margin-top: 110px; }
+.nine-faq details a { text-decoration: underline; text-underline-offset: 3px; color: #174eae; }
+.nine-page a:focus-visible, .nine-page summary:focus-visible { outline: 3px solid #b3425d; outline-offset: 5px; }
+.nine-dark a:focus-visible, .nine-hero a:focus-visible, .nine-cta a:focus-visible { outline-color: #c1d9ff; }
+@media (max-width: 900px) {
+  .nine-steps { grid-template-columns: 1fr; gap: 16px; }
+  .nine-steps li { border-right: 0; padding: 24px; }
+  .nine-step-number { margin-bottom: 16px; }
+}
+@media (max-width: 480px) {
+  .nine-benefits { flex-direction: column; gap: 8px; }
+  .nine-private { padding: 14px 10px; gap: 10px; }
+}
