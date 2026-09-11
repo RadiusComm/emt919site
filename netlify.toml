@@ -11,6 +11,11 @@
   to = "/service-options"
   status = 301
 
+[[redirects]]
+  from = "/sms-terms-and-conditions"
+  to = "/sms-terms"
+  status = 301
+
 [[headers]]
   for = "/styles.*.css"
   [headers.values]
