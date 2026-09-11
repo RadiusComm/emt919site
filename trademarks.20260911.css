@@ -1,0 +1,23 @@
+/* Trademark notices are text; the approved logo artwork stays unchanged. */
+.brand-lockup,
+.footer-logo-link { position: relative; }
+.brand-tm {
+  position: absolute;
+  inset: 20% 0 auto auto;
+  color: #f4f7fc;
+  font: 600 11px/1 Arial, sans-serif;
+  letter-spacing: 0;
+  pointer-events: none;
+}
+.footer-logo-link .brand-tm { font-size: 12px; }
+.trademark-name { white-space: nowrap; }
+.nine-wordmark .wordmark-tm {
+  display: inline-block;
+  position: relative;
+  top: 0;
+  margin-left: .16em;
+  color: inherit;
+  font: 600 .24em/1 Arial, sans-serif;
+  letter-spacing: 0;
+  vertical-align: top;
+}
