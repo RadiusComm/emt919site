@@ -18,7 +18,24 @@
     <h2>Messages you may receive</h2>
     <p>After providing consent, civilians and other recipients may receive non-marketing, service-related messages from an officer or authorized agency user. Messages may include follow-up communications, appointment or meeting coordination, requested information, location or scheduling details, status updates, replies to an inbound message, safety or service notices, and help or opt-out confirmations. MMS may include agency-approved images or attachments.</p>
     <h2>How consent is obtained</h2>
-    <p>Consent may be provided by giving a mobile number to an officer or agency and expressly agreeing to receive 9-Line SMS/MMS, by submitting an online form with a clear unchecked consent box, or by initiating a text conversation with a 9-Line number. The officer or agency may keep a record of the consent. Consent to receive messages is not a condition of purchasing goods or services.</p>
+    <p>Consent may be provided by expressly agreeing during a phone or in-person conversation after the officer reads the <a href="/sms-consent">written 9-Line consent script</a>, or by submitting the opt-in request below. An inbound text permits a response to that conversation; it does not authorize unrelated outreach. Merely providing a phone number is not consent. The officer or agency must document affirmative consent before the first officer-initiated message. Consent to receive messages is not a condition of purchasing goods or services.</p>
+    <p>FastDial is the messaging provider for participating public-safety organizations using the same consent process and non-marketing message categories. Each officer uses a persistent dedicated work number. First outbound messages identify FastDial 9-Line, the officer and agency, the purpose, and HELP/STOP instructions.</p>
+    <section id="sms-opt-in" aria-labelledby="sms-opt-in-heading">
+      <h2 id="sms-opt-in-heading">Request 9-Line SMS/MMS contact</h2>
+      <p>Use this form to request non-emergency messages about a specific officer or agency interaction. Requests require review and do not activate an account or guarantee an officer response. Do not include case details or sensitive information.</p>
+      <form name="nine-line-sms-consent" method="POST" action="/sms-request-received" data-netlify="true" netlify-honeypot="company-website">
+        <input type="hidden" name="form-name" value="nine-line-sms-consent">
+        <input type="hidden" name="consent-version" value="9line-web-v1-20260911">
+        <input type="hidden" name="consent-source" value="emt919.com/sms-terms#sms-opt-in">
+        <p hidden><label>Leave blank<input name="company-website" tabindex="-1" autocomplete="off"></label></p>
+        <p><label for="sms-name">Your name</label><br><input id="sms-name" name="name" autocomplete="name" required maxlength="120"></p>
+        <p><label for="sms-phone">Your mobile phone number</label><br><input id="sms-phone" name="phone" type="tel" autocomplete="tel" required maxlength="30"></p>
+        <p><label for="sms-agency">Officer and agency you wish to contact</label><br><input id="sms-agency" name="officer-agency" required maxlength="160"></p>
+        <p><label style="display:flex;align-items:flex-start;gap:12px"><input style="width:24px;height:24px;flex:0 0 24px;margin-top:4px" type="checkbox" name="sms-consent" value="I agree to 9-Line SMS/MMS under consent version 9line-web-v1-20260911" required><span>I agree to receive non-marketing SMS/MMS from FastDial Inc's 9-Line service concerning this officer or agency interaction at the number provided. Message frequency varies. Message and data rates may apply. Reply STOP to opt out or HELP for help. Consent is not a condition of purchase. Mobile numbers and consent information are not shared with third parties for marketing. I have read the <a href="/sms-terms">SMS Terms</a> and <a href="/privacy">Privacy Policy</a>.</span></label></p>
+        <button class="button" type="submit">Submit SMS/MMS contact request</button>
+        <p>For an emergency, call 911. For support, call <a href="tel:+13025999900">(302) 599-9900</a> or email <a href="mailto:contact@emt919.com">contact@emt919.com</a>.</p>
+      </form>
+    </section>
     <p>Do not enroll another person or provide a number you do not control. If a number changes owners, the new owner may opt out by replying STOP.</p>
     <h2>Frequency and charges</h2>
     <p><strong>Message frequency varies</strong> based on the interaction and agency use. <strong>Message and data rates may apply.</strong> FastDial does not charge a separate fee merely to receive a 9-Line text, but your mobile carrier's plan and charges apply. Carriers are not liable for delayed or undelivered messages.</p>
