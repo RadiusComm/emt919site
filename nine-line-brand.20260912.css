@@ -1,0 +1,11 @@
+/* Shared 9/Line wordmark rule: only the slash is red; text remains searchable. */
+:root { --nine-brand-slash-color: #c92337; }
+:where(.site-header, .site-footer, .nx-hero, .nx-supervision, .nx-final, .page-hero) { --nine-brand-slash-color: #ff5c5c; }
+html .nine-brand-name, html .nine-brand-copy, html .nine-brand-slash {
+  display: inline; position: static; width: auto; height: auto;
+  margin: 0; padding: 0; border: 0; border-radius: 0; background: transparent;
+  font: inherit; line-height: inherit; letter-spacing: inherit; vertical-align: baseline;
+}
+html .nine-brand-name, html .nine-brand-copy { color: inherit; }
+html .nine-brand-name { white-space: nowrap; }
+html .nine-brand-slash { color: var(--nine-brand-slash-color); }
