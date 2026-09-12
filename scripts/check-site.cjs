@@ -44,6 +44,12 @@ for(const file of files){
    else if(formMode==='success')await r.fulfill({status:200,body:'Mock accepted'});
    else await r.fulfill({status:500,body:'Mock unavailable'});
   });
+  // Simulate Netlify's build-time removal of detection attributes even locally.
+  await p.route(base+'/demo?product=9-line',async route=>{
+   const response=await route.fetch();
+   const body=(await response.text()).replace(/data-netlify="true"/g,'').replace(/netlify-honeypot="company-website"/g,'');
+   await route.fulfill({response,body});
+  });
   await p.goto(base+'/demo?product=9-line');
   await p.locator('.mobile-menu summary').focus();await p.keyboard.press('Enter');
   check('Mobile menu opens within viewport',()=>{});

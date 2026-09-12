@@ -33,7 +33,9 @@
   const iframe = document.createElement('iframe'); iframe.src = 'https://www.youtube-nocookie.com/embed/unDpE__-7Ao?rel=0&playsinline=1'; iframe.title = 'EMT919 service overview'; iframe.allow = 'fullscreen; picture-in-picture'; iframe.allowFullscreen = true;
   button.closest('.video-frame').replaceChildren(iframe); iframe.focus();
  });
- for (const form of document.querySelectorAll('form[data-netlify="true"]')) {
+ // Netlify removes data-netlify/netlify-honeypot from the published markup.
+ // Registered names survive that processing and scope the enhancement safely.
+ for (const form of document.querySelectorAll('form[name="emt919-demo"], form[name="emt919-quote"]')) {
   const button = form.querySelector('button[type="submit"]'); if (!button) continue;
   const status = document.createElement('p'); status.className = 'full-field form-status'; status.tabIndex = -1; status.hidden = true; status.setAttribute('role', 'status'); form.append(status);
   let pending = false;
