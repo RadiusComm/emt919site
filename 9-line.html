@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&amp;family=Inter:wght@400;500;600;700&amp;family=Montserrat:wght@800;900&amp;display=swap">
 <link rel="stylesheet" href="/9-line.20260908-bundle.css">
 <link rel="stylesheet" href="/9-line.20260911-visual.css">
+<link rel="stylesheet" href="/9-line.20260912-map.css">
   <link rel="stylesheet" href="/trademarks.20260911.css">
 <link rel="stylesheet" href="/nine-line-brand.20260912.css"></head>
 <body class="nine-page nine-refresh">
@@ -88,7 +89,55 @@
 
 <section class="nx-section" id="agency-dashboard" aria-labelledby="dashboard-title"><div class="nx-wrap">
  <div class="nx-section-head"><div><p class="nx-kicker">04 / AGENCY DASHBOARD</p><h2 id="dashboard-title">Your team.<br>One clear view.</h2></div><p>Manage people, supervise authorized calls and follow communication status—with separate permissions for each role.</p></div>
- <figure class="nx-preview nx-dashboard-preview"><div class="nx-preview-top"><span><span class="nine-brand-name">9<span class="nine-brand-slash">/</span>LINE</span> · DEMO AGENCY</span><span class="nx-preview-tag">ILLUSTRATIVE PREVIEW</span></div><div class="nx-dashboard-content"><div class="nx-dashboard-rail" aria-hidden="true"><b>Overview</b><span>Officers</span><span>Live calls</span><span>Messages</span><span>Records</span></div><div class="nx-dashboard-main"><div class="nx-demo-stats"><div><small>Officers</small><strong>3 <span>demo entries</span></strong></div><div><small>Live calls</small><strong>1 <span>sample call</span></strong></div><div><small>Follow-ups</small><strong>2 <span>sample tasks</span></strong></div></div><div class="nx-demo-table" role="table" aria-label="Illustrative agency activity with synthetic data"><div role="row" class="nx-table-head"><span role="columnheader">Officer</span><span role="columnheader">Work line</span><span role="columnheader">Activity</span></div><div role="row"><strong role="cell">Demo officer 01</strong><span role="cell">(202) 555-0100</span><span role="cell" class="nx-table-status">On a call</span></div><div role="row"><strong role="cell">Demo officer 02</strong><span role="cell">(202) 555-0102</span><span role="cell">Available</span></div><div role="row"><strong role="cell">Demo officer 03</strong><span role="cell">(202) 555-0103</span><span role="cell">Follow-up</span></div></div></div></div><figcaption>Illustrative dashboard with synthetic data—not customer activity.</figcaption></figure>
+ <figure class="nx-preview nx-dashboard-preview nx-map-preview" id="team-call-map">
+  <div class="nx-preview-top"><span><span class="nine-brand-name">9<span class="nine-brand-slash">/</span>LINE</span> · DEMO AGENCY</span><span class="nx-preview-tag">FICTIONAL SCENARIO · NOT LIVE DATA</span></div>
+  <div class="nx-dashboard-content">
+   <div class="nx-dashboard-rail" aria-hidden="true"><b>Overview</b><span>Officers</span><span>Live calls</span><span>Messages</span><span>Records</span></div>
+   <div class="nx-dashboard-main">
+    <div class="nx-map-heading"><div><p class="nx-map-eyebrow"><span class="nine-brand-name">9<span class="nine-brand-slash">/</span>Line</span> Team</p><h3>Active calls. Shared context.</h3></div><span class="nx-map-snapshot">Sample snapshot</span></div>
+    <div class="nx-demo-stats"><div><small>On a call</small><strong>5 <span>demo officers</span></strong></div><div><small>Location available</small><strong>4 <span>sample positions</span></strong></div><div><small>Location unavailable</small><strong>1 <span>call still active</span></strong></div></div>
+    <div class="nx-map-grid">
+     <div class="nx-map-canvas-wrap">
+      <div class="nx-map-canvas">
+       <svg class="nx-officer-map" viewBox="0 0 620 430" role="img" aria-labelledby="officer-map-title officer-map-desc" xmlns="http://www.w3.org/2000/svg">
+        <title id="officer-map-title">Fictional officer locations and active-call heat map</title>
+        <desc id="officer-map-desc">Four officers are mapped during sample active calls. Officer 01 is in West Sector. Officers 02, 03 and 04 form a higher concentration in Central Sector. Officer 02 is selected and has a dashed location-accuracy circle. Officer 05 has no location and is not plotted. The map, streets, heat intensity and positions are illustrative, not real geography or measured activity. All five calls are described in the adjacent panel.</desc>
+        <defs>
+         <pattern id="nx-map-blocks" width="100" height="84" patternUnits="userSpaceOnUse"><rect width="100" height="84" fill="#e9eff3"/><rect x="8" y="8" width="81" height="63" rx="7" fill="#dde6eb"/><path d="M0 80H100M96 0V84" stroke="#fff" stroke-width="9"/></pattern>
+         <radialGradient id="nx-heat-low"><stop offset="0" stop-color="#079d9a" stop-opacity=".58"/><stop offset=".55" stop-color="#3ec5b5" stop-opacity=".29"/><stop offset="1" stop-color="#3ec5b5" stop-opacity="0"/></radialGradient>
+         <radialGradient id="nx-heat-high"><stop offset="0" stop-color="#e46c30" stop-opacity=".73"/><stop offset=".28" stop-color="#efa24a" stop-opacity=".65"/><stop offset=".59" stop-color="#5cc5aa" stop-opacity=".39"/><stop offset="1" stop-color="#3ec5b5" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="620" height="430" fill="url(#nx-map-blocks)"/>
+        <path d="M488-30C423 73 536 137 489 224S466 369 536 461" fill="none" stroke="#bed9e8" stroke-width="62"/>
+        <path d="M-15 313L647 168M177-20L244 448" fill="none" stroke="#c8d3dc" stroke-width="24"/>
+        <path d="M-15 313L647 168M177-20L244 448" fill="none" stroke="#fff" stroke-width="16"/>
+        <rect x="18" y="25" width="130" height="78" rx="22" fill="#cfe1d8"/>
+        <rect x="523" y="278" width="75" height="123" rx="20" fill="#cfe1d8"/>
+        <circle cx="128" cy="215" r="113" fill="url(#nx-heat-low)"/>
+        <ellipse cx="356" cy="212" rx="162" ry="152" fill="url(#nx-heat-high)"/>
+        <g class="nx-map-area-labels" aria-hidden="true"><text x="42" y="148">WEST SECTOR</text><text x="254" y="78">CENTRAL SECTOR</text><text x="504" y="249" transform="rotate(-80 504 249)">DEMO RIVER</text></g>
+        <circle cx="322" cy="225" r="48" fill="#174bc6" fill-opacity=".08" stroke="#174bc6" stroke-width="2" stroke-dasharray="6 6"/>
+        <g class="nx-map-pins" text-anchor="middle" aria-hidden="true">
+         <g data-demo-officer="01" transform="translate(128 215)"><circle r="23" fill="#fff"/><circle r="19" fill="#173a60"/><text y="7">01</text></g>
+         <g data-demo-officer="02" transform="translate(322 225)"><circle r="28" fill="#fff"/><circle r="23" fill="#174bc6"/><text y="7">02</text></g>
+         <g data-demo-officer="03" transform="translate(386 151)"><circle r="23" fill="#fff"/><circle r="19" fill="#173a60"/><text y="7">03</text></g>
+         <g data-demo-officer="04" transform="translate(408 282)"><circle r="23" fill="#fff"/><circle r="19" fill="#173a60"/><text y="7">04</text></g>
+        </g>
+        <g aria-hidden="true"><rect x="257" y="270" width="130" height="35" rx="8" fill="#fff" stroke="#174bc6"/><text x="322" y="294" class="nx-map-selected-label" text-anchor="middle">02 · Selected</text></g>
+        <g class="nx-map-demo-label" aria-hidden="true"><rect x="20" y="371" width="267" height="39" rx="8" fill="#fff" fill-opacity=".95"/><text x="34" y="397">FICTIONAL DEMO DISTRICT</text></g>
+       </svg>
+      </div>
+      <div class="nx-heat-legend"><strong>Sample active-call concentration</strong><div><span>Lower</span><span class="nx-heat-scale" aria-hidden="true"></span><span>Higher</span></div><p>Heat shows an illustrative grouping of calls—not crime, risk or off-duty activity. Numbered pins identify on-call officers.</p></div>
+     </div>
+     <div class="nx-map-call-panel">
+      <div class="nx-map-selected-call"><p class="nx-map-eyebrow">SELECTED CALL · EXAMPLE</p><h4>Demo officer 02</h4><p class="nx-map-call-type">Outbound work-line call</p><dl><div><dt>Call state</dt><dd>Connected · 02:14</dd></div><div><dt>Officer location</dt><dd>Central Sector</dd></div><div><dt>Last update</dt><dd>8 seconds ago</dd></div><div><dt>Reported accuracy</dt><dd>25-meter radius</dd></div></dl><p class="nx-map-listening"><span aria-hidden="true">◉</span> Listen-only · sample state</p><p class="nx-map-note">Officer-visible supervision. Viewing location and listening require separate permissions.</p></div>
+      <div class="nx-map-other-calls"><h4>Other sample calls</h4><ul><li><strong>01 · West Sector</strong><span>Active call · updated 6s ago</span></li><li><strong>03 · Central Sector</strong><span>Active call · updated 12s ago</span></li><li><strong>04 · Central Sector</strong><span>Active call · updated 9s ago</span></li><li><strong>05 · Location unavailable</strong><span>Active call · no map pin</span></li></ul></div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <figcaption><strong>Illustrative <span class="nine-brand-name">9<span class="nine-brand-slash">/</span>Line</span> Team concept.</strong> Fictional officers, streets and call activity; times are sample values. No live data or audio. Location sharing is call-scoped and permission-based. Feature availability is confirmed before purchase.</figcaption>
+ </figure>
  <div class="nx-callouts"><article><span>01</span><h3>Manage officers</h3><p>Enrollment, teams, work numbers, devices and session revocation.</p></article><article><span>02</span><h3>Supervise authorized calls</h3><p>Scoped call lists and Listen / Leave controls. <span class="nine-brand-name">9<span class="nine-brand-slash">/</span>Line</span> Team adds officer location, accuracy and update time.</p></article><article><span>03</span><h3>Review communication status</h3><p>Delivery, transcripts, callbacks, usage and service alerts.</p></article></div>
  <details class="nx-detail" id="live-officer-location"><summary>Live Officer Location · <span class="nine-brand-name">9<span class="nine-brand-slash">/</span>Line</span> Team</summary><p>See the officer’s device-reported position alongside a monitored call, with a map pin, accuracy radius and last-updated time. Call-start location and updates during the call add context to the call information—not the civilian’s location.</p><p>Call-scoped sharing requires an enabled native app build, officer permission and a visible sharing indicator. Sharing stops when the call ends. Location viewing and call listening have separate agency-scoped permissions and audit controls; no off-duty tracking.</p><p>Approximate, stale or unavailable positions are clearly labeled. Locked-screen updates depend on supported devices, granted permissions and system conditions. Native-device support and feature activation are confirmed before purchase.</p></details>
  <details class="nx-detail"><summary>More agency controls</summary><p>Assignment history, consent evidence, attachment status, email-delivery tracking, budget warnings and audit logs. Administration does not automatically grant permission to listen, read messages or export records.</p></details>
