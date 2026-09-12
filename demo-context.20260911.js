@@ -24,7 +24,7 @@
   const hero = main.querySelector('.page-hero');
   setBrandedText(hero.querySelector('.eyebrow'), '9/Line agency demo');
   setBrandedText(hero.querySelector('h1'), 'See 9/Line for your agency.');
-  setBrandedText(hero.querySelector('p:last-child'), 'Explore 9/Line Officer and 9/Line Team packages. We will review your priorities, show available workflows and confirm feature availability and activation requirements.');
+  setBrandedText(hero.querySelector('p:last-child'), 'Explore 9/Line Officer and Team. We’ll review your priorities and confirm the available configuration.');
   main.querySelector('.demo-form h2').textContent = 'Request a demo.';
   main.querySelector('button[type="submit"]').textContent = 'Request a demo';
   const message = main.querySelector('textarea[name="message"]');

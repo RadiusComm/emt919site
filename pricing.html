@@ -1,40 +1,25 @@
 <!doctype html>
 <html lang="en">
 <head>
+<link rel="stylesheet" href="/site-shared.20260912.css">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Service Options | EMT919</title>
   <meta name="description" content="Compare EMT919 service configurations and request an agency-specific proposal.">
-  <link rel="stylesheet" href="/styles.20260727-footer-social.css">
-  <link rel="canonical" href="https://emt.city919.com/service-options">
-  <link rel="stylesheet" href="/trademarks.20260911.css">
-<link rel="stylesheet" href="/nine-line-brand.20260912.css"></head>
+  <link rel="canonical" href="https://emt919.com/service-options">
+<link rel="stylesheet" href="/site-ui.20260912.css">
+</head>
 <body>
 <a class="skip-link" href="#main-content">Skip to content</a>
 
 <header class="site-header no-print">
-  <a class="brand brand-lockup" href="/" aria-label="EMT919 trademark home"><img class="brand-logo brand-logo--header" src="/emt919-logo-header-responderbadge-small.png" srcset="/emt919-logo-header-responderbadge-small.png 600w, /emt919-logo-header-responderbadge-standard.png 1200w, /emt919-logo-header-responderbadge-large.png 1800w" sizes="(max-width: 680px) 174px, (max-width: 1180px) 198px, 216px" width="600" height="200" alt="EMT919 — Emergency Multitranslator" decoding="async"><sup class="brand-tm" aria-hidden="true">™</sup></a>
-  <nav class="desktop-nav" aria-label="Primary navigation">
-  <a href="/how-it-works">How it works</a>
-  <a href="/solutions">Solutions</a>
-  <a href="/security">Trust center</a>
-  <a href="/resources">Resources</a>
-  <a href="/news">News</a>
-  <a href="/company">Company</a>
-  </nav>
-  <a class="button button-small header-cta" href="/demo">Request a briefing</a>
-  <details class="mobile-menu">
-    <summary aria-label="Open navigation"><span>Menu</span><b aria-hidden="true">☰</b></summary>
-    <nav aria-label="Mobile navigation">
-  <a href="/how-it-works">How it works</a>
-  <a href="/solutions">Solutions</a>
-  <a href="/security">Trust center</a>
-  <a href="/resources">Resources</a>
-  <a href="/news">News</a>
-  <a href="/company">Company</a>
-      <a class="mobile-cta" href="/demo">Request a briefing</a>
-    </nav>
-  </details>
+ <a class="brand brand-lockup" href="/" aria-label="EMT919 home"><img class="brand-logo brand-logo--header" src="/emt919-logo-header-responderbadge-small.png" width="600" height="200" alt="EMT919 — Emergency Multitranslator" decoding="async"><sup class="brand-tm" aria-hidden="true">™</sup></a>
+ <nav class="desktop-nav" aria-label="Primary navigation">
+  <details class="nav-products"><summary>Products</summary><div class="nav-products-panel"><a href="/how-it-works"><strong>EMT919™</strong><small>Field interpretation and language access</small></a><a href="/9-line"><strong><span class="nine-brand-name">9<span class="nine-brand-slash">/</span>Line</span>™</strong><small>Officer calling, messaging and team tools</small></a><a href="/solutions"><strong>Agency solutions</strong><small>Explore workflows by service area</small></a></div></details>
+  <a href="/security">Trust center</a><a href="/resources">Resources</a><a href="/company">Company</a><a href="/support">Support</a>
+ </nav>
+ <a class="button button-small header-cta" href="/demo">Request a demo</a>
+ <details class="mobile-menu"><summary aria-label="Navigation menu"><span>Menu</span><b aria-hidden="true">☰</b></summary><nav aria-label="Mobile navigation"><span class="mobile-nav-label">Products</span><a href="/how-it-works">EMT919 interpretation</a><a href="/9-line"><span class="nine-brand-name">9<span class="nine-brand-slash">/</span>Line</span>&nbsp;officer communications</a><a href="/solutions">Agency solutions</a><a href="/security">Trust center</a><a href="/resources">Resources &amp; news</a><a href="/company">Company</a><a href="/support">Support</a><a class="mobile-cta" href="/demo">Request a demo</a></nav></details>
 </header>
 <main id="main-content">
   <section class="page-hero"><p class="eyebrow"><span></span>Service options</p><h1>Configured around your agency.</h1><p>Choose the translation and records configuration that fits your existing workflow. Commercial terms are provided in an agency-specific written proposal.</p></section>
@@ -49,15 +34,15 @@
     <div class="notice"><strong>Commercial terms are not published online:</strong> Licensed-user counts, minimums, service configuration, live-interpreter terms, records options, implementation, support, renewal terms, taxes, and any purchasing vehicle are confirmed in the agency's written proposal. This page is not a contract or a guarantee of grant eligibility.</div>
     <h2>Request an agency proposal</h2>
     <p>Use approximate counts only. Do not submit case information, protected records, credentials, or sensitive operational data.</p>
-    <form class="standalone-form" name="emt919-quote" method="POST" action="/thanks" data-netlify="true" netlify-honeypot="company-website">
+    <form class="standalone-form" name="emt919-quote" method="POST" action="/thanks" data-netlify="true" netlify-honeypot="company-website" aria-describedby="inquiry-instructions"><p class="full-field form-instructions" id="inquiry-instructions">Name, agency and work email are required. Other fields are optional. Do not include case details, protected records or credentials. See our <a href="/privacy">Privacy Policy</a>.</p>
       <input type="hidden" name="form-name" value="emt919-quote">
-      <p class="hidden-field"><label>Leave blank<input name="company-website"></label></p>
+      <p class="hidden-field" hidden aria-hidden="true"><label>Leave blank<input name="company-website" tabindex="-1" autocomplete="off"></label></p>
       <label>Name<input required name="name" autocomplete="name"></label>
       <label>Agency<input required name="agency" autocomplete="organization"></label>
       <label>Work email<input required type="email" name="email" autocomplete="email"></label>
-      <label>Phone<input name="phone" autocomplete="tel"></label>
+      <label>Phone<input name="phone" autocomplete="tel" type="tel" inputmode="tel"></label>
       <label>Approximate licensed users<input name="licensed-users" inputmode="numeric"></label>
-      <label>Desired review timeline<select name="timeline"><option>Within 30 days</option><option>31-90 days</option><option>3-6 months</option><option>Planning only</option></select></label>
+      <label>Desired review timeline<select name="timeline"><option value="" selected>Select an option (optional)</option><option>Within 30 days</option><option>31-90 days</option><option>3-6 months</option><option>Planning only</option></select></label>
       <label class="full-field">Procurement notes<textarea name="message" rows="4"></textarea></label>
       <button class="button full-field" type="submit">Request agency proposal</button>
     </form>
@@ -65,24 +50,16 @@
 </main>
 
 <footer id="site-footer" class="site-footer no-print">
-  <div class="footer-shell">
-    <div class="footer-main">
-      <section class="footer-brand" aria-label="About EMT919">
-        <a class="footer-logo-link" href="/" aria-label="EMT919 trademark home"><img class="brand-logo brand-logo--footer" src="/emt919-logo-header-responderbadge-small.png" srcset="/emt919-logo-header-responderbadge-small.png 600w, /emt919-logo-header-responderbadge-standard.png 1200w, /emt919-logo-header-responderbadge-large.png 1800w" sizes="(max-width: 680px) 270px, 310px" width="600" height="200" alt="EMT919 &mdash; Emergency Multitranslator" loading="lazy" decoding="async"><sup class="brand-tm" aria-hidden="true">™</sup></a>
-        <p class="footer-summary">Immediate language access for responders working the first critical minutes of a call.</p>
-        <p class="footer-company"><span class="trademark-name">EMT919™</span>, <span class="trademark-name">CITY919™</span>, and <span class="trademark-name"><span class="nine-brand-name">9<span class="nine-brand-slash">/</span>Line</span>™</span> are products of FastDial Inc.</p>
-      </section>
-      <nav class="footer-nav" aria-label="Footer navigation">
-        <div class="footer-column"><p class="footer-heading">Product</p><a href="/how-it-works">How it works</a><a href="/solutions">Solutions</a><a href="/languages">Languages</a><a href="/service-options">Service options</a><a href="/news">News</a></div>
-        <div class="footer-column"><p class="footer-heading">Agency</p><a href="/security">Trust center</a><a href="/government-data">Government data</a><a href="/procurement">Procurement</a><a href="/support">Support</a><a href="/company">Company</a></div>
-        <div class="footer-column"><p class="footer-heading">Contact</p><a href="mailto:contact@emt919.com">contact@emt919.com</a><a href="mailto:security@emt919.com">security@emt919.com</a><a href="mailto:privacy@emt919.com">privacy@emt919.com</a><p class="footer-heading footer-social-heading">Social media</p><a href="https://www.facebook.com/emt919" target="_blank" rel="noopener noreferrer" aria-label="EMT919 on Facebook">Facebook</a></div>
-      </nav>
-    </div>
-    <div class="footer-bottom">
-      <p>&copy; 2026 FastDial Inc. All rights reserved.</p>
-      <div class="footer-legal"><a href="/privacy">Privacy</a><a href="/sms-terms">SMS terms</a><a href="/accessibility">Accessibility</a><a href="/terms">Website terms</a><a href="/vulnerability-disclosure">Vulnerability disclosure</a></div>
-    </div>
-  </div>
+ <div class="footer-shell"><div class="footer-main">
+  <section class="footer-brand" aria-label="About FastDial products"><a class="footer-logo-link" href="/" aria-label="EMT919 home"><img class="brand-logo brand-logo--footer" src="/emt919-logo-header-responderbadge-small.png" width="600" height="200" alt="EMT919 — Emergency Multitranslator" loading="lazy" decoding="async"><sup class="brand-tm" aria-hidden="true">™</sup></a><p class="footer-summary">Language access and work-number communications for public-safety teams.</p><p class="footer-company"><span class="trademark-name">EMT919™</span>, <span class="trademark-name">CITY919™</span>, and <span class="trademark-name"><span class="nine-brand-name">9<span class="nine-brand-slash">/</span>Line</span>™</span> are products of FastDial Inc.</p></section>
+  <nav class="footer-nav" aria-label="Footer navigation">
+   <div class="footer-column"><p class="footer-heading">Products</p><a href="/how-it-works">EMT919 interpretation</a><a href="/9-line"><span class="nine-brand-name">9<span class="nine-brand-slash">/</span>Line</span>&nbsp;Officer &amp; Team</a><a href="/solutions">Agency solutions</a><a href="/languages">Languages</a><a href="/service-options">Service options</a><a href="/evidentiary-package">Evidentiary Package</a></div>
+   <div class="footer-column"><p class="footer-heading">Agency resources</p><a href="/security">Trust center</a><a href="/procurement">Procurement</a><a href="/resources">Resource center</a><a href="/news">Field notes &amp; news</a><a href="/support">Support</a><a href="/company">Company</a></div>
+   <div class="footer-column"><p class="footer-heading">Contact</p><a href="mailto:contact@emt919.com">contact@emt919.com</a><a href="mailto:security@emt919.com">security@emt919.com</a><a href="mailto:privacy@emt919.com">privacy@emt919.com</a><p class="footer-heading footer-social-heading">Social media</p><a href="https://www.facebook.com/emt919" target="_blank" rel="noopener noreferrer" aria-label="EMT919 on Facebook (opens a new tab)">Facebook</a></div>
+  </nav></div>
+  <div class="footer-bottom"><p>© 2026 FastDial Inc. All rights reserved.</p><div class="footer-legal"><a href="/privacy">Privacy</a><a href="/sms-terms">SMS terms</a><a href="/accessibility">Accessibility</a><a href="/terms">Website terms</a><a href="/vulnerability-disclosure">Vulnerability disclosure</a></div></div>
+ </div>
 </footer>
+<script src="/site-ui.20260912.js" defer></script>
 </body>
 </html>
