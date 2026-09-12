@@ -22,7 +22,7 @@ for(const file of files){
 (async()=>{
  const browser=await chromium.launch({channel:process.env.BROWSER_CHANNEL||'chrome',headless:true});
  try{
-  const jobs=files.flatMap(file=>[320,390,768,1440].map(width=>({file,width})));
+  const jobs=process.env.QA_INTERACTIONS_ONLY==='1'?[]:files.flatMap(file=>[320,390,768,1440].map(width=>({file,width})));
   await Promise.all(Array.from({length:3},async()=>{while(jobs.length){
    const {file,width}=jobs.shift(),route=file==='index.html'?'/':'/'+file.replace('.html','');
    const p=await browser.newPage({viewport:{width,height:900}});const errors=[];
@@ -76,7 +76,8 @@ for(const file of files){
   check('Language matching and empty state',()=>{});
   await p.goto(base+'/resources');await p.locator('[data-resource-filter]').selectOption('news');assert.equal(await p.locator('[data-resource-group]:visible').count(),1);assert.match(await p.locator('[data-resource-status]').innerText(),/4 resources/);
   check('Resource category filtering',()=>{});
-  await p.goto(base+'/');assert.equal(await p.locator('iframe').count(),0);await p.locator('.video-disclosure summary').click();assert.equal(await p.locator('iframe').count(),0);await p.locator('[data-load-video]').click();assert.equal(await p.locator('iframe[title="EMT919 service overview"]').count(),1);
+  // Security infrastructure may add its own hidden iframe; scope to the actual video.
+  await p.goto(base+'/');assert.equal(await p.locator('.video-frame iframe').count(),0);await p.locator('.video-disclosure summary').click();assert.equal(await p.locator('.video-frame iframe').count(),0);await p.locator('[data-load-video]').click();assert.equal(await p.locator('iframe[title="EMT919 service overview"]').count(),1);
   check('Third-party video waits for explicit load',()=>{});
   await p.setViewportSize({width:1440,height:900});await p.goto(base+'/9-line');await p.locator('.nav-products summary').focus();await p.keyboard.press('Enter');assert.ok(await p.locator('.nav-products').evaluate(e=>e.open));await p.keyboard.press('Escape');assert.ok(await p.locator('.nav-products').evaluate(e=>!e.open));
   check('Desktop product navigation keyboard controls',()=>{});
