@@ -1,0 +1,73 @@
+/* Officer packages: scoped to 9/Line; existing branding and compliance pages stay intact. */
+.nine-hero-package { max-width: 600px; color: #c8d9ed; font-size: 15px; line-height: 1.7; margin: 18px 0 0; }
+.nine-section-nav { background: #fff; border-bottom: 1px solid #cbd7e6; }
+.nine-section-nav .nine-wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 26px; padding-top: 12px; padding-bottom: 12px; }
+.nine-section-nav a { display: inline-flex; align-items: center; min-height: 44px; color: #173451; font-size: 12px; line-height: 1.4; }
+.nine-section-nav a:hover { color: #861d39; text-decoration: underline; text-underline-offset: 4px; }
+.nine-page main section[id] { scroll-margin-top: 105px; }
+.nine-availability { background: #edf2f8; border-bottom: 1px solid #cbd7e6; }
+.nine-availability p { margin: 0; padding: 16px 0; color: #43566f; font-size: 13px; line-height: 1.7; }
+.nine-availability strong { color: #173451; }
+.nine-officer-package { background: #edf2f8; }
+.nine-feature-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 22px; margin-top: 32px; }
+.nine-feature-card { padding: 28px; background: #fff; border: 1px solid #cbd7e6; border-radius: 12px; min-width: 0; }
+.nine-feature-card .nine-number { margin-top: 0; margin-bottom: 16px; }
+.nine-feature-card h3 { font-size: 28px; line-height: 1.15; }
+.nine-feature-card > p:not(.nine-number), .nine-feature-card li { font-size: 15px; line-height: 1.75; color: #43566f; }
+.nine-feature-card ul { margin: 20px 0; padding-left: 20px; }
+.nine-feature-card li + li { margin-top: 10px; }
+.nine-feature-card li::marker { color: #861d39; }
+.nine-feature-card .nine-feature-note { border-top: 1px solid #d5deeb; padding-top: 16px; margin: 20px 0 0; font-size: 13px !important; }
+.nine-package-note { display: flex; gap: 18px 28px; align-items: baseline; border-left: 4px solid #861d39; margin-top: 28px; padding: 18px 22px; background: #fff; }
+.nine-package-note strong { flex: 0 0 220px; color: #173451; line-height: 1.6; }
+.nine-package-note p { margin: 0; color: #43566f; font-size: 14px; line-height: 1.7; }
+#agency-dashboard { background: #10243f; }
+#agency-dashboard .nine-section-heading > p { color: #c8d9ed; }
+.nine-dashboard-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 0 32px; margin-top: 30px; }
+.nine-dashboard-grid article { border-top: 1px solid #56708f; padding: 24px 0; min-width: 0; }
+.nine-dashboard-index { display: block; color: #b9d5fa; font: 600 12px/1.5 "Inter",Arial,sans-serif; margin-bottom: 12px; }
+.nine-dashboard-grid h3 { font-size: 26px; color: #fff; }
+.nine-dashboard-grid p { color: #c8d9ed; font-size: 15px; line-height: 1.75; margin-bottom: 0; }
+.nine-dashboard-boundary { color: #d6e4f5; font-size: 14px; line-height: 1.8; padding: 20px 24px; border: 1px solid #6983a2; border-radius: 10px; margin: 14px 0 0; }
+.nine-dashboard-boundary strong { color: #fff; }
+#officers-and-agencies { border-top: 1px solid #405672; }
+.nine-advanced { background: #fff; }
+.nine-advanced-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 24px; margin-top: 32px; }
+.nine-advanced-grid article { padding: 28px; border: 1px solid #cbd7e6; border-top: 3px solid #861d39; border-radius: 10px; }
+.nine-advanced-grid h3 { font-size: 28px; }
+.nine-advanced-grid p:not(.nine-number) { color: #43566f; line-height: 1.8; font-size: 16px; margin-bottom: 0; }
+.nine-package-comparison { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 24px; margin-top: 32px; }
+.nine-package-comparison article { background: #edf2f8; border-radius: 10px; padding: 28px; }
+.nine-package-comparison article:last-child { background: #f8eef1; }
+.nine-package-comparison h3 { font-size: 27px; }
+.nine-package-comparison p:not(.nine-kicker) { color: #43566f; font-size: 15px; line-height: 1.8; }
+.nine-package-comparison a { display: inline-flex; align-items: center; min-height: 44px; }
+.nine-page .nine-faq summary { min-height: 48px; }
+@media (max-width: 1100px) {
+  .nine-feature-card { padding: 22px; }
+  .nine-feature-grid { gap: 16px; }
+}
+@media (max-width: 900px) {
+  .nine-feature-grid { grid-template-columns: 1fr; gap: 18px; }
+  .nine-feature-card { padding: 26px; }
+  .nine-dashboard-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 0 24px; }
+  .nine-package-note { display: block; }
+  .nine-package-note p { margin-top: 10px; }
+}
+@media (max-width: 600px) {
+  .nine-page h2 { font-size: clamp(28px, 8vw, 34px); overflow-wrap: break-word; }
+  .nine-hero-package { font-size: 14px; }
+  .nine-section-nav .nine-wrap { gap: 2px 16px; }
+  .nine-section-nav a { font-size: 11px; letter-spacing: .04em; }
+  .nine-dashboard-grid { grid-template-columns: 1fr; }
+  .nine-dashboard-grid article { padding: 22px 0; }
+  .nine-dashboard-boundary { padding: 18px; }
+  .nine-feature-card { padding: 22px; }
+  .nine-advanced-grid, .nine-package-comparison { grid-template-columns: 1fr; gap: 18px; }
+  .nine-advanced-grid article, .nine-package-comparison article { padding: 22px; }
+  .nine-advanced-grid p:not(.nine-number) { font-size: 15px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .nine-page *, .nine-page *::before, .nine-page *::after { transition: none !important; animation: none !important; }
+}
