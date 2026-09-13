@@ -1,0 +1,26 @@
+/* Homepage product links: native anchors, visible affordances and full-tile targets. */
+.home-page .hero { --nine-brand-slash-color: #ff5c5c; }
+.home-page .hero-inline-link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+.home-page .hero-product-link {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  min-height: 56px;
+  border-radius: 4px;
+  color: inherit;
+}
+.home-page .hero-product-link > strong {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
+}
+.home-page .hero-inline-link:hover,
+.home-page .hero-product-link:hover { color: #fff; }
+.home-page .hero-inline-link:hover,
+.home-page .hero-product-link:hover > strong { text-decoration-thickness: 2px; }
+.home-page .hero-product-link:focus-visible { outline-offset: 5px; }
