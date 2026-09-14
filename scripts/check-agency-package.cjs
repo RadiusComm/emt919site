@@ -27,6 +27,8 @@ const compact=t=>t.replace(/\s+/g,' ').replaceAll('\u00a0',' ').trim();
    await p.evaluate(()=>document.fonts.ready);
    const body=compact(await p.locator('body').innerText());
    assert.ok(!body.includes('9/Line Team'));assert.ok(body.includes('9/Line Agency'));assert.ok(body.includes('Department-wide communications and supervision.'));
+   assert.ok(!body.includes('Package availability:'));
+   assert.equal(await p.locator('.nx-availability').count(),0);
    const officer=compact(await p.locator('#officer-package').innerText());
    assert.ok(officer.includes('Up to 3 dedicated 9/Line numbers per officer'));
    assert.ok(officer.includes('Keep separate, labeled work numbers for different assignments, investigations, or roles—all managed in one app.'));
