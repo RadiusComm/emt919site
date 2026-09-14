@@ -1,0 +1,35 @@
+/* Compact, readable messaging example; other product previews are unchanged. */
+.nx-message-preview {
+  width: 100%;
+  max-width: 460px;
+  justify-self: center;
+  margin-inline: auto;
+}
+.nx-message-preview .nx-preview-top { padding: 12px 16px; }
+.nx-message-preview .nx-message-head { gap: 10px; padding: 12px 16px; }
+.nx-message-preview .nx-avatar { width: 32px; height: 32px; flex-shrink: 0; }
+.nx-message-preview .nx-messages { padding: 16px; }
+.nine-refresh .nx-message-preview .nx-bubble {
+  padding: 10px 12px;
+  line-height: 1.5;
+  margin-bottom: 6px;
+}
+.nine-refresh .nx-message-preview .nx-bubble-out { margin-top: 14px; }
+
+.nx-location-attachment {
+  align-self: flex-end;
+  display: block;
+  width: min(72%, 200px);
+  padding: 0;
+  margin-top: 10px;
+  overflow: hidden;
+  border-radius: 14px 14px 4px 14px;
+  background: #f4f8fc;
+}
+.nx-location-attachment img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+}
+.nx-location-caption { padding: 8px 12px; }
