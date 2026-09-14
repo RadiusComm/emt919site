@@ -1,0 +1,18 @@
+/* Scoped photo attachment in the illustrative SMS/MMS conversation. */
+.nx-location-attachment {
+  align-self: flex-end;
+  display: block;
+  width: min(100%, 340px);
+  padding: 0;
+  margin-top: 18px;
+  overflow: hidden;
+  border-radius: 14px 14px 4px 14px;
+  background: #f4f8fc;
+}
+.nx-location-attachment img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+}
+.nx-location-caption { padding: 12px 16px; }
