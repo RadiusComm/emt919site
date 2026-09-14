@@ -17,6 +17,8 @@ Use Node.js and an installed Playwright browser runtime. Set `PLAYWRIGHT_MODULE`
 
 Run `node scripts/check-site.cjs`. It checks local assets, approved policy content against the pre-redesign revision, the package-availability sentence, page responses/landmarks at 320, 390, 768 and 1440 pixels, keyboard navigation, honeypot focus exclusion, filtering, text enlargement and mocked form responses. Form POSTs in these tests are intercepted, never sent to Netlify. Mocked success does not prove email notification delivery.
 
+For the Officer / Agency package naming, run `node scripts/check-agency-package.cjs` with `QA_BASE` and `PLAYWRIGHT_MODULE` set as needed. It verifies the Agency name and description, shared footer references, product-page metadata, the contextual demo prefill, four viewport widths, retained deep links and unchanged approved policy bodies. The existing SMS-consent page has a policy-only footer; the rename preserves it. The active demo-context asset is `demo-context.20260914.js`.
+
 Before each release, also inspect desktop and mobile screenshots, keyboard focus, open menus, disclosures, form feedback and the demonstration map. Check changed links and all compliance URLs. Browser geometry and contrast checks are not an accessibility certification.
 
 ## Release and rollback
