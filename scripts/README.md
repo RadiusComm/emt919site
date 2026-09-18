@@ -13,6 +13,8 @@ This remains a static HTML site deployed to the existing Netlify project by push
 
 ## Repeatable checks
 
+The `/educators` landing page uses `educators.20260918.css` and an optimized illustrative school image. Its school-labelled inquiry form reuses the registered `emt919-demo` field names and submission handler, with `/educators-thanks` as its confirmation page. Existing agency inquiry forms retain `/thanks`. Navigation templates and the shell synchronizer preserve the education page's school-demo links and footer summary.
+
 Use Node.js and an installed Playwright browser runtime. Set `PLAYWRIGHT_MODULE` if Playwright is outside the default module path. Set `QA_BASE` to the exact local preview or hosted origin, without a trailing slash, and optionally `QA_REPORT` to a report file outside the published directory.
 
 Run `node scripts/check-site.cjs`. It checks local assets, approved policy content against the pre-redesign revision, the package-availability sentence, page responses/landmarks at 320, 390, 768 and 1440 pixels, keyboard navigation, honeypot focus exclusion, filtering, text enlargement and mocked form responses. Form POSTs in these tests are intercepted, never sent to Netlify. Mocked success does not prove email notification delivery.

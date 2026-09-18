@@ -26,8 +26,10 @@ for (const file of fs.readdirSync(root).filter(f => f.endsWith('.html'))) {
  const route = file === 'index.html' ? '/' : '/' + file.replace('.html', '');
  let pageHeader = header.replaceAll(`href="${route}"`, `href="${route}" aria-current="page"`);
  if (file === '9-line.html') pageHeader = pageHeader.replaceAll('href="/demo"', 'href="/demo?product=9-line"');
+ if (['educators.html', 'educators-thanks.html'].includes(file)) pageHeader = pageHeader.replaceAll('href="/demo"', 'href="/educators#school-demo"').replaceAll('Request a demo', 'School demo');
  html = html.replace(/<header\b[^>]*class="site-header[^>]*>[\s\S]*?<\/header>/, pageHeader);
- html = html.replace(/<footer\b[^>]*class="site-footer[^>]*>[\s\S]*?<\/footer>/, footer);
+ const pageFooter = ['educators.html', 'educators-thanks.html'].includes(file) ? footer.replace('Language access and work-number communications for public-safety teams.', 'Helping school communities communicate across language barriers.') : footer;
+ html = html.replace(/<footer\b[^>]*class="site-footer[^>]*>[\s\S]*?<\/footer>/, pageFooter);
  html = html.replace(/<link\b[^>]*rel="stylesheet"[^>]*>/g, tag => /href="\/(?:styles\.[^"]+|9-line\.20260908-bundle\.css|trademarks\.20260911\.css|nine-line-brand\.20260912\.css|site-(?:shared|ui)\.20260912\.css)"/.test(tag) ? '' : tag);
  html = html.replace(/<link\b[^>]*href="https:\/\/fonts.googleapis.com[^>]*>/g, '');
  html = html.replace('</head>', '<link rel="stylesheet" href="/site-ui.20260912.css">\n</head>');
