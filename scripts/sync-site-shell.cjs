@@ -26,7 +26,7 @@ for (const file of fs.readdirSync(root).filter(f => f.endsWith('.html'))) {
  const route = file === 'index.html' ? '/' : '/' + file.replace('.html', '');
  let pageHeader = header.replaceAll(`href="${route}"`, `href="${route}" aria-current="page"`);
  if (file === '9-line.html') pageHeader = pageHeader.replaceAll('href="/demo"', 'href="/demo?product=9-line"');
- if (['educators.html', 'educators-thanks.html'].includes(file)) pageHeader = pageHeader.replaceAll('href="/demo"', 'href="/educators#school-demo"').replaceAll('Request a demo', 'School demo');
+ if (['educators.html', 'educators-thanks.html'].includes(file)) pageHeader = pageHeader.replaceAll('href="/demo"', 'href="/educators#school-demo"').replaceAll('Request a demo', 'Request a school demo');
  html = html.replace(/<header\b[^>]*class="site-header[^>]*>[\s\S]*?<\/header>/, pageHeader);
  const pageFooter = ['educators.html', 'educators-thanks.html'].includes(file) ? footer.replace('Language access and work-number communications for public-safety teams.', 'Helping school communities communicate across language barriers.') : footer;
  html = html.replace(/<footer\b[^>]*class="site-footer[^>]*>[\s\S]*?<\/footer>/, pageFooter);

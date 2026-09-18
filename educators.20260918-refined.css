@@ -1,0 +1,118 @@
+/* Education page: compact storytelling, responsive school imagery, direct form access. */
+.edu-page{background:#fff;color:#172a3c}
+.edu-page main{font-family:Inter,Arial,sans-serif}
+.edu-wrap{width:min(1200px,calc(100% - 80px));margin-inline:auto}
+.edu-page h1,.edu-page h2,.edu-page h3{font-family:Inter,Arial,sans-serif;text-transform:none;letter-spacing:-.04em;font-weight:650}
+.edu-page h1{font-size:clamp(38px,4.25vw,60px);line-height:1.08;margin:0 0 24px}
+.edu-page h1 em{font-style:normal;color:#2361bd}
+.edu-page h2{font-size:clamp(30px,3vw,42px);line-height:1.16;margin:0 0 20px}
+.edu-page h3{font-size:21px;line-height:1.3;letter-spacing:-.025em;margin:0 0 10px}
+.edu-page main p{font-size:16px;line-height:1.65;margin:0 0 18px}
+.edu-page main .edu-eyebrow{font-size:13px;letter-spacing:.09em;text-transform:uppercase;color:#315b8f;font-weight:700;margin-bottom:18px}
+.edu-page main .button{background:#1452c4;color:white;display:inline-flex;align-items:center;justify-content:center;gap:16px;text-decoration:none;border:1px solid #1452c4;min-height:48px;padding:13px 20px;font-size:15px;font-weight:600;border-radius:8px}
+.edu-page main .button:hover{background:#103e92;border-color:#103e92}
+.edu-page main .button span{font-size:20px}
+.edu-text-link{display:inline-flex;gap:12px;align-items:center;min-height:48px;font-size:15px;font-weight:650;color:#174b97;text-decoration:underline;text-underline-offset:5px}
+.edu-hero{background:#f2f5f8;padding:54px 0}
+.edu-hero-grid{display:grid;grid-template-columns:1.04fr 1fr;gap:50px;align-items:center}
+.edu-hero-copy{min-width:0}
+.edu-page main .edu-lead{font-size:21px;line-height:1.5;color:#172a3c;margin-bottom:16px}
+.edu-hero-copy>p:not(.edu-eyebrow):not(.edu-lead){color:#4b5b6e}
+.edu-page main .edu-coverage,.edu-page main .edu-for{font-size:14px;line-height:1.5}
+.edu-page main .edu-for{margin:0}
+.edu-actions{display:flex;gap:12px 22px;align-items:center;flex-wrap:wrap;margin:24px 0 14px}
+.edu-hero-photo{margin:0;position:relative;border-radius:16px;overflow:hidden;background:#d7dfe2;isolation:isolate}
+.edu-hero-photo img{display:block;width:100%;height:460px;object-fit:cover;object-position:49% center}
+.edu-hero-photo::after{content:'';position:absolute;inset:52% 0 0;background:linear-gradient(transparent,#071b2bed);pointer-events:none}
+.edu-hero-photo figcaption{position:absolute;bottom:24px;left:26px;right:26px;z-index:1;display:flex;align-items:end;gap:16px;justify-content:space-between;color:white}
+.edu-hero-photo figcaption span{font-size:24px;line-height:1.3;letter-spacing:-.025em}
+.edu-hero-photo figcaption strong{font-weight:650}
+.edu-hero-photo figcaption small{font-size:12px;color:#fff;text-align:right}
+.edu-section{padding:66px 0;position:relative;scroll-margin-top:8px}
+.edu-anchor{position:absolute;top:0}
+.edu-section-heading{display:grid;grid-template-columns:1.25fr 1fr;gap:65px;align-items:end;margin-bottom:32px}
+.edu-section-heading h2{margin:0}
+.edu-section-heading>p{color:#526275;margin-bottom:0!important;max-width:460px}
+.edu-how-grid{display:grid;grid-template-columns:1fr 1fr;gap:76px;align-items:center}
+.edu-intro{color:#526275;max-width:480px}
+.edu-steps{list-style:none;padding:0;margin:24px 0 10px;display:grid;gap:16px}
+.edu-steps li{display:flex;gap:14px}
+.edu-steps li>span{flex:0 0 32px;height:32px;display:grid;place-items:center;border-radius:50%;background:#eaf1fc;color:#2456a2;font-size:14px;font-weight:650}
+.edu-page main .edu-steps p{font-size:15px;margin:0;color:#526275}
+.edu-steps strong{color:#172a3c}
+.edu-conversation{padding:24px;border:1px solid #cedce9;border-radius:16px;background:#f6f8fb;box-shadow:0 14px 40px #122d4e0b;min-width:0}
+.edu-conversation-top{font-size:15px;font-weight:650;display:flex;align-items:center;gap:12px;justify-content:space-between;color:#253f5c}
+.edu-conversation-top>span:last-child{font-size:13px;white-space:nowrap}
+.edu-page main .edu-example-label{font-size:13px;color:#526275;margin:8px 0 20px}
+.edu-turn{margin:10px 28px 10px 0;padding:14px 17px;border:1px solid #dce4ec;border-radius:10px;background:white}
+.edu-turn>span{font-size:14px;color:#49657e;font-weight:600}
+.edu-page main .edu-turn p{font-size:16px;line-height:1.5;margin:7px 0 0}
+.edu-translated{margin-left:28px;margin-right:0;background:#e8f0fc;border-color:#cbdcf3}
+.edu-translated>span{color:#23539b}
+.edu-page main .edu-conversation-bottom{margin:18px 0 0;padding-top:16px;border-top:1px solid #d6e0eb;font-size:14px;color:#4d6278;line-height:1.5}
+.edu-school-day{background:#f3f6f9}
+.edu-use-layout{display:grid;grid-template-columns:1.15fr 1fr;gap:48px;align-items:center}
+.edu-scenes{display:grid;grid-template-columns:1fr 1fr;gap:14px;min-width:0}
+.edu-scenes figure{margin:0;min-width:0}
+.edu-scenes figure:nth-child(2){padding-top:46px}
+.edu-scenes img{display:block;width:100%;height:310px;object-fit:cover;border-radius:12px;object-position:50% center}
+.edu-scenes figure:first-child img{object-position:42% center}
+.edu-scenes figcaption{font-size:14px;font-weight:600;color:#284968;padding-top:12px;line-height:1.5}
+.edu-page main .edu-image-note{grid-column:1/-1;font-size:13px;color:#526275;margin:0}
+.edu-use-list{display:grid;gap:22px}
+.edu-use-list article{display:flex;gap:20px;padding-bottom:22px;border-bottom:1px solid #ccd9e5;min-width:0}
+.edu-use-list article:last-child{border:0;padding:0}
+.edu-number{padding-top:4px;font-size:14px;color:#376ab0}
+.edu-page main .edu-use-list p{color:#526275;margin:0}
+.edu-districts{background:#0e253e;color:white}
+.edu-districts h2,.edu-districts h3{color:white}
+.edu-page main .edu-districts .edu-eyebrow{color:#aec8ee}
+.edu-districts .edu-section-heading>p,.edu-districts p{color:#d0dceb}
+.edu-review-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px}
+.edu-review-grid article{border-top:1px solid #667e99;padding-top:22px;min-width:0}
+.edu-review-grid h3{font-size:18px;letter-spacing:-.01em}
+.edu-page main .edu-review-grid p{font-size:15px;line-height:1.65;margin:0}
+.edu-review-grid a{display:inline-flex;align-items:center;min-height:44px;font-size:14px;color:#dceaff;text-decoration:underline;text-underline-offset:5px}
+.edu-district-action{display:flex;justify-content:space-between;align-items:center;gap:32px;margin-top:30px}
+.edu-page main .edu-district-action p{font-size:14px;max-width:560px;margin:0}
+.edu-page main .edu-district-action .button{flex-shrink:0;background:#fff;color:#173f7c;border-color:#fff}
+.edu-page main .edu-district-action .button:hover{background:#e5edfa}
+.edu-demo{background:#edf3fa}
+.edu-demo-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:70px;align-items:center}
+.edu-demo-copy>p:not(.edu-eyebrow){color:#526275;max-width:370px}
+.edu-page main .edu-email{font-size:14px;line-height:1.9;margin-top:24px}
+.edu-email a{display:inline-flex;align-items:center;min-height:44px;font-size:17px;color:#174b97;font-weight:600;text-underline-offset:5px}
+.edu-form{background:#fff;padding:28px;border:1px solid #c6d6e7;border-radius:14px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;min-width:0;scroll-margin-top:8px}
+.edu-form .full-field{grid-column:1/-1}
+.edu-page .edu-form h2{font-size:27px;margin:0;letter-spacing:-.03em}
+.edu-page main .edu-form .form-instructions,.edu-page main .edu-form-note{font-size:14px;line-height:1.5;color:#526275;margin:0}
+.edu-form label{display:flex;flex-direction:column;gap:7px;font-size:14px;font-weight:600;color:#233e5a;min-width:0}
+.edu-form label>span{display:contents;font-weight:400}
+.edu-form input,.edu-form select,.edu-form textarea{width:100%;background:white;color:#172a3c;padding:10px 12px;border:1px solid #8799ae;border-radius:6px;min-width:0}
+.edu-form textarea{resize:vertical}
+.edu-form textarea::placeholder{color:#5c6b7d;opacity:1}
+.edu-form button{cursor:pointer;width:100%}
+.edu-form a,.edu-faq a{color:#174b97;text-decoration:underline;text-underline-offset:3px}
+.edu-extra{border-block:1px solid #d6e0eb}
+.edu-extra summary{cursor:pointer;list-style:none;min-height:48px;padding:12px 0;display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:14px;font-weight:600;color:#174b97}
+.edu-extra summary::-webkit-details-marker{display:none}
+.edu-extra summary::after{content:'+';margin-left:auto;font-size:22px;font-weight:400}
+.edu-extra[open] summary::after{content:'−'}
+.edu-extra summary span{font-weight:400;color:#526275}
+.edu-extra-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;padding:6px 0 20px}
+.edu-faq-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:70px}
+.edu-faq details{border-bottom:1px solid #d3dee8}
+.edu-faq details:first-child{border-top:1px solid #d3dee8}
+.edu-faq summary{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 0;list-style:none;cursor:pointer;font-size:16px;line-height:1.5;font-weight:600}
+.edu-faq summary::-webkit-details-marker{display:none}
+.edu-faq summary::after{content:'+';color:#23539b;font-weight:400;font-size:24px;flex-shrink:0}
+.edu-faq details[open] summary::after{content:'−'}
+.edu-page main .edu-faq p{font-size:16px;color:#526275}
+.edu-page .edu-thanks{min-height:65vh;display:grid;align-content:center;background:#f2f5f8}
+.edu-page .mobile-menu summary{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 14px;border:1px solid #6f849d;color:#fff;list-style:none;cursor:pointer;font-size:12px;font-weight:650}
+.edu-page .mobile-menu summary::-webkit-details-marker{display:none}
+.edu-page .edu-mobile-demo{display:none}
+@media(max-width:1050px){.edu-wrap{width:calc(100% - 48px)}.edu-hero-grid{gap:30px}.edu-section-heading,.edu-how-grid,.edu-demo-grid,.edu-faq-grid{gap:34px}.edu-hero-photo img{height:460px}.edu-use-layout{gap:28px}.edu-scenes{gap:12px}.edu-scenes img{height:300px}.edu-review-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 32px}.edu-form{padding:24px;grid-template-columns:minmax(0,1fr)}}
+@media(max-width:760px){.edu-wrap{width:calc(100% - 40px)}.edu-hero{padding:34px 0}.edu-hero-grid{grid-template-columns:minmax(0,1fr);gap:26px}.edu-page h1{font-size:clamp(36px,7vw,49px);margin-bottom:18px}.edu-page h2{font-size:31px}.edu-page main .edu-lead{font-size:19px;line-height:1.5}.edu-hero-photo img{height:auto;aspect-ratio:3/2}.edu-hero-photo figcaption{bottom:18px;left:20px;right:20px}.edu-hero-photo figcaption span{font-size:22px}.edu-hero-photo figcaption small{max-width:64px}.edu-section{padding:42px 0}.edu-section-heading{grid-template-columns:minmax(0,1fr);gap:16px;margin-bottom:26px}.edu-how-grid,.edu-demo-grid,.edu-faq-grid,.edu-use-layout{grid-template-columns:minmax(0,1fr);gap:26px}.edu-how-grid>div h2 br{display:none}.edu-how-grid .edu-steps{margin-top:20px}.edu-conversation{max-width:520px;width:100%;margin-inline:auto}.edu-scenes img{height:210px;object-position:center}.edu-scenes figure:nth-child(2){padding-top:24px}.edu-use-list{gap:20px}.edu-use-list article{gap:16px;padding-bottom:20px}.edu-district-action{display:block;margin-top:24px}.edu-district-action .button{margin-top:20px}.edu-demo-copy{order:2}.edu-form{order:1;grid-template-columns:repeat(2,minmax(0,1fr))}.edu-demo-copy h2{font-size:24px}.edu-demo-copy h2 br{display:none}.edu-demo-copy p{max-width:none}.edu-page main .edu-email{margin-top:12px;margin-bottom:0}.edu-faq-grid{gap:8px}.edu-faq-grid h2 br{display:none}.edu-page main .edu-eyebrow{font-size:12px;margin-bottom:14px}.edu-page .edu-mobile-demo:not([hidden]){position:fixed;display:flex;left:0;right:0;bottom:0;z-index:25;padding:10px 20px max(10px,env(safe-area-inset-bottom));background:#ffffffed;border-top:1px solid #c6d6e7;box-shadow:0 -3px 20px #0c263314}.edu-mobile-demo a{display:flex;align-items:center;justify-content:center;width:100%;min-height:46px;background:#1452c4;border-radius:7px;color:#fff;font-size:15px;font-weight:600}.edu-page:has(.edu-mobile-demo){padding-bottom:76px;scroll-padding-bottom:76px}.edu-page :focus{scroll-margin-bottom:90px}}
+@media(max-width:480px){.edu-actions{gap:8px;align-items:stretch;flex-direction:column;margin-top:20px}.edu-actions .button{width:100%}.edu-actions .edu-text-link{justify-content:center}.edu-form,.edu-extra-fields{grid-template-columns:minmax(0,1fr)}.edu-form{padding:22px;gap:16px}.edu-conversation{padding:18px}.edu-turn{padding:12px 14px;margin-right:16px}.edu-translated{margin-right:0;margin-left:16px}.edu-conversation-top{font-size:14px;gap:8px}.edu-scenes img{height:190px}.edu-scenes figcaption{font-size:14px}.edu-review-grid{grid-template-columns:minmax(0,1fr);gap:20px}.edu-review-grid article{padding-top:18px}.edu-page h2 br{display:none}.edu-district-action .button{width:100%}.edu-steps li{gap:12px}.edu-page main .edu-steps p{font-size:16px}}
+@media(prefers-reduced-motion:reduce){.edu-page *{scroll-behavior:auto!important}}
