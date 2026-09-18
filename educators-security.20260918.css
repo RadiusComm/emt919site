@@ -1,0 +1,22 @@
+/* School-specific service comparison, with readable stacked rows on phones. */
+.edu-difference .edu-section-heading{grid-template-columns:1.1fr 1fr;gap:50px}
+.edu-comparison{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border:1px solid #9eb6cf;border-radius:12px;overflow:hidden;color:#172a3c;table-layout:fixed}
+.edu-comparison caption{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.edu-comparison th,.edu-comparison td{text-align:left;vertical-align:top;padding:22px 24px;border-bottom:1px solid #d1deea;line-height:1.6}
+.edu-comparison th{font-family:Inter,Arial,sans-serif;text-transform:none;letter-spacing:0;color:#172a3c}
+.edu-comparison thead th{font-size:14px;font-weight:650;background:#e7eff8;color:#294a6c}
+.edu-comparison thead th:first-child{width:24%}
+.edu-comparison thead th:nth-child(2){width:31%}
+.edu-comparison thead th:last-child{background:#cfdef5;color:#173f7c}
+.edu-comparison tbody th{font-size:18px;font-weight:650;line-height:1.4;letter-spacing:-.02em;background:#f5f8fb}
+.edu-comparison td{font-size:15px;color:#526275}
+.edu-comparison td:last-child{background:#f0f5fc;color:#172a3c}
+.edu-comparison tbody tr:last-child>*{border-bottom:0}
+.edu-cell-label{display:none}
+.edu-difference-footer{display:flex;align-items:center;justify-content:space-between;gap:40px;margin-top:24px}
+.edu-page main .edu-difference-footer p{font-size:14px;line-height:1.65;max-width:710px;margin:0}
+.edu-difference-footer p a{display:inline-flex;align-items:center;min-height:44px;color:#dceaff;text-decoration:underline;text-underline-offset:4px}
+.edu-page main .edu-difference-footer .button{flex-shrink:0;background:#fff;color:#173f7c;border-color:#fff}
+.edu-page main .edu-difference-footer .button:hover{background:#e5edfa}
+@media(max-width:1050px){.edu-difference .edu-section-heading{gap:32px}.edu-comparison th,.edu-comparison td{padding:18px}.edu-difference-footer{gap:28px}}
+@media(max-width:760px){.edu-difference .edu-section-heading{grid-template-columns:minmax(0,1fr);gap:16px}.edu-comparison,.edu-comparison tbody,.edu-comparison tr{display:block}.edu-comparison{border:0;border-radius:0;background:none;overflow:visible}.edu-comparison thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}.edu-comparison tbody{display:grid;gap:16px}.edu-comparison tbody tr{border:1px solid #9eb6cf;border-radius:10px;overflow:hidden;background:#fff}.edu-comparison tbody th,.edu-comparison tbody td{display:block;width:auto;border:0;padding:16px 20px}.edu-comparison tbody th{font-size:19px;padding-bottom:14px}.edu-comparison tbody td{font-size:15px;line-height:1.6}.edu-comparison tbody td:last-child{font-size:16px}.edu-cell-label{display:block;font-size:13px;font-weight:650;color:#375679;margin-bottom:6px}.edu-comparison td:last-child .edu-cell-label{color:#174b97}.edu-difference-footer{display:block}.edu-page main .edu-difference-footer .button{margin-top:18px;width:100%}}
