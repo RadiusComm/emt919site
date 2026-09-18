@@ -33,6 +33,7 @@ for (const file of fs.readdirSync(root).filter(f => f.endsWith('.html'))) {
  html = html.replace(/<link\b[^>]*rel="stylesheet"[^>]*>/g, tag => /href="\/(?:styles\.[^"]+|9-line\.20260908-bundle\.css|trademarks\.20260911\.css|nine-line-brand\.20260912\.css|site-(?:shared|ui)\.20260912\.css)"/.test(tag) ? '' : tag);
  html = html.replace(/<link\b[^>]*href="https:\/\/fonts.googleapis.com[^>]*>/g, '');
  html = html.replace('</head>', '<link rel="stylesheet" href="/site-ui.20260912.css">\n</head>');
+ if (!html.includes('href="/site-footer.20260918.css"')) html = html.replace('</head>', '<link rel="stylesheet" href="/site-footer.20260918.css">\n</head>');
  html = html.replace(/(<head[^>]*>)/, '$1\n<link rel="stylesheet" href="/site-shared.20260912.css">');
  html = html.replace(/<script src="\/site-ui\.20260912\.js" defer><\/script>\s*/g, '');
  html = html.replace('</body>', '<script src="/site-ui.20260912.js" defer></script>\n</body>');

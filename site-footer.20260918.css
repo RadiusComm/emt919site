@@ -1,0 +1,2 @@
+/* Keep contact addresses readable within the shared footer columns. */
+.site-footer .footer-column a[href^="mailto:"]{text-transform:none;letter-spacing:0}

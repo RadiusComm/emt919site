@@ -7,6 +7,7 @@ This remains a static HTML site deployed to the existing Netlify project by push
 - Edit `site-components/header.html` and `site-components/footer.html` for shared navigation.
 - Run `node scripts/sync-site-shell.cjs` to synchronize page shells and generate `site-shared.20260912.css` from the existing stylesheet chain. Preserve page-specific styles.
 - Edit `site-ui.20260912.css` for the current design tokens and responsive/accessibility refinements.
+- Shared footer links include `For Schools & Educators`; `site-footer.20260918.css` keeps contact email addresses readable without uppercase letter spacing. Preserve this stylesheet when updating the shell.
 - New production changes to cached assets should receive a new versioned filename and updated references. Do not overwrite previously deployed immutable assets.
 - Inquiry forms retain their registered Netlify names, hidden form-name field, honeypot, field names and `/thanks` fallback. The JavaScript adds pending/error feedback and blocks duplicate clicks; it does not guarantee server-side idempotency.
 - The removed public SMS opt-in form must not be reintroduced. An old Netlify form registration is not a public consent path.
