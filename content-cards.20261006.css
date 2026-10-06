@@ -1,0 +1,14 @@
+/* Linked content cards need a single box, including outside a grid. */
+.content-page a.content-card {
+  display: block;
+  text-decoration: none;
+}
+
+.content-page a.content-card p {
+  font-weight: 400;
+}
+
+.content-page a.content-card:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 4px;
+}
