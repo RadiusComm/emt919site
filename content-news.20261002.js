@@ -25,6 +25,16 @@
       read.className = 'text-link dark-link';
       read.textContent = 'Read the article →';
       wrapper.append(date, title, read);
+      if (post.image_url) {
+        const cover = document.createElement('a');
+        cover.className = 'news-image';
+        cover.href = link.getAttribute('href');
+        const image = document.createElement('img');
+        image.src = '/api/content919/image/' + post.slug;
+        image.alt = post.image_alt || post.title;
+        image.width = 1024; image.height = 1024; image.loading = 'lazy';
+        cover.append(image); article.append(cover);
+      }
       article.append(wrapper);
       grid.append(article);
     }
