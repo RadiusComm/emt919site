@@ -1,6 +1,13 @@
 [build]
   publish = "."
 
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+[functions.content919]
+  included_files = ["news.html"]
+
 [[redirects]]
   from = "/pricing"
   to = "/service-options"
