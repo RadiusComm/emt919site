@@ -1,0 +1,9 @@
+/* Original SBA certification artwork; retain its proportions and colors. */
+.sba-certification-link{display:inline-block;flex:none;line-height:0}
+.sba-certification-link img{display:block;width:140px;max-width:100%;height:auto}
+.site-footer .sba-certification-link{margin-top:20px}
+.company-certification{display:flex;align-items:center;gap:28px;margin:32px 0;padding:24px;border:1px solid #dce3eb;border-radius:16px;background:#fff}
+.company-certification .sba-certification-link img{width:180px}
+.company-certification h2{margin-top:0}
+.company-certification p{margin-bottom:0}
+@media(max-width:600px){.company-certification{flex-direction:column;align-items:flex-start;gap:20px;padding:20px}}
