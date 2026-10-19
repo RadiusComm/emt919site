@@ -17,7 +17,7 @@
     button.disabled = running;
     button.textContent = text;
     $('sign-out').disabled = running;
-    document.querySelectorAll('#officer-form input').forEach(input => input.disabled = running);
+    document.querySelectorAll('#officer-form input, #officer-form select').forEach(input => input.disabled = running);
     button.setAttribute('aria-busy', String(running));
   }
   function signedIn(data) { $('operator-email').textContent = data.email; view('registration-view'); }

@@ -29,7 +29,66 @@
         <p class="eyebrow">NEW OFFICER DEMO</p><h2>Ready to try #919?</h2><p class="muted">Three details. One activation text.</p>
         <form id="officer-form">
           <label for="officer-name">Officer name</label><input id="officer-name" name="name" autocomplete="off" required minlength="2" maxlength="120" placeholder="Full name">
-          <label for="officer-rank">Rank</label><input id="officer-rank" name="rank" list="ranks" autocomplete="off" required maxlength="80" placeholder="Select or enter a rank"><datalist id="ranks"><option value="Officer"><option value="Sergeant"><option value="Lieutenant"><option value="Captain"><option value="Chief"><option value="Deputy"><option value="Sheriff"><option value="Detective"><option value="Trooper"><option value="Corporal"><option value="Commander"></datalist>
+          <label for="officer-rank">Rank</label><select id="officer-rank" name="rank" required>
+            <option value="" disabled selected>Select a rank</option>
+            <option value="Officer">Officer</option>
+            <option value="Corporal">Corporal</option>
+            <option value="Detective">Detective</option>
+            <option value="Sergeant">Sergeant</option>
+            <option value="Lieutenant">Lieutenant</option>
+            <option value="Captain">Captain</option>
+            <option value="Commander">Commander</option>
+            <option value="Deputy Chief">Deputy Chief</option>
+            <option value="Chief">Chief</option>
+            <option value="Agent">Agent</option>
+            <option value="Special Agent">Special Agent</option>
+            <option value="Trooper">Trooper</option>
+            <option value="Deputy">Deputy</option>
+            <option value="Deputy Sheriff">Deputy Sheriff</option>
+            <option value="Sheriff">Sheriff</option>
+            <option value="Undersheriff">Undersheriff</option>
+            <option value="Marshal">Marshal</option>
+            <option value="Constable">Constable</option>
+            <option value="Corrections Officer">Corrections Officer</option>
+            <option value="Inspector">Inspector</option>
+            <option value="Second Lieutenant">Second Lieutenant</option>
+            <option value="First Lieutenant">First Lieutenant</option>
+            <option value="Major">Major</option>
+            <option value="Lieutenant Colonel">Lieutenant Colonel</option>
+            <option value="Colonel">Colonel</option>
+            <option value="Brigadier General">Brigadier General</option>
+            <option value="Major General">Major General</option>
+            <option value="Lieutenant General">Lieutenant General</option>
+            <option value="General">General</option>
+            <option value="Master Gunnery Sergeant">Master Gunnery Sergeant</option>
+            <option value="Sergeant Major">Sergeant Major</option>
+            <option value="Command Sergeant Major">Command Sergeant Major</option>
+            <option value="Governor">Governor</option>
+            <option value="Senator">Senator</option>
+            <option value="Congressman">Congressman</option>
+            <option value="Congresswoman">Congresswoman</option>
+            <option value="Representative">Representative</option>
+            <option value="Assemblyman / Assemblywoman">Assemblyman / Assemblywoman</option>
+            <option value="Mayor">Mayor</option>
+            <option value="Deputy Mayor">Deputy Mayor</option>
+            <option value="Councilman / Councilwoman">Councilman / Councilwoman</option>
+            <option value="Commissioner">Commissioner</option>
+            <option value="Supervisor">Supervisor</option>
+            <option value="Deputy Director">Deputy Director</option>
+            <option value="Regional Director">Regional Director</option>
+            <option value="Park Superintendent">Park Superintendent</option>
+            <option value="Deputy Superintendent">Deputy Superintendent</option>
+            <option value="Chief Ranger">Chief Ranger</option>
+            <option value="Park Ranger">Park Ranger</option>
+            <option value="Ranger">Ranger</option>
+            <option value="Mr">Mr</option>
+            <option value="Mrs">Mrs</option>
+            <option value="Dr">Dr</option>
+            <option value="Pastor">Pastor</option>
+            <option value="Attorney">Attorney</option>
+            <option value="Miss">Miss</option>
+            <option value="Nurse">Nurse</option>
+          </select>
           <label for="officer-phone">Phone number</label><input id="officer-phone" name="phone" type="tel" inputmode="tel" autocomplete="off" required maxlength="30" placeholder="(555) 123-4567" aria-describedby="phone-hint"><small id="phone-hint">US numbers work with or without +1. Include a country code for other numbers.</small>
           <p class="consent">Submit only when the officer has requested a demo and agreed to receive the activation text. They can reply STOP to opt out.</p>
           <button class="primary" id="officer-submit" type="submit">Create demo &amp; send text <span aria-hidden="true">→</span></button>
