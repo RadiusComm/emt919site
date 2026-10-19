@@ -7,7 +7,7 @@
   <meta name="referrer" content="same-origin">
   <title>Officer demo registration | EMT919</title>
   <link rel="icon" href="/favicon-responder-badge-32.png">
-  <link rel="stylesheet" href="/event-demo.css?v=20261019-mobile">
+  <link rel="stylesheet" href="/event-demo.css?v=20261019-otp-actions">
   <script src="/event-demo.js?v=20261019-otp" defer></script>
 </head>
 <body>
@@ -22,8 +22,10 @@
           <label for="login-phone">Mobile number</label><input id="login-phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel-national" required maxlength="14" minlength="14" pattern="\([2-9][0-9]{2}\) [2-9][0-9]{2}-[0-9]{4}" placeholder="(202) 555-0123">
           <div id="code-fields" hidden><label for="login-code">6-digit code</label><input id="login-code" name="code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" placeholder="000000"><p class="muted" id="code-help" role="status"></p></div>
           <button class="primary" id="login-submit" type="submit">Send sign-in code →</button>
-          <button id="resend-code" type="button" hidden>Resend code</button>
-          <button id="change-phone" type="button" hidden>Use a different number</button>
+          <div class="login-actions">
+            <button class="secondary-button" id="resend-code" type="button" hidden>Resend code</button>
+            <button class="link-button" id="change-phone" type="button" hidden>Use a different number</button>
+          </div>
         </form>
       </div>
       <div id="registration-view" hidden>
