@@ -7,6 +7,32 @@
  });
  document.addEventListener('click', event => { for (const menu of menus) if (menu.open && !menu.contains(event.target)) menu.open = false; });
  for (const menu of menus) menu.addEventListener('toggle', () => { if (menu.open) for (const other of menus) if (other !== menu) other.open = false; });
+ for (const link of document.querySelectorAll('.mobile-menu nav a')) link.addEventListener('click', () => { link.closest('.mobile-menu').open = false; });
+ // Wide comparisons scroll within their own region, with a visible hint on phones.
+ for (const wrap of document.querySelectorAll('.table-wrap')) {
+  const table = wrap.querySelector('table');
+  if (!table) continue;
+  const hint = document.createElement('p');
+  hint.className = 'table-scroll-hint';
+  hint.textContent = 'Swipe left or right to see all columns.';
+  hint.hidden = true;
+  wrap.before(hint);
+  const update = () => {
+   const scrolls = wrap.scrollWidth > wrap.clientWidth + 1;
+   hint.hidden = !scrolls;
+   if (scrolls) {
+    wrap.tabIndex = 0;
+    wrap.setAttribute('role', 'region');
+    if (!wrap.hasAttribute('aria-label')) wrap.setAttribute('aria-label', table.caption?.textContent.trim() || 'Scrollable data table');
+   } else {
+    wrap.removeAttribute('tabindex');
+    wrap.removeAttribute('role');
+   }
+  };
+  if ('ResizeObserver' in window) { const observer = new ResizeObserver(update); observer.observe(wrap); observer.observe(table); }
+  else window.addEventListener('resize', update);
+  update();
+ }
  const search = document.querySelector('[data-language-search]');
  if (search) {
   const entries = [...document.querySelectorAll('.language-grid > span')];

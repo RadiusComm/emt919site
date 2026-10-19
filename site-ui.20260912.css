@@ -258,3 +258,45 @@ form[aria-busy=true] button{opacity:.7;cursor:wait}
 @media(max-width:360px){.home-page h1{font-size:40px}.home-page .scenario-photos{grid-template-columns:minmax(0,1fr)}.home-page .scenario-photos img{height:190px}.nine-refresh h1{font-size:36px}.nx-map-selected-call dl{grid-template-columns:minmax(0,1fr)}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
 @media print{.on-this-page,.filter-controls,.nx-mobile-demo{display:none}.content-page{max-width:none}.page-hero{padding:20px 0}.page-hero h1{font-size:32px}}
+
+/* Shared phone/tablet shell: do not size the logo against a grid column twice. */
+@media (max-width:1180px) {
+ .site-header { display:flex; }
+ .site-header .mobile-menu { flex:0 0 auto; }
+ .site-header .mobile-menu nav {
+  grid-template-columns:minmax(0,1fr);
+  overflow-x:hidden;
+  overscroll-behavior:contain;
+  max-height:calc(100vh - 104px);
+  max-height:calc(100dvh - 104px);
+ }
+ .site-header .mobile-menu nav a {
+  display:block;
+  min-width:0;
+  min-height:48px;
+  padding:12px 14px;
+  white-space:normal;
+  overflow-wrap:anywhere;
+  line-height:1.5;
+ }
+ .site-header .mobile-menu nav .mobile-cta { display:flex; }
+}
+@media (max-width:600px) {
+ .site-header .brand-lockup { max-width:none; width:168px; flex:0 1 168px; }
+ .site-header .brand-logo--header { width:168px; }
+ .site-header .mobile-menu summary { min-width:76px; }
+ .site-header .mobile-menu nav { max-height:calc(100vh - 88px); max-height:calc(100dvh - 88px); padding-bottom:max(20px,env(safe-area-inset-bottom)); }
+ main :is(input,select,textarea) { min-width:0; scroll-margin-block:100px; }
+ .content-card :is(.button,.text-link), .page-hero .button { max-width:100%; min-height:44px; }
+}
+.table-wrap {
+ max-width:100%;
+ overflow-x:auto;
+ overscroll-behavior-x:contain;
+ -webkit-overflow-scrolling:touch;
+}
+.table-scroll-hint { display:none; }
+@media (max-width:760px) {
+ .table-scroll-hint:not([hidden]) { display:block; font:500 13px/1.5 Inter,Arial,sans-serif; color:#526071; margin:16px 0 8px; }
+}
+@media print { .table-scroll-hint { display:none!important; } }
