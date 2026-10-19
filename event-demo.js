@@ -1,6 +1,18 @@
 (() => {
   const $ = id => document.getElementById(id);
   let busy = false;
+  let codeRequested = false;
+  let resendAt = 0;
+  function resetLogin() {
+    codeRequested = false;
+    $('login-phone').readOnly = false;
+    $('login-code').value = '';
+    $('login-code').required = false;
+    $('code-fields').hidden = true;
+    $('resend-code').hidden = true;
+    $('change-phone').hidden = true;
+    $('login-submit').textContent = 'Send sign-in code →';
+  }
   function view(id) {
     ['checking', 'login-view', 'registration-view', 'result-view'].forEach(v => $(v).hidden = v !== id);
     $('feedback').hidden = true;
@@ -52,19 +64,36 @@
     validatePhone();
   });
   $('officer-form').addEventListener('reset', () => $('officer-phone').setCustomValidity(''));
-  $('show-password').addEventListener('click', () => {
-    const show = $('password').type === 'password';
-    $('password').type = show ? 'text' : 'password';
-    $('show-password').textContent = show ? 'Hide' : 'Show';
-    $('show-password').setAttribute('aria-label', show ? 'Hide password' : 'Show password');
+  $('login-phone').addEventListener('input', () => { $('login-phone').value = formatPhoneInput($('login-phone').value); });
+  $('login-code').addEventListener('input', () => { $('login-code').value = $('login-code').value.replace(/\D/g, '').slice(0, 6); });
+  async function requestCode() {
+    const data = await api('request-code', { phone: `+1${$('login-phone').value.replace(/\D/g, '')}` });
+    codeRequested = true; resendAt = Date.now() + 60000;
+    $('login-phone').readOnly = true;
+    $('login-code').required = true;
+    $('code-fields').hidden = false;
+    $('code-help').textContent = data.message;
+    $('resend-code').hidden = false; $('change-phone').hidden = false;
+    $('login-code').focus();
+  }
+  $('change-phone').addEventListener('click', () => { if (!busy) { resetLogin(); $('login-phone').focus(); } });
+  $('resend-code').addEventListener('click', async () => {
+    if (busy) return;
+    if (Date.now() < resendAt) { message(`Please wait ${Math.ceil((resendAt - Date.now()) / 1000)} seconds before resending.`); return; }
+    setBusy($('login-submit'), 'Sending code…', true);
+    try { await requestCode(); } catch (error) { message(error.message); }
+    finally { setBusy($('login-submit'), 'Verify & sign in →', false); }
   });
   $('login-form').addEventListener('submit', async event => {
     event.preventDefault(); if (busy) return;
     $('feedback').hidden = true;
-    setBusy($('login-submit'), 'Signing in…', true);
-    try { signedIn(await api('login', { email: $('email').value.trim(), password: $('password').value })); $('password').value = ''; $('officer-name').focus(); }
+    setBusy($('login-submit'), codeRequested ? 'Verifying code…' : 'Sending code…', true);
+    try {
+      if (!codeRequested) await requestCode();
+      else { signedIn(await api('verify-code', { phone: `+1${$('login-phone').value.replace(/\D/g, '')}`, code: $('login-code').value })); resetLogin(); $('officer-name').focus(); }
+    }
     catch (error) { message(error.message || 'Could not sign in. Check your connection and try again.'); }
-    finally { setBusy($('login-submit'), 'Sign in →', false); }
+    finally { setBusy($('login-submit'), codeRequested ? 'Verify & sign in →' : 'Send sign-in code →', false); }
   });
   $('officer-form').addEventListener('submit', async event => {
     event.preventDefault(); if (busy) return;
@@ -79,13 +108,13 @@
       $('next-steps').hidden = !data.sms_sent;
       $('officer-form').reset(); view('result-view'); $('add-another').focus();
     } catch (error) {
-      if (error.status === 401) { view('login-view'); message('Your session expired. Sign in again; your entered officer details are preserved.'); }
+      if (error.status === 401) { resetLogin(); view('login-view'); message('Your session expired. Sign in again; your entered officer details are preserved.'); }
       else message(error.message || 'Could not confirm the result. Check the CRM before retrying.');
     } finally { setBusy($('officer-submit'), 'Create demo & send text →', false); }
   });
   async function signOut() {
     if (busy) return;
-    try { await api('logout', {}); $('officer-form').reset(); $('password').value = ''; view('login-view'); }
+    try { await api('logout', {}); $('officer-form').reset(); resetLogin(); view('login-view'); }
     catch { message('Could not sign out. Please try again.'); }
   }
   $('sign-out').addEventListener('click', signOut);

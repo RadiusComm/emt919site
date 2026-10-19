@@ -2,7 +2,7 @@
 const endpoint = 'https://ptoqbvoxtknebussntdh.supabase.co/functions/v1/event-demo';
 export function createHandler(requestFetch = fetch) {
   return async request => {
-    const match = new URL(request.url).pathname.match(/^\/api\/demo\/(session|login|logout|officers)$/);
+    const match = new URL(request.url).pathname.match(/^\/api\/demo\/(session|login|request-code|verify-code|logout|officers)$/);
     if (!match) return Response.json({ error: 'Not found.' }, { status: 404 });
     const route = match[1];
     if (request.method !== (route === 'session' ? 'GET' : 'POST')) return Response.json({ error: 'Method not allowed.' }, { status: 405 });
