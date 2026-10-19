@@ -8,7 +8,7 @@
   <title>Officer demo registration | EMT919</title>
   <link rel="icon" href="/favicon-responder-badge-32.png">
   <link rel="stylesheet" href="/event-demo.css?v=20261019-mobile">
-  <script src="/event-demo.js" defer></script>
+  <script src="/event-demo.js?v=20261019-phone" defer></script>
 </head>
 <body>
   <header><a href="/" aria-label="EMT919 home"><img src="/emt919-logo-header-responderbadge-standard.png" alt="EMT919" width="250" height="84"></a><span class="secure"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>Staff access</span></header>
@@ -89,7 +89,7 @@
             <option value="Miss">Miss</option>
             <option value="Nurse">Nurse</option>
           </select>
-          <label for="officer-phone">Phone number</label><input id="officer-phone" name="phone" type="tel" inputmode="tel" autocomplete="off" required maxlength="30" placeholder="(555) 123-4567" aria-describedby="phone-hint"><small id="phone-hint">US numbers work with or without +1. Include a country code for other numbers.</small>
+          <label for="officer-phone">Phone number</label><input id="officer-phone" name="phone" type="tel" inputmode="numeric" autocomplete="off" required minlength="14" maxlength="14" pattern="\([2-9][0-9]{2}\) [2-9][0-9]{2}-[0-9]{4}" placeholder="(202) 555-0123" aria-describedby="phone-hint" title="Enter a valid 10-digit US phone number."><small id="phone-hint">Enter 10 digits. Brackets and spacing are added automatically; no +1 needed.</small>
           <p class="consent">Submit only when the officer has requested a demo and agreed to receive the activation text. They can reply STOP to opt out.</p>
           <button class="primary" id="officer-submit" type="submit">Create demo &amp; send text <span aria-hidden="true">→</span></button>
         </form>

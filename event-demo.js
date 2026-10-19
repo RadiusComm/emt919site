@@ -21,6 +21,37 @@
     button.setAttribute('aria-busy', String(running));
   }
   function signedIn(data) { $('operator-email').textContent = data.email; view('registration-view'); }
+  // Match the EMT dashboard's ten-digit phone mask and US area/exchange validation.
+  function formatPhoneInput(raw) {
+    const digits = raw.replace(/\D/g, '').slice(0, 10);
+    if (!digits.length) return '';
+    if (digits.length <= 3) return `(${digits}`;
+    if (digits.length <= 6) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+    return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+  }
+  function validatePhone() {
+    const digits = $('officer-phone').value.replace(/\D/g, '');
+    let error = '';
+    if (digits.length && digits.length !== 10) error = 'Enter all 10 digits of the US phone number.';
+    else if (digits.length === 10 && /^[01]/.test(digits)) error = 'US area codes cannot start with 0 or 1.';
+    else if (digits.length === 10 && /^[01]/.test(digits.slice(3))) error = 'The three digits after the area code cannot start with 0 or 1.';
+    $('officer-phone').setCustomValidity(error);
+    return !error && digits.length === 10;
+  }
+  $('officer-phone').addEventListener('input', event => {
+    const input = event.target;
+    const oldValue = input.value;
+    const oldCaret = input.selectionStart ?? oldValue.length;
+    const atEnd = oldCaret === oldValue.length;
+    const digitsBefore = oldValue.slice(0, oldCaret).replace(/\D/g, '').length;
+    input.value = formatPhoneInput(oldValue);
+    if (!atEnd && digitsBefore > 0) {
+      let seen = 0;
+      for (let i = 0; i < input.value.length; i++) if (/\d/.test(input.value[i]) && ++seen === digitsBefore) { input.setSelectionRange(i + 1, i + 1); break; }
+    }
+    validatePhone();
+  });
+  $('officer-form').addEventListener('reset', () => $('officer-phone').setCustomValidity(''));
   $('show-password').addEventListener('click', () => {
     const show = $('password').type === 'password';
     $('password').type = show ? 'text' : 'password';
@@ -37,8 +68,9 @@
   });
   $('officer-form').addEventListener('submit', async event => {
     event.preventDefault(); if (busy) return;
+    if (!validatePhone()) { $('officer-phone').reportValidity(); return; }
     $('feedback').hidden = true;
-    const details = { name: $('officer-name').value.trim(), rank: $('officer-rank').value.trim(), phone: $('officer-phone').value.trim() };
+    const details = { name: $('officer-name').value.trim(), rank: $('officer-rank').value.trim(), phone: `+1${$('officer-phone').value.replace(/\D/g, '')}` };
     setBusy($('officer-submit'), 'Creating demo & sending text…', true);
     try {
       const data = await api('officers', details);
