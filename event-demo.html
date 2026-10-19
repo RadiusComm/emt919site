@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="referrer" content="same-origin">
+  <title>Officer demo registration | EMT919</title>
+  <link rel="icon" href="/favicon-responder-badge-32.png">
+  <link rel="stylesheet" href="/event-demo.css">
+  <script src="/event-demo.js" defer></script>
+</head>
+<body>
+  <header><a href="/" aria-label="EMT919 home"><img src="/emt919-logo-header-responderbadge-standard.png" alt="EMT919" width="250" height="84"></a><span class="secure"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>Staff access</span></header>
+  <main>
+    <section class="intro"><p class="eyebrow">EMT919 · EVENT DEMOS</p><h1>A field demo.<br> Ready in moments.</h1><p class="lead">Register an officer, send their activation text, and put #919 in their hands.</p><ol><li><span>01</span>Enter the officer’s details.</li><li><span>02</span>They receive a text and reply YES.</li><li><span>03</span>They dial #919 to try EMT919.</li></ol><p class="intro-note">Seven days of demo access through the existing EMT919 demo program.</p></section>
+    <section class="panel" aria-label="Demo registration">
+      <div id="checking" role="status"><span class="spinner"></span> Checking sign-in…</div>
+      <div id="login-view" hidden>
+        <p class="eyebrow">AUTHORIZED STAFF ONLY</p><h2>Sign in to add officers</h2><p class="muted">Use your event demo account to get started.</p>
+        <form id="login-form">
+          <label for="email">Email address</label><input id="email" name="email" type="email" autocomplete="username" required maxlength="254" placeholder="demo@emt919.com">
+          <label for="password">Password</label><div class="password-field"><input id="password" name="password" type="password" autocomplete="current-password" required maxlength="256"><button id="show-password" type="button" aria-label="Show password">Show</button></div>
+          <button class="primary" id="login-submit" type="submit">Sign in <span aria-hidden="true">→</span></button>
+        </form>
+      </div>
+      <div id="registration-view" hidden>
+        <div class="session"><span id="operator-email"></span><button id="sign-out" type="button">Sign out</button></div>
+        <p class="eyebrow">NEW OFFICER DEMO</p><h2>Ready to try #919?</h2><p class="muted">Three details. One activation text.</p>
+        <form id="officer-form">
+          <label for="officer-name">Officer name</label><input id="officer-name" name="name" autocomplete="off" required minlength="2" maxlength="120" placeholder="Full name">
+          <label for="officer-rank">Rank</label><input id="officer-rank" name="rank" list="ranks" autocomplete="off" required maxlength="80" placeholder="Select or enter a rank"><datalist id="ranks"><option value="Officer"><option value="Sergeant"><option value="Lieutenant"><option value="Captain"><option value="Chief"><option value="Deputy"><option value="Sheriff"><option value="Detective"><option value="Trooper"><option value="Corporal"><option value="Commander"></datalist>
+          <label for="officer-phone">Phone number</label><input id="officer-phone" name="phone" type="tel" inputmode="tel" autocomplete="off" required maxlength="30" placeholder="(555) 123-4567" aria-describedby="phone-hint"><small id="phone-hint">US numbers work with or without +1. Include a country code for other numbers.</small>
+          <p class="consent">Submit only when the officer has requested a demo and agreed to receive the activation text. They can reply STOP to opt out.</p>
+          <button class="primary" id="officer-submit" type="submit">Create demo &amp; send text <span aria-hidden="true">→</span></button>
+        </form>
+      </div>
+      <div id="result-view" hidden>
+        <span class="result-icon" aria-hidden="true">✓</span><p class="eyebrow">OFFICER REGISTERED</p><h2 id="result-title">Activation text sent</h2><p id="result-copy"></p><div id="next-steps" class="next-steps"><strong>What happens next</strong><p>The officer replies <b>YES</b> to activate, then dials <b>#919</b> from this phone.</p></div><button id="add-another" class="primary" type="button">Add another officer <span aria-hidden="true">+</span></button><button id="result-sign-out" class="text-button" type="button">Sign out</button>
+      </div>
+      <p id="feedback" class="feedback" role="alert" hidden></p>
+      <p class="panel-foot">Secure registration · EMT919</p>
+    </section>
+  </main>
+  <footer><span>EMT919 · Emergency Multi-Translator</span><a href="/privacy">Privacy</a><a href="/sms-terms">SMS terms</a></footer>
+</body>
+</html>
