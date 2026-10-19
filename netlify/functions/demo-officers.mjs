@@ -14,7 +14,11 @@ export function createHandler(requestFetch = fetch) {
       const body = request.method === 'POST' ? await request.text() : undefined;
       if (body?.length > 4096) return Response.json({ error: 'Request too large.' }, { status: 413, headers: responseHeaders });
       const upstream = await requestFetch(`${endpoint}?route=${route}`, { method: request.method, headers, ...(body !== undefined ? { body } : {}), signal: AbortSignal.timeout(35000) });
-      if (upstream.headers.has('set-cookie')) responseHeaders['Set-Cookie'] = upstream.headers.get('set-cookie');
+      // Forward only our host-bound session cookie. The upstream can also set
+      // Supabase/Cloudflare cookies; combining them corrupts Max-Age and makes
+      // browsers reject the session cookie (and their Domain is not this site).
+      const sessionCookie = upstream.headers.get('set-cookie')?.match(/(?:^|,\s*)(__Host-emt-demo=[^,]*)/)?.[1];
+      if (sessionCookie) responseHeaders['Set-Cookie'] = sessionCookie;
       return new Response(upstream.body, { status: upstream.status, headers: responseHeaders });
     } catch { return Response.json({ error: route === 'officers' ? 'Could not confirm the result. Check the CRM before trying again.' : 'The demo service is temporarily unavailable.' }, { status: 503, headers: responseHeaders }); }
   };

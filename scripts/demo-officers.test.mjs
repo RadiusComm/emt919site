@@ -33,3 +33,12 @@ test('bridge returns sign-in failures and ambiguous registration failures safely
   assert.equal(response.status, 503);
   assert.match((await response.json()).error, /Check the CRM/);
 });
+
+test('bridge isolates the session cookie from upstream infrastructure cookies', async () => {
+  const headers = new Headers();
+  headers.append('Set-Cookie', '__Host-emt-demo=signed-session; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=28800');
+  headers.append('Set-Cookie', '__cf_bm=upstream-only; Domain=supabase.co; Path=/; Expires=Mon, 19 Oct 2026 14:00:00 GMT');
+  const handler = createHandler(async () => new Response('{}', { headers }));
+  const response = await handler(new Request(`${origin}/api/demo/login`, { method: 'POST', headers: { Origin: origin, 'Content-Type': 'application/json' }, body: '{}' }));
+  assert.equal(response.headers.get('set-cookie'), '__Host-emt-demo=signed-session; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=28800');
+});
