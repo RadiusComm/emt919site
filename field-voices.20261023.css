@@ -1,0 +1,35 @@
+.field-voices{background:#f4f2ec;color:#08111f;padding:42px max(24px,calc((100% - 1120px)/2));border-bottom:1px solid #d7dde5}
+.field-voices *{box-sizing:border-box}
+.field-voices .voices-header{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:22px}
+.field-voices .voices-kicker{margin:0 0 9px;color:#1452c4;font-size:11px;font-weight:750;letter-spacing:.14em;text-transform:uppercase}
+.field-voices h2{margin:0;font-family:'Barlow Condensed','Arial Narrow',Arial,sans-serif;font-size:clamp(32px,4vw,48px);line-height:1.02;text-transform:uppercase;color:#08111f}
+.field-voices .voices-controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;flex-shrink:0}
+.field-voices [hidden]{display:none!important}
+.field-voices .voices-controls button{appearance:none;background:#fff;color:#16335c;border:1px solid #b9c6d9;border-radius:4px;padding:10px 14px;min-width:44px;min-height:44px;font:600 13px/1.2 Inter,Arial,sans-serif;cursor:pointer}
+.field-voices .voices-controls button:hover{background:#e5edf9}
+.field-voices .voices-controls button:focus-visible,.field-voices .voices-track:focus-visible,.field-voices summary:focus-visible{outline:3px solid #1452c4;outline-offset:4px}
+.field-voices .voices-track{display:flex;gap:20px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-inline:2px;padding:3px 2px 14px;scrollbar-width:thin;scrollbar-color:#8b9eb8 transparent;direction:ltr}
+.field-voices .voices-card{flex:0 0 calc((100% - 20px)/2);min-width:0;margin:0;background:#fff;border:1px solid #d4dce7;border-top:3px solid #1452c4;border-radius:4px;padding:25px 28px;scroll-snap-align:start;display:flex;flex-direction:column;justify-content:space-between;gap:22px}
+.field-voices .voices-card:first-child{border-top-color:#b3142b}
+.field-voices .voices-card blockquote{margin:0;font:400 19px/1.55 Inter,Arial,sans-serif;letter-spacing:-.015em;color:#102039}
+.field-voices .voices-card blockquote p{margin:0;font:inherit;color:inherit}
+.field-voices .voices-role{margin:0;font:650 13px/1.5 Inter,Arial,sans-serif;color:#19365c;overflow-wrap:anywhere}
+.field-voices .voices-note{max-width:850px;margin:12px 0 0;font:400 12px/1.6 Inter,Arial,sans-serif;color:#536174}
+.field-voices .voices-backgrounds{border-top:1px solid #d4dce7;margin-top:22px;padding-top:12px}
+.field-voices .voices-backgrounds summary{font:600 14px/1.5 Inter,Arial,sans-serif;cursor:pointer;padding:10px 0;min-height:44px;color:#19365c}
+.field-voices .voices-background-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:12px 0 4px}
+.field-voices .voices-background-grid .voices-card{padding:24px;gap:18px}
+.field-voices .voices-background-grid blockquote{font-size:16px}
+.field-voices .voices-sr{position:absolute!important;width:1px!important;height:1px!important;margin:-1px!important;padding:0!important;overflow:hidden!important;clip-path:inset(50%)!important;white-space:nowrap!important;border:0!important}
+.field-voices--nine{background:#0b1729;border-bottom-color:#253b59}
+.field-voices--nine h2{color:#fff}
+.field-voices--nine .voices-kicker{color:#bdd7fc}
+.field-voices--nine .voices-card{background:#11213a;border-color:#344a68;border-top-color:#7da8ee}
+.field-voices--nine .voices-card blockquote{color:#f5f8fd}
+.field-voices--nine .voices-role{color:#c4dafa}
+.field-voices--nine .voices-note{color:#bdcadd}
+.field-voices[data-reduced="true"] .voices-track{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible;scroll-snap-type:none}
+@media(max-width:700px){.field-voices{padding:30px 20px}.field-voices .voices-header{display:block}.field-voices h2{font-size:36px}.field-voices .voices-controls{margin-top:18px}.field-voices .voices-card{flex-basis:100%;padding:23px 24px}.field-voices .voices-card blockquote{font-size:18px}.field-voices .voices-background-grid{grid-template-columns:1fr}.field-voices[data-reduced="true"] .voices-track{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.field-voices .voices-track{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible;scroll-snap-type:none;scroll-behavior:auto}.field-voices .voices-controls{display:none!important}}
+@media(prefers-reduced-motion:reduce) and (max-width:700px){.field-voices .voices-track{grid-template-columns:1fr}}
+@media print{.field-voices .voices-track{display:grid;grid-template-columns:1fr;overflow:visible}.field-voices .voices-card{break-inside:avoid}.field-voices .voices-controls{display:none!important}}
