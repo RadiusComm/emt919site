@@ -1,21 +1,24 @@
 /* Focused source-integrity, quote and continuous ticker lifecycle checks. No network writes. */
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),vm=require('node:vm'),{execFileSync}=require('node:child_process');
 const root=path.resolve(__dirname,'..'),read=f=>fs.readFileSync(path.join(root,f),'utf8');
-const base='9ad0b51b05ff47ef4e76a53ec7e1d5bb0c6b1d0e';
+const base='7c651d94c13ae99640af7f8f5cc38528c2374c78';
 for(const file of ['index.html','9-line.html']){
  const html=read(file),before=execFileSync('git',['show',`${base}:${file}`],{cwd:root,encoding:'utf8'}),oldSection=before.match(/<section class="field-ticker[\s\S]*?<\/section>/)[0];
- const restored=html.replace(/<section class="field-ticker[\s\S]*?<\/section>/,oldSection).replace('/field-ticker.20261023-fast.css','/field-ticker.20261023.css').replace('/field-ticker.20261023-fast.js','/field-ticker.20261023-scroll.js');
+ const restored=html.replace(/<section class="field-ticker[\s\S]*?<\/section>/,oldSection).replace('/field-ticker.20261023-two-line.css','/field-ticker.20261023-fast.css');
  assert.equal(restored.replace(/\r/g,''),before.replace(/\r/g,''),'Unrelated HTML preserved: '+file);
  const section=html.match(/<section class="field-ticker[\s\S]*?<\/section>/)[0];
  assert.ok(!/<article|<details|<img|<blockquote|<button/.test(section),'No cards, expansion, portraits, logos or visible buttons');
  const baselineQuotes=[...oldSection.matchAll(/<span class="ticker-item" role="listitem"><span>([\s\S]*?)&nbsp; &#8212;/g)].map(m=>m[1]);
- for(const quote of baselineQuotes)assert.ok(section.includes(quote),'Exact original quote retained');
+ const renderedCopy=section.replace(/<[^>]*>/g,'');
+ for(const quote of baselineQuotes)assert.ok(renderedCopy.includes(quote),'Exact original quote retained across two-line spans');
+ assert.equal((section.match(/class="ticker-lines"/g)||[]).length,file==='index.html'?5:2);
+ assert.equal((section.match(/class="ticker-line"/g)||[]).length,file==='index.html'?10:4,'Exactly two text lines per testimonial');
  assert.equal((section.match(/class="ticker-item"/g)||[]).length,file==='index.html'?5:2);
  for(const match of html.matchAll(/(?:src|href)="(\/[^"?#]+\.(?:css|js|png|webp|jpg|svg))"/g))assert.ok(fs.existsSync(path.join(root,match[1])),'Asset exists: '+match[1]);
 }
 for(const role of ['Sergeant, Philadelphia Police Department','Police Officer, Oklahoma State Police','Federal Agent','Marine Corps Sergeant','Patrol Officer, North Carolina'])assert.ok(read('index.html').includes(`<strong class="ticker-role">${role}</strong>`));
 for(const role of ['Former Officer, San Diego Police Department','Former Undercover Narcotics'])assert.ok(read('9-line.html').includes(`<strong class="ticker-role">${role}</strong>`));
-const css=read('field-ticker.20261023-fast.css');assert.ok(css.includes('height:72px')&&css.includes('height:88px')&&css.includes('white-space:nowrap')&&css.includes('prefers-reduced-motion:reduce'));
+const css=read('field-ticker.20261023-two-line.css');assert.ok(css.includes('height:84px')&&css.includes('height:100px')&&css.includes('grid-template-rows:22px 22px')&&css.includes('white-space:nowrap')&&css.includes('prefers-reduced-motion:reduce'));
 function el(){return {events:{},attrs:{},dataset:{},hidden:false,textContent:'',addEventListener(k,f){this.events[k]=f},setAttribute(k,v){this.attrs[k]=v}}}
 function setup(reduced=false){
  const section=el(),viewport={...el(),clientWidth:1000},toggle=el(),group={...el(),scrollWidth:5000,cloneNode(){return el()}},runner={appendChild(c){this.clone=c}};
@@ -40,4 +43,4 @@ t.motion.matches=true;t.motion.events.change();assert.equal(t.viewport.scrollLef
 const r=setup(true);assert.equal(r.frames.size,0);assert.equal(r.section.dataset.motionState,'reduced','Static reduced-motion load');
 const b=setup();b.doc.hidden=true;b.doc.events.visibilitychange();assert.equal(b.frames.size,0,'Background tab pauses');
 const o=setup();o.observer([{isIntersecting:false}]);assert.equal(o.frames.size,0,'Offscreen pauses');
-console.log('PASS: visible button removed; speed 22 -> 33px/s (1.5x); exact seven quotes/roles; product/team separation; unrelated source/hero preserved; fixed-height line; continuous loop; hover/focus and persistent Space-key pause; native touch scrolling; reduced-motion static; background/offscreen pause.');
+console.log('PASS: exactly two word-boundary text lines per complete testimonial; no visible button or expanding cards; 33px/s preserved; exact seven quotes/roles; product/team separation; unrelated source/hero preserved; fixed strip height; continuous loop; hover/focus/Space pause; native scrolling; reduced-motion static.');
