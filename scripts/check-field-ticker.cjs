@@ -4,7 +4,7 @@ const root=path.resolve(__dirname,'..'),read=f=>fs.readFileSync(path.join(root,f
 const base='d73c35d14b98b2616e3dc6d3a61ed63bf8fdef1d';
 for(const file of ['index.html','9-line.html']){
  const html=read(file),before=execFileSync('git',['show',`${base}:${file}`],{cwd:root,encoding:'utf8'}),oldSection=before.match(/<section class="field-voices[\s\S]*?<\/section>/)[0];
- const restored=html.replace(/<section class="field-ticker[\s\S]*?<\/section>/,oldSection).replace('/field-ticker.20261023.css','/field-voices.20261023.css').replace('/field-ticker.20261023.js','/field-voices.20261023.js');
+ const restored=html.replace(/<section class="field-ticker[\s\S]*?<\/section>/,oldSection).replace('/field-ticker.20261023.css','/field-voices.20261023.css').replace(/\/field-ticker\.20261023(?:-scroll)?\.js/,'/field-voices.20261023.js');
  assert.equal(restored.replace(/\r/g,''),before.replace(/\r/g,''),'Unrelated HTML preserved: '+file);
  const section=html.match(/<section class="field-ticker[\s\S]*?<\/section>/)[0];
  assert.ok(!/<article|<details|<img|<blockquote/.test(section),'No cards, expansion, portraits or logos');
@@ -18,16 +18,17 @@ for(const role of ['Former Officer, San Diego Police Department','Former Underco
 const css=read('field-ticker.20261023.css');assert.ok(css.includes('height:72px')&&css.includes('height:88px')&&css.includes('white-space:nowrap')&&css.includes('prefers-reduced-motion:reduce'));
 function el(){return {events:{},attrs:{},dataset:{},hidden:false,textContent:'',addEventListener(k,f){this.events[k]=f},setAttribute(k,v){this.attrs[k]=v}}}
 function setup(reduced=false){
- const section=el(),viewport={...el(),scrollLeft:0,clientWidth:1000},toggle=el(),group={...el(),scrollWidth:5000,cloneNode(){return el()}},runner={appendChild(c){this.clone=c}};
+ const section=el(),viewport={...el(),clientWidth:1000},toggle=el(),group={...el(),scrollWidth:5000,cloneNode(){return el()}},runner={appendChild(c){this.clone=c}};
+ let scrollPosition=0;Object.defineProperty(viewport,'scrollLeft',{get(){return scrollPosition},set(v){scrollPosition=Math.round(v)}});
  const els={'[data-ticker-viewport]':viewport,'[data-ticker-runner]':runner,'[data-ticker-group]':group,'[data-ticker-toggle]':toggle};section.querySelector=s=>els[s];section.contains=e=>e===viewport;
  const motion={...el(),matches:reduced},doc={...el(),hidden:false,querySelectorAll:()=>[section]},frames=new Map();let id=0,observer;
  const win={matchMedia:()=>motion,requestAnimationFrame(f){frames.set(++id,f);return id},cancelAnimationFrame(i){frames.delete(i)},IntersectionObserver:class{constructor(f){observer=f}observe(){observer([{isIntersecting:true}])}}};
- vm.runInNewContext(read('field-ticker.20261023.js'),{window:win,document:doc});
+ vm.runInNewContext(read('field-ticker.20261023-scroll.js'),{window:win,document:doc});
  return {section,viewport,toggle,runner,motion,doc,frames,observer,tick(t){const [id,f]=frames.entries().next().value;frames.delete(id);f(t)}};
 }
 const t=setup();assert.equal(t.runner.clone.attrs['aria-hidden'],'true');assert.equal(t.section.dataset.motionState,'playing');
-t.tick(0);t.tick(100);t.tick(200);assert.ok(Math.abs(t.viewport.scrollLeft-4.4)<0.001,'Continuous 22px/second pace');
-t.viewport.scrollLeft=4999;t.tick(300);assert.ok(t.viewport.scrollLeft<2,'Seamless loop');
+t.tick(0);for(let time=16;time<=160;time+=16)t.tick(time);assert.equal(t.viewport.scrollLeft,4,'Continuous pace survives integer-rounded browser scrollLeft');
+const loop=setup();loop.viewport.scrollLeft=4999;loop.section.events.pointerenter({pointerType:'mouse'});loop.section.events.pointerleave();loop.tick(0);loop.tick(100);assert.ok(loop.viewport.scrollLeft<2,'Seamless loop');
 t.section.events.pointerenter({pointerType:'mouse'});assert.equal(t.frames.size,0,'Hover pauses');t.section.events.pointerleave();assert.equal(t.frames.size,1);
 t.section.events.focusin();assert.equal(t.frames.size,0,'Focus pauses');t.section.events.focusout({relatedTarget:null});assert.equal(t.frames.size,1);
 t.toggle.events.click();assert.equal(t.toggle.textContent,'Play');assert.equal(t.frames.size,0,'Pause control');t.toggle.events.click();assert.equal(t.frames.size,1);
