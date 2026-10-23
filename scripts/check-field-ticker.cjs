@@ -1,6 +1,7 @@
 /* Focused source-integrity, quote and continuous ticker lifecycle checks. No network writes. */
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),vm=require('node:vm'),{execFileSync}=require('node:child_process');
 const root=path.resolve(__dirname,'..'),read=f=>fs.readFileSync(path.join(root,f),'utf8');
+const chiefItem="<span class=\"ticker-item\" role=\"listitem\"><span class=\"ticker-lines\"><span class=\"ticker-line\">\"Using #919 for translation is amazing, I wish I had</span> <span class=\"ticker-line\">this when I was a patrol officer.\"&nbsp; &#8212;&nbsp; <strong class=\"ticker-role\">Retired Florida Police Chief</strong></span></span><span class=\"ticker-divider\" aria-hidden=\"true\"><span class=\"nine-brand-slash\">/</span></span></span>";
 const base='7c651d94c13ae99640af7f8f5cc38528c2374c78';
 for(const file of ['index.html','9-line.html']){
  const html=read(file),before=execFileSync('git',['show',`${base}:${file}`],{cwd:root,encoding:'utf8'}),oldSection=before.match(/<section class="field-ticker[\s\S]*?<\/section>/)[0];
@@ -11,18 +12,21 @@ for(const file of ['index.html','9-line.html']){
  const baselineQuotes=[...oldSection.matchAll(/<span class="ticker-item" role="listitem"><span>([\s\S]*?)&nbsp; &#8212;/g)].map(m=>m[1]);
  const renderedCopy=section.replace(/<[^>]*>/g,'');
  for(const quote of baselineQuotes)assert.ok(renderedCopy.includes(quote),'Exact original quote retained across two-line spans');
- assert.equal((section.match(/class="ticker-lines"/g)||[]).length,file==='index.html'?5:2);
- assert.equal((section.match(/class="ticker-line"/g)||[]).length,file==='index.html'?10:4,'Exactly two text lines per testimonial');
- assert.equal((section.match(/class="ticker-item"/g)||[]).length,file==='index.html'?5:2);
+ assert.equal((section.match(/class="ticker-lines"/g)||[]).length,file==='index.html'?6:2);
+ assert.equal((section.match(/class="ticker-line"/g)||[]).length,file==='index.html'?12:4,'Exactly two text lines per testimonial');
+ assert.equal((section.match(/class="ticker-item"/g)||[]).length,file==='index.html'?6:2);
  const slash='<span class="ticker-divider" aria-hidden="true"><span class="nine-brand-slash">/</span></span>';
  const dot='<span class="ticker-divider" aria-hidden="true">&#8226;</span>';
- assert.equal(section.split(slash).length-1,file==='index.html'?5:2,'Every separator reuses existing 9/Line slash');
+ assert.equal(section.split(slash).length-1,file==='index.html'?6:2,'Every separator reuses existing 9/Line slash');
  const previous=execFileSync('git',['show',`13c841c41bc24e47e60119837319c6a37c9b5530:${file}`],{cwd:root,encoding:'utf8'});
- assert.equal(html.replaceAll(slash,dot).replace(/\r/g,''),previous.replace(/\r/g,''),'Only separator markup changed: '+file);
+ assert.equal(html.replace(chiefItem,'').replaceAll(slash,dot).replaceAll('Detective, Oklahoma Police Department','Police Officer, Oklahoma State Police').replace(/\r/g,''),previous.replace(/\r/g,''),'Approved separator and attribution changes only: '+file);
+ const attributionBaseline=execFileSync('git',['show',`2d4481d905835dcd4ee3be4da14d7f257e7f00f1:${file}`],{cwd:root,encoding:'utf8'});
+ assert.equal(html.replace(chiefItem,'').replaceAll('Detective, Oklahoma Police Department','Police Officer, Oklahoma State Police').replace(/\r/g,''),attributionBaseline.replace(/\r/g,''),'Only requested attribution changed from current production: '+file);
  for(const match of html.matchAll(/(?:src|href)="(\/[^"?#]+\.(?:css|js|png|webp|jpg|svg))"/g))assert.ok(fs.existsSync(path.join(root,match[1])),'Asset exists: '+match[1]);
 }
-for(const role of ['Sergeant, Philadelphia Police Department','Police Officer, Oklahoma State Police','Federal Agent','Marine Corps Sergeant','Patrol Officer, North Carolina'])assert.ok(read('index.html').includes(`<strong class="ticker-role">${role}</strong>`));
+for(const role of ['Sergeant, Philadelphia Police Department','Detective, Oklahoma Police Department','Federal Agent','Marine Corps Sergeant','Patrol Officer, North Carolina','Retired Florida Police Chief'])assert.ok(read('index.html').includes(`<strong class="ticker-role">${role}</strong>`));
 for(const role of ['Former Officer, San Diego Police Department','Former Undercover Narcotics'])assert.ok(read('9-line.html').includes(`<strong class="ticker-role">${role}</strong>`));
+assert.ok(read('index.html').includes(chiefItem),'Exact new chief quote and attribution');
 const css=read('field-ticker.20261023-two-line.css');assert.ok(css.includes('height:84px')&&css.includes('height:100px')&&css.includes('grid-template-rows:22px 22px')&&css.includes('white-space:nowrap')&&css.includes('prefers-reduced-motion:reduce'));
 function el(){return {events:{},attrs:{},dataset:{},hidden:false,textContent:'',addEventListener(k,f){this.events[k]=f},setAttribute(k,v){this.attrs[k]=v}}}
 function setup(reduced=false){
@@ -48,4 +52,4 @@ t.motion.matches=true;t.motion.events.change();assert.equal(t.viewport.scrollLef
 const r=setup(true);assert.equal(r.frames.size,0);assert.equal(r.section.dataset.motionState,'reduced','Static reduced-motion load');
 const b=setup();b.doc.hidden=true;b.doc.events.visibilitychange();assert.equal(b.frames.size,0,'Background tab pauses');
 const o=setup();o.observer([{isIntersecting:false}]);assert.equal(o.frames.size,0,'Offscreen pauses');
-console.log('PASS: exactly two word-boundary text lines per complete testimonial; no visible button or expanding cards; 33px/s preserved; exact seven quotes/roles; product/team separation; unrelated source/hero preserved; fixed strip height; continuous loop; hover/focus/Space pause; native scrolling; reduced-motion static.');
+console.log('PASS: exactly two word-boundary text lines per complete testimonial; no visible button or expanding cards; 33px/s preserved; exact eight quotes/roles; product/team separation; unrelated source/hero preserved; fixed strip height; continuous loop; hover/focus/Space pause; native scrolling; reduced-motion static.');
