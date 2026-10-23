@@ -14,6 +14,11 @@ for(const file of ['index.html','9-line.html']){
  assert.equal((section.match(/class="ticker-lines"/g)||[]).length,file==='index.html'?5:2);
  assert.equal((section.match(/class="ticker-line"/g)||[]).length,file==='index.html'?10:4,'Exactly two text lines per testimonial');
  assert.equal((section.match(/class="ticker-item"/g)||[]).length,file==='index.html'?5:2);
+ const slash='<span class="ticker-divider" aria-hidden="true"><span class="nine-brand-slash">/</span></span>';
+ const dot='<span class="ticker-divider" aria-hidden="true">&#8226;</span>';
+ assert.equal(section.split(slash).length-1,file==='index.html'?5:2,'Every separator reuses existing 9/Line slash');
+ const previous=execFileSync('git',['show',`13c841c41bc24e47e60119837319c6a37c9b5530:${file}`],{cwd:root,encoding:'utf8'});
+ assert.equal(html.replaceAll(slash,dot).replace(/\r/g,''),previous.replace(/\r/g,''),'Only separator markup changed: '+file);
  for(const match of html.matchAll(/(?:src|href)="(\/[^"?#]+\.(?:css|js|png|webp|jpg|svg))"/g))assert.ok(fs.existsSync(path.join(root,match[1])),'Asset exists: '+match[1]);
 }
 for(const role of ['Sergeant, Philadelphia Police Department','Police Officer, Oklahoma State Police','Federal Agent','Marine Corps Sergeant','Patrol Officer, North Carolina'])assert.ok(read('index.html').includes(`<strong class="ticker-role">${role}</strong>`));
