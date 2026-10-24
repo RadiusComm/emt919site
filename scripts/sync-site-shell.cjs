@@ -63,7 +63,8 @@ for (const file of fs.readdirSync(root).filter(f => f.endsWith('.html'))) {
  html = html.replace(/(<head[^>]*>)([\s\S]*?)(<\/head>)/, (_, open, body, close) => open + '\n' + body.split(/\r?\n/).filter(line => line.trim()).join('\n') + '\n' + close);
  // Keep a fresh browser/CDN cache key when publishing responsive shell fixes.
  html = html.replace(/(href="\/[^"?#]+\.css)(?:\?[^"#]*)?"/g, '$1?v=20261019-mobile"');
- html = html.replace(/(src="\/site-ui\.20260912\.js)(?:\?[^"#]*)?"/g, '$1?v=20261019-mobile"');
+ html = html.replace(/(src="\/site-ui\.20260912\.js)(?:\?[^"#]*)?"/g, '$1?v=20261024-consent"');
+ html = html.replace(/(href="\/site-ui\.20260912\.css)(?:\?[^"#]*)?"/g, '$1?v=20261024-consent"');
  write(file, html);
  count++;
 }
