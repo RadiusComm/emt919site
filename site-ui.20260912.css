@@ -1,5 +1,23 @@
 /* Shared accessibility and sales-page refinement. Existing brand assets are retained. */
 :root{--blue:#1452c4;--text-muted:#4e5b6c;--surface:#f4f7fb;--focus:#f5c542;--radius:12px}
+.ads-consent-banner,.ads-consent-dialog{color:#101d30;background:#fff;border:1px solid #b5c5da;border-radius:12px;box-shadow:0 8px 32px #08111f33;padding:20px;font:16px/1.5 Inter,Arial,sans-serif}
+.ads-consent-banner{position:fixed;z-index:100;bottom:74px;left:max(16px,4vw);right:max(16px,4vw);max-height:65vh;overflow:auto;display:flex;gap:24px;align-items:center}
+.ads-consent-banner h2,.ads-consent-dialog h2{font:700 21px/1.3 Inter,Arial,sans-serif;margin:0 0 10px;color:#101d30;letter-spacing:normal;text-transform:none}
+.ads-consent-banner p,.ads-consent-dialog p{font:16px/1.5 Inter,Arial,sans-serif;margin:0 0 12px;color:#26364c}
+.ads-consent-banner a,.ads-consent-dialog a{color:#1452c4;text-decoration:underline}
+.ads-consent-actions{display:flex;gap:10px;flex-wrap:wrap;flex:0 0 auto;max-width:420px}
+.ads-consent-actions button,.ads-consent-manage{border:2px solid #1452c4;border-radius:8px;background:#fff;color:#101d30;font:600 15px/1.35 Inter,Arial,sans-serif;padding:11px 14px;min-height:46px;cursor:pointer;white-space:normal;text-transform:none;letter-spacing:normal}
+.ads-consent-actions button:hover,.ads-consent-manage:hover{background:#eaf0fc}
+.ads-consent-actions button:disabled{opacity:.6;cursor:not-allowed}
+.ads-consent-manage{box-shadow:0 2px 12px #08111f22}
+.ads-consent-manage-floating{position:fixed;z-index:99;bottom:14px;left:16px}
+.content-page [data-advertising-preferences]{border:0;background:none;color:#1452c4;padding:0;text-decoration:underline;cursor:pointer;font:inherit}
+.ads-consent-dialog{width:min(600px,calc(100% - 32px));max-height:85vh;overflow:auto;margin:auto}
+.ads-consent-dialog::backdrop{background:#08111f99}
+.ads-consent-option{display:flex;gap:12px;align-items:flex-start;font:600 16px/1.5 Inter,Arial,sans-serif;margin:20px 0}
+.ads-consent-option input{width:22px;height:22px;flex:0 0 22px;margin:2px 0;accent-color:#1452c4}
+.ads-consent-status{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+@media(max-width:800px){.ads-consent-banner{display:block;bottom:74px}.ads-consent-actions{max-width:none}.ads-consent-actions button{flex:1 1 140px}.ads-consent-manage{font-size:14px}}
 html{scroll-padding-top:100px}
 body{overflow-x:visible}
 [hidden],.hidden-field[hidden]{display:none!important}

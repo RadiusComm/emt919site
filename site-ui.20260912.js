@@ -1,5 +1,9 @@
-// Progressive enhancement only. No analytics, geolocation, microphone or carrier access.
+// Progressive enhancement with consent-gated demo measurement.
 (() => {
+ // First-party preferences keep Google tags blocked until affirmative consent.
+ if (!window.EMT919Consent && !document.querySelector('script[src="/ads-consent.20261024.js"]')) {
+  const consent = document.createElement('script'); consent.src = '/ads-consent.20261024.js'; consent.defer = true; document.head.append(consent);
+ }
  const menus = [...document.querySelectorAll('.nav-products, .mobile-menu')];
  document.addEventListener('keydown', event => {
   if (event.key !== 'Escape') return;
@@ -73,6 +77,10 @@
    try {
     const response = await fetch('/', { method: 'POST', signal: controller.signal, headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(form)).toString() });
     if (!response.ok) throw new Error('Submission not accepted');
+    // Keep the accepted inquiry independent of optional measurement failures.
+    if (form.getAttribute('name') === 'emt919-demo') {
+     try { await window.EMT919DemoConversion?.recordAcceptedDemo(form); } catch { /* continue to confirmation */ }
+    }
     window.location.assign(form.getAttribute('action') || '/thanks');
    } catch {
     // Never silently retry: an interrupted response may still have been received.
