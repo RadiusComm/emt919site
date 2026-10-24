@@ -2,6 +2,7 @@
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),vm=require('node:vm'),{execFileSync}=require('node:child_process');
 const root=path.resolve(__dirname,'..'),read=f=>fs.readFileSync(path.join(root,f),'utf8');
 const chiefItem="<span class=\"ticker-item\" role=\"listitem\"><span class=\"ticker-lines\"><span class=\"ticker-line\">\"Using #919 for translation is amazing, I wish I had</span> <span class=\"ticker-line\">this when I was a patrol officer.\"&nbsp; &#8212;&nbsp; <strong class=\"ticker-role\">Retired Florida Police Chief</strong></span></span><span class=\"ticker-divider\" aria-hidden=\"true\"><span class=\"nine-brand-slash\">/</span></span></span>";
+const oldPPD="<span class=\"ticker-line\">“I use it every day while on patrol for community</span> <span class=\"ticker-line\">outreach.”&nbsp; &#8212;&nbsp; <strong class=\"ticker-role\">Sergeant, Philadelphia Police Department</strong>",newPPD="<span class=\"ticker-line\">“I would use it every day</span> <span class=\"ticker-line\">when I was on patrol.”&nbsp; &#8212;&nbsp; <strong class=\"ticker-role\">Sergeant, PPD</strong>";
 const base='7c651d94c13ae99640af7f8f5cc38528c2374c78';
 for(const file of ['index.html','9-line.html']){
  const html=read(file),before=execFileSync('git',['show',`${base}:${file}`],{cwd:root,encoding:'utf8'}),oldSection=before.match(/<section class="field-ticker[\s\S]*?<\/section>/)[0];
@@ -10,7 +11,7 @@ for(const file of ['index.html','9-line.html']){
  const section=html.match(/<section class="field-ticker[\s\S]*?<\/section>/)[0];
  assert.ok(!/<article|<details|<img|<blockquote|<button/.test(section),'No cards, expansion, portraits, logos or visible buttons');
  const baselineQuotes=[...oldSection.matchAll(/<span class="ticker-item" role="listitem"><span>([\s\S]*?)&nbsp; &#8212;/g)].map(m=>m[1]);
- const renderedCopy=section.replace(/<[^>]*>/g,'');
+ const renderedCopy=section.replace(newPPD,oldPPD).replace(/<[^>]*>/g,'');
  for(const quote of baselineQuotes)assert.ok(renderedCopy.includes(quote),'Exact original quote retained across two-line spans');
  assert.equal((section.match(/class="ticker-lines"/g)||[]).length,file==='index.html'?6:2);
  assert.equal((section.match(/class="ticker-line"/g)||[]).length,file==='index.html'?12:4,'Exactly two text lines per testimonial');
@@ -19,13 +20,16 @@ for(const file of ['index.html','9-line.html']){
  const dot='<span class="ticker-divider" aria-hidden="true">&#8226;</span>';
  assert.equal(section.split(slash).length-1,file==='index.html'?6:2,'Every separator reuses existing 9/Line slash');
  const previous=execFileSync('git',['show',`13c841c41bc24e47e60119837319c6a37c9b5530:${file}`],{cwd:root,encoding:'utf8'});
- assert.equal(html.replace(chiefItem,'').replaceAll(slash,dot).replaceAll('Detective, Oklahoma Police Department','Police Officer, Oklahoma State Police').replace(/\r/g,''),previous.replace(/\r/g,''),'Approved separator and attribution changes only: '+file);
+ assert.equal(html.replace(newPPD,oldPPD).replace(chiefItem,'').replaceAll(slash,dot).replaceAll('Detective, Oklahoma Police Department','Police Officer, Oklahoma State Police').replace(/\r/g,''),previous.replace(/\r/g,''),'Approved separator and attribution changes only: '+file);
  const attributionBaseline=execFileSync('git',['show',`2d4481d905835dcd4ee3be4da14d7f257e7f00f1:${file}`],{cwd:root,encoding:'utf8'});
- assert.equal(html.replace(chiefItem,'').replaceAll('Detective, Oklahoma Police Department','Police Officer, Oklahoma State Police').replace(/\r/g,''),attributionBaseline.replace(/\r/g,''),'Only requested attribution changed from current production: '+file);
+ assert.equal(html.replace(newPPD,oldPPD).replace(chiefItem,'').replaceAll('Detective, Oklahoma Police Department','Police Officer, Oklahoma State Police').replace(/\r/g,''),attributionBaseline.replace(/\r/g,''),'Only requested attribution changed from current production: '+file);
+ const currentBefore=execFileSync('git',['show',`ec9f0fb61e0ea623d4a12ae55deefb0330511b49:${file}`],{cwd:root,encoding:'utf8'});
+ assert.equal(html.replace(newPPD,oldPPD).replace(/\r/g,''),currentBefore.replace(/\r/g,''),'Only confirmed hypothetical PPD quote and label changed');
  for(const match of html.matchAll(/(?:src|href)="(\/[^"?#]+\.(?:css|js|png|webp|jpg|svg))"/g))assert.ok(fs.existsSync(path.join(root,match[1])),'Asset exists: '+match[1]);
 }
-for(const role of ['Sergeant, Philadelphia Police Department','Detective, Oklahoma Police Department','Federal Agent','Marine Corps Sergeant','Patrol Officer, North Carolina','Retired Florida Police Chief'])assert.ok(read('index.html').includes(`<strong class="ticker-role">${role}</strong>`));
+for(const role of ['Sergeant, PPD','Detective, Oklahoma Police Department','Federal Agent','Marine Corps Sergeant','Patrol Officer, North Carolina','Retired Florida Police Chief'])assert.ok(read('index.html').includes(`<strong class="ticker-role">${role}</strong>`));
 for(const role of ['Former Officer, San Diego Police Department','Former Undercover Narcotics'])assert.ok(read('9-line.html').includes(`<strong class="ticker-role">${role}</strong>`));
+assert.ok(read('index.html').includes(newPPD),'Confirmed hypothetical quote and abbreviated role');
 assert.ok(read('index.html').includes(chiefItem),'Exact new chief quote and attribution');
 const css=read('field-ticker.20261023-two-line.css');assert.ok(css.includes('height:84px')&&css.includes('height:100px')&&css.includes('grid-template-rows:22px 22px')&&css.includes('white-space:nowrap')&&css.includes('prefers-reduced-motion:reduce'));
 function el(){return {events:{},attrs:{},dataset:{},hidden:false,textContent:'',addEventListener(k,f){this.events[k]=f},setAttribute(k,v){this.attrs[k]=v}}}
