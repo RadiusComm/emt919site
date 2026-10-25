@@ -8,12 +8,5 @@
 .company-certification p{margin-bottom:0}
 @media(max-width:600px){.company-certification{flex-direction:column;align-items:flex-start;gap:20px;padding:20px}}
 
-/* Footer credential presentation: same official artwork, separate supporting copy. No alteration to the mark. */
-.site-footer .footer-credential{display:grid;grid-template-columns:112px minmax(0,1fr);align-items:center;gap:18px;margin-top:24px;padding:16px;border:1px solid #33445b;border-radius:6px;background:#0d1a2d;max-width:390px}
-.site-footer .footer-credential .sba-certification-link{margin:0;line-height:0;background:#fff;align-self:start}
-.site-footer .footer-credential .sba-certification-link img{width:112px;max-width:100%;height:auto;object-fit:contain}
-.site-footer .footer-credential-copy{min-width:0}
-.site-footer .footer-credential .footer-credential-kicker{font:600 11px/1.6 Inter,Arial,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#adc2dd;margin:0 0 10px}
-.site-footer .footer-credential .footer-credential-title{font:600 14px/1.55 Inter,Arial,sans-serif;color:#eef4fc;margin:0;overflow-wrap:normal}
-.site-footer .footer-credential a:focus-visible{outline:3px solid #ffd166;outline-offset:4px}
-@media(max-width:360px){.site-footer .footer-credential{gap:12px;padding:12px;grid-template-columns:112px minmax(0,1fr)}}
+/* Restrained company descriptor; no certification badge or endorsement claim. */
+.site-footer .footer-brand .footer-business{margin:24px 0 0;padding:14px 16px;border:1px solid #33445b;border-radius:6px;background:#0d1a2d;color:#eef4fc;font:600 14px/1.55 Inter,Arial,sans-serif;letter-spacing:0;text-transform:none;max-width:390px}
