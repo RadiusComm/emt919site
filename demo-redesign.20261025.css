@@ -98,3 +98,6 @@ html{scroll-behavior:auto}
 @media(max-width:360px){.funnel-band{padding-inline:4vw}.demo-page .demo-request.demo-form{padding:22px 12px}.funnel-video-heading{align-items:start}.funnel-video-heading>span{padding-top:3px}.demo-page .funnel-video h2{font-size:29px}}
 @media(prefers-reduced-motion:reduce){.demo-page *{scroll-behavior:auto;transition:none}}
 @media(max-width:760px){.demo-page .site-header .brand{width:100%;max-width:100%}}
+
+/* Remove only the duplicate mobile header request shortcut. Hero/form actions remain. */
+@media(max-width:760px){.demo-page .site-header{grid-template-columns:minmax(0,1fr) 44px}.demo-page .site-header .header-cta{display:none}.demo-page .site-header .brand{width:120px;max-width:100%;justify-content:flex-start}}
