@@ -3,7 +3,7 @@ html{scroll-behavior:auto}
 .demo-page .mobile-menu summary{min-width:0}
 .demo-page main{background:#f6f8fb;color:#08111f}
 .funnel-band{background:#0b1729;color:white;padding:52px 5vw 60px}
-.funnel-grid{max-width:1200px;margin:auto;display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);grid-template-areas:"intro request" "actions request" "media request" "agenda request";grid-template-rows:max-content max-content max-content 1fr;gap:0 52px;align-items:start}
+.funnel-grid{max-width:1200px;margin:auto;display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);grid-template-areas:"intro request" "actions request" "proof request" "media request" "agenda request";grid-template-rows:max-content max-content max-content max-content 1fr;gap:0 52px;align-items:start}
 .demo-page .funnel-intro.page-hero{grid-area:intro;padding:0;background:none;min-height:0}
 .funnel-intro .eyebrow{font-size:11px;margin:0 0 15px;color:#a9caff}
 .funnel-audience{font-size:11px;line-height:1.6;text-transform:uppercase;letter-spacing:.07em;color:#c5d3e4;margin-bottom:17px}
@@ -109,3 +109,19 @@ html{scroll-behavior:auto}
 .funnel-video-placeholder .funnel-video-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;z-index:0}
 .funnel-video-placeholder::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,#07101e0a,#07101e8c);z-index:1}
 .funnel-video-placeholder>:is(.funnel-play-icon,button){position:relative;z-index:2}
+
+/* Approved individual field perspectives; static, distinct and scoped to /demo. */
+.funnel-request-stack{grid-area:request;min-width:0;width:100%}
+.funnel-featured-proof{grid-area:proof;min-width:0;margin:0 0 26px;padding:3px 0 3px 18px;border-left:3px solid #89b7ff}
+.funnel-featured-proof blockquote,.funnel-support-proof blockquote{margin:0;padding:0;border:0;background:none}
+.funnel-featured-proof blockquote p{font:500 17px/1.6 Inter,Arial,sans-serif;margin:0;color:#f3f7ff}
+.funnel-proof-attribution{font:700 13.5px/1.5 Inter,Arial,sans-serif;margin:10px 0 0;color:#d7e5f8}
+.funnel-proof-attribution strong,.funnel-proof-attribution span{display:block}
+.funnel-proof-attribution span{font-weight:400}
+.funnel-proof-note{font:400 13px/1.6 Inter,Arial,sans-serif;margin:9px 0 0;color:#c3d1e4}
+.funnel-support-proof{margin:0 0 24px;padding:20px;background:#14243a;border:1px solid #41516a;border-radius:4px}
+.demo-page .funnel-support-proof h2{font:700 18px/1.4 Inter,Arial,sans-serif;text-transform:none;margin:0;color:#f3f7ff}
+.funnel-support-item{margin-top:17px}
+.funnel-support-item+.funnel-support-item{padding-top:17px;border-top:1px solid #41516a}
+.funnel-support-item blockquote p,.funnel-support-item .funnel-proof-quote{font:400 14px/1.65 Inter,Arial,sans-serif;margin:0;color:#e6eef9}
+@media(max-width:760px){.funnel-featured-proof{width:100%;margin:0;padding-left:15px}.funnel-featured-proof blockquote p{font-size:16px}.funnel-support-proof{padding:18px}.funnel-request-stack{width:100%}}
