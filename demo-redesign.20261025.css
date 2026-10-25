@@ -101,3 +101,11 @@ html{scroll-behavior:auto}
 
 /* Remove only the duplicate mobile header request shortcut. Hero/form actions remain. */
 @media(max-width:760px){.demo-page .site-header{grid-template-columns:minmax(0,1fr) 44px}.demo-page .site-header .header-cta{display:none}.demo-page .site-header .brand{width:120px;max-width:100%;justify-content:flex-start}}
+
+/* Give the readable mobile overview heading its own line; duration remains below. */
+@media(max-width:760px){.funnel-video-heading{display:block}.funnel-video-heading>span{display:block;margin-top:8px;padding-top:0}}
+
+/* Local still from the existing approved illustrative video; no third-party request before play. */
+.funnel-video-placeholder .funnel-video-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;z-index:0}
+.funnel-video-placeholder::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,#07101e0a,#07101e8c);z-index:1}
+.funnel-video-placeholder>:is(.funnel-play-icon,button){position:relative;z-index:2}
