@@ -318,3 +318,7 @@ form[aria-busy=true] button{opacity:.7;cursor:wait}
  .table-scroll-hint:not([hidden]) { display:block; font:500 13px/1.5 Inter,Arial,sans-serif; color:#526071; margin:16px 0 8px; }
 }
 @media print { .table-scroll-hint { display:none!important; } }
+
+/* User-opened privacy status only; no automatic tracking panel. */
+.site-footer .privacy-choices-link{border:0;background:none;box-shadow:none;color:#b9c5d4;font:14px/1.5 Inter,Arial,sans-serif;text-decoration:underline;text-underline-offset:3px;min-height:44px;padding:8px 2px;cursor:pointer;letter-spacing:0;text-transform:none}
+.privacy-choices-link:focus-visible{outline:3px solid #ffd166;outline-offset:4px}

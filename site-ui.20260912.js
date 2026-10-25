@@ -1,8 +1,8 @@
 // Progressive enhancement with consent-gated demo measurement.
 (() => {
  // First-party preferences keep Google tags blocked until affirmative consent.
- if (!window.EMT919Consent && !document.querySelector('script[src="/ads-consent.20261024.js"]')) {
-  const consent = document.createElement('script'); consent.src = '/ads-consent.20261024.js'; consent.defer = true; document.head.append(consent);
+ if (!window.EMT919Consent && !document.querySelector('script[src^="/ads-consent.20261024.js"]')) {
+  const consent = document.createElement('script'); consent.src = '/ads-consent.20261024.js?v=20261025-off'; consent.defer = true; document.head.append(consent);
  }
  const menus = [...document.querySelectorAll('.nav-products, .mobile-menu')];
  document.addEventListener('keydown', event => {
