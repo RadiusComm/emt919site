@@ -3,7 +3,7 @@ html{scroll-behavior:auto}
 .demo-page .mobile-menu summary{min-width:0}
 .demo-page main{background:#f6f8fb;color:#08111f}
 .funnel-band{background:#0b1729;color:white;padding:52px 5vw 60px}
-.funnel-grid{max-width:1200px;margin:auto;display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);grid-template-areas:"intro request" "actions request" "agenda request" "media request";grid-template-rows:max-content max-content max-content 1fr;gap:0 52px;align-items:start}
+.funnel-grid{max-width:1200px;margin:auto;display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);grid-template-areas:"intro request" "actions request" "media request" "agenda request";grid-template-rows:max-content max-content max-content 1fr;gap:0 52px;align-items:start}
 .demo-page .funnel-intro.page-hero{grid-area:intro;padding:0;background:none;min-height:0}
 .funnel-intro .eyebrow{font-size:11px;margin:0 0 15px;color:#a9caff}
 .funnel-audience{font-size:11px;line-height:1.6;text-transform:uppercase;letter-spacing:.07em;color:#c5d3e4;margin-bottom:17px}
