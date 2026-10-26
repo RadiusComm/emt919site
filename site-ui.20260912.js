@@ -63,6 +63,23 @@
   const iframe = document.createElement('iframe'); iframe.src = 'https://www.youtube-nocookie.com/embed/unDpE__-7Ao?rel=0&playsinline=1'; iframe.title = 'EMT919 service overview'; iframe.allow = 'fullscreen; picture-in-picture'; iframe.allowFullscreen = true;
   button.closest('.video-frame').replaceChildren(iframe); iframe.focus();
  });
+ // Campaign labels belong only to the submitted demo request, never browser storage or pixels.
+ const fillDemoUTMs = (form, search) => {
+  const names = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+  let params = null;
+  if (typeof search === 'string' && search.length <= 4096) {
+   try { params = new URLSearchParams(search); } catch { /* leave attribution blank */ }
+  }
+  for (const name of names) {
+   const field = form.querySelector('input[type="hidden"][name="' + name + '"]');
+   if (!field) continue;
+   const values = params ? params.getAll(name) : [];
+   const raw = values.length === 1 ? values[0] : '';
+   // Reject ambiguous, overlong or unsafe values rather than truncating or echoing URLs.
+   field.value = raw.length <= 100 && !/[\u0000-\u001f\u007f]/.test(raw) && /^[A-Za-z0-9][A-Za-z0-9 ._-]*$/.test(raw.trim())
+    ? raw.trim().replace(/ +/g, ' ') : '';
+  }
+ };
  // Netlify removes data-netlify/netlify-honeypot from the published markup.
  // Registered names survive that processing and scope the enhancement safely.
  for (const form of document.querySelectorAll('form[name="emt919-demo"], form[name="emt919-quote"]')) {
@@ -75,6 +92,7 @@
    const controller = new AbortController();
    const timeout = setTimeout(() => controller.abort(), 20000);
    try {
+    if (form.getAttribute('name') === 'emt919-demo') fillDemoUTMs(form, window.location.search);
     const response = await fetch('/', { method: 'POST', signal: controller.signal, headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(form)).toString() });
     if (!response.ok) throw new Error('Submission not accepted');
     // Keep the accepted inquiry independent of optional measurement failures.
