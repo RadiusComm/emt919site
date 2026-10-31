@@ -8,3 +8,5 @@ test('1 to 30 whole feet accepted, invalid values rejected',()=>{for(let i=1;i<=
 const samples=[{kind:'speech',distance:6,rms:-20,peak:-10,clipping:0,rating:'clear',listened:true,notes:{make:'Apple',model:'iPhone 16',manual:'',os:'iOS',version:'18',noise:'PRIVATE NOTE',position:'PRIVATE',device:'Safari'},blob:'PRIVATE AUDIO',reviewNotes:'PRIVATE'}];
 test('shared payload strictly omits local notes, audio, OS, identifying metadata',()=>{assert.deepEqual(sharedPayload(samples),{consent:true,model:'Apple / iPhone 16',results:[{distance:6,rms:-20,peak:-10,clipping:0,rating:'clear'}]});assert.throws(()=>sharedPayload([]));});
 
+
+test('no-signal attempts cannot qualify even with stale clear/listened fields and export only existing unclear schema',()=>{const s={kind:'speech',distance:6,noSignal:true,rating:'clear',listened:true,rms:-100,peak:-100,clipping:0,notes:{make:'Apple',model:'iPhone 16',manual:''}};assert.deepEqual(summary([s]),{farthest:null,target:'Not qualified'});assert.deepEqual(sharedPayload([s]),{consent:true,model:'Apple / iPhone 16',results:[{distance:6,rms:-100,peak:-100,clipping:0,rating:'unclear'}]});});
