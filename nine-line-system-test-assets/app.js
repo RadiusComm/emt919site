@@ -27,7 +27,7 @@ function finishPrompt(run,message){
 }
 function beginCoach(distance){
   const run={ticket:++epoch,kind:'coach',distance,discard:false,promptPlaying:false};active=run;phase='coaching';
-  $('coach').hidden=false;$('coach-test').textContent='Test '+(TEST_DISTANCES.indexOf(distance)+1)+' of 5';
+  $('coach').hidden=false;$('coach').insertAdjacentElement?.('afterend',$('recorder'));$('coach').scrollIntoView?.({block:'start',behavior:'smooth'});$('coach-test').textContent='Test '+(TEST_DISTANCES.indexOf(distance)+1)+' of 5';
   $('coach-heading').textContent='Stand '+distance+' feet away.';$('coach-phrase').textContent=PHRASE;
   $('coach-ready').hidden=false;$('coach-ready').disabled=false;$('stop-prompt').hidden=true;
   $('record-status').textContent='Microphone off · read the instruction';
@@ -76,7 +76,7 @@ function release(run) {
   try { run.source?.disconnect(); } catch {} try { run.analyser?.disconnect(); } catch {}
   if (run.context && run.context.state !== 'closed') run.context.close().catch(() => {});
 }
-function reset() { $('coach').hidden=true; active = null; phase = 'idle'; $('record-status').classList.remove('active'); $('record-status').textContent = 'Microphone off · ready'; $('meter-fill').style.width = '0'; $('live-level').textContent = '— dBFS'; document.querySelector('[role="meter"]').setAttribute('aria-valuenow','-100'); updateControls(); }
+function reset() { $('coach').hidden=true;$('test-progress-group').insertAdjacentElement?.('beforebegin',$('recorder'));  active = null; phase = 'idle'; $('record-status').classList.remove('active'); $('record-status').textContent = 'Microphone off · ready'; $('meter-fill').style.width = '0'; $('live-level').textContent = '— dBFS'; document.querySelector('[role="meter"]').setAttribute('aria-valuenow','-100'); updateControls(); }
 function cancel(message = '') {
   epoch++; const run = active; if (run) { run.discard = true; try { if (run.recorder?.state !== 'inactive') run.recorder.stop(); } catch {} release(run); }
   reset(); if (message) error(message);
