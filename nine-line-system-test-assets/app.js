@@ -1,3 +1,5 @@
+import {createLocalAnalyzer} from './asr/controller.js';
+import {estimate,uncertain,estimateLabel,automaticSummary} from './asr/scoring.js';
 import { db, latestDistances, summary } from './metrics.js';
 import { sharedPayload } from './results.js';
 import { MODEL_GROUPS, defaultOperatingSystem } from './models.js';
@@ -14,10 +16,27 @@ const displayedStage=()=>pendingSilent?TEST_DISTANCES.indexOf(pendingSilent.dist
 const supported=!!(window.isSecureContext&&navigator.mediaDevices?.getUserMedia&&window.MediaRecorder&&(window.AudioContext||window.webkitAudioContext));
 function phrase(stage){return 'This is the '+WORDS[stage-1]+'-foot test. The plane flies west. I can hear every word clearly.';}
 function error(text){$('error').textContent=text;$('error').hidden=!text;}
+let autoBusy=false,autoEpoch=0,autoMessage='Automatic estimates are optional and run only on this device.';
+const analyzer=createLocalAnalyzer({onProgress:p=>{$('auto-status').textContent='Preparing local model: '+p.file+' '+(p.progress===null?'':Math.round(p.progress)+'%');}});
+function stopAnalysis(){autoEpoch++;analyzer.cancel();autoBusy=false;autoMessage='Local analysis cancelled. Enable again to retry; manual listening remains available.';}
+async function analyzeSample(sample){
+ if(autoBusy||capture.phase!=='idle'||!analyzer.ready||document.hidden)return;
+ const ticket=++autoEpoch;autoBusy=true;autoMessage='Analyzing '+sample.distance+' feet locally — microphone off.';updateControls();
+ try{const text=sample.noSignal?'':await analyzer.analyze(sample.blob);if(ticket!==autoEpoch||!samples.includes(sample)||document.hidden)return;sample.automatic=estimate(text,sample.distance,{noSignal:sample.noSignal,clipping:sample.clipping});autoMessage=sample.distance+' feet: '+estimateLabel(sample.automatic)+'. WER '+Math.round(sample.automatic.wer*100)+'%. This is not a hardware certification.';}
+ catch(e){if(ticket!==autoEpoch||!samples.includes(sample))return;sample.automatic=uncertain(sample.clipping);autoMessage='Uncertain: '+e.message;}
+ finally{if(ticket===autoEpoch){autoBusy=false;render();}}
+}
+$('enable-auto').onclick=async()=>{if(autoBusy||capture.phase!=='idle')return;const ticket=++autoEpoch;autoBusy=true;updateControls();try{await analyzer.load();if(ticket===autoEpoch)autoMessage='Local model ready. Each completed speech trial will be analyzed automatically; recordings and transcripts stay on this device.';}catch(e){if(ticket===autoEpoch)autoMessage=e.message;}finally{if(ticket===autoEpoch){autoBusy=false;render();}}};
+$('cancel-auto').onclick=()=>{stopAnalysis();render();};
 const capture=createCapture({
   onState(phase,run){
     $('record-status').classList.toggle('active',phase==='recording');
     $('record-status').textContent=phase==='requesting'?'Requesting microphone access and preparing audio.':phase==='preparing'?'Microphone access ready — not recording. Get into position.':phase==='recording'?'● Recording — '+(run.stage===0?'stay quiet.':'read the script now.'):phase==='stopping'?'Microphone off — finishing recording.':'Microphone off — ready.';
+    if(phase==='speaking-cue')$('record-status').textContent='Spoken start cue — wait for recording indicator.';
+    if(phase==='settling')$('record-status').textContent='Cue finished — recording starts momentarily.';
+    if(phase==='completion-cue')$('record-status').textContent='Microphone off — recording complete.';
+    $('wake-status').textContent=run?.wakeStatus||'Screen-awake protection is requested only during a visible test step.';
+    $('cue-status').textContent=run?.cueUnavailable?'Local spoken cue unavailable. Follow the visual recording indicator.':'Spoken cues use an available local English voice. Device volume or mute may prevent hearing them; follow the screen.';
     $('countdown').textContent=phase==='preparing'?run.remaining+' seconds to get into position':phase==='recording'?run.remaining+' seconds of recording left':'';
     $('countdown').hidden=!['preparing','recording'].includes(phase);
     const level=phase==='recording'?Math.min(0,db(run.level||0)):-100;
@@ -30,7 +49,7 @@ const capture=createCapture({
     samples=samples.filter(s=>!(s.kind==='speech'&&s.distance===distance));
     const sample={id:++seq,kind:run.stage===0?'baseline':'speech',distance,notes:run.notes,created:new Date().toISOString(),duration:run.elapsed,rms:Math.min(0,db(Math.sqrt(run.sum/run.count))),peak:Math.min(0,db(run.peak)),clipping:run.clipped/run.count*100,blob:run.blob,url:URL.createObjectURL(run.blob),noSignal:run.noSignal,rating:run.noSignal?'unclear':'unreviewed',listened:false,reviewNotes:''};
     samples.push(sample);pendingSilent=run.noSignal?sample:null;
-    failed=false;lastCompleted=run.stage===0?'Baseline recorded.':run.noSignal?'No speech detected at this distance. Attempt complete — unsuccessful. Retry or continue.':'Step '+(run.stage+1)+' complete — '+distance+' feet recorded. Clarity still needs your review.';error('');render();
+    failed=false;lastCompleted=run.stage===0?'Baseline recorded.':run.noSignal?'No speech detected at this distance. Attempt complete — unsuccessful. Retry or continue.':'Step '+(run.stage+1)+' complete — '+distance+' feet recorded. Clarity still needs your review.';error('');render();if(sample.kind==='speech'&&analyzer.ready)void analyzeSample(sample);
   }
 });
 function renderTests(){
@@ -47,7 +66,7 @@ function renderGuidance(){
   $('script-box').hidden=index===0||index===6;
   $('script').textContent=index>0&&index<6?phrase(index):'';
   $('preparation-label').hidden=index===0||index===6;
-  if(index!==shownStage){$('preparation').value=index===1?'5':index===2||index===3?'10':'20';shownStage=index;}
+  if(index!==shownStage){$('preparation').value=index===1?'5':'10';shownStage=index;}
   $('start').hidden=index===6;
   $('start').textContent=pendingSilent?(stageIndex()===6?'Continue to final results':'Continue to Step '+(stageIndex()+1)):(failed?'Retry':'Start')+' Step '+(index+1)+(index===0?' — baseline':' — '+TEST_DISTANCES[index-1]+' feet');
   $('retry-distance').hidden=!pendingSilent;$('retry-distance').textContent='Retry Step '+(index+1)+' — '+TEST_DISTANCES[index-1]+' feet';
@@ -56,9 +75,11 @@ function renderGuidance(){
   $('stage-card').setAttribute('aria-busy',String(busy));
 }
 function updateControls(){
-  const busy=capture.phase!=='idle';
+  const busy=capture.phase!=='idle'||autoBusy;
+  document.querySelectorAll('[data-analysis]').forEach(b=>b.disabled=busy||!analyzer.ready);
+  $('auto-status').textContent=autoMessage;$('enable-auto').disabled=busy||analyzer.ready;$('cancel-auto').disabled=!autoBusy&&!analyzer.ready;
   fields.forEach(k=>$(k).disabled=busy||samples.length>0);$('preparation').disabled=busy;
-  $('start').disabled=busy||!supported||submitting;$('cancel').disabled=!busy;
+  $('start').disabled=busy||!supported||submitting;$('cancel').disabled=capture.phase==='idle';
   $('retry-distance').disabled=busy||submitting;
   $('clear').disabled=(!samples.length&&!busy)||submitting;
   $('share-results').disabled=busy||!complete()||submitting;
@@ -79,7 +100,7 @@ $('start').onclick=()=>{
   return startStage(stageIndex());
 };
 function startStage(stage){
-  if(capture.phase!=='idle'||submitting||!supported)return;
+  if(capture.phase!=='idle'||autoBusy||submitting||!supported)return;
   if(!$('make').value||!$('model').value||!$('os').value)return error('Select phone make, model and operating system before starting.');
   if(samples.some(s=>fields.some(k=>s.notes[k]!==$(k).value.trim())))return error('The phone setup changed. Delete recordings and restart.');
   document.querySelectorAll('audio').forEach(a=>a.pause());error('');lastCompleted='';
@@ -88,10 +109,13 @@ function startStage(stage){
 $('retry-distance').onclick=()=>{if(pendingSilent&&capture.phase==='idle'&&!submitting)return startStage(displayedStage());};
 $('cancel').onclick=()=>capture.cancel();
 if(!supported){$('support').hidden=false;$('support').textContent='Recording is unavailable here. Open this page directly over HTTPS in a browser with microphone, MediaRecorder and Web Audio support. Embedded previews may block access.';}
-document.addEventListener('visibilitychange',()=>{if(document.hidden){if(capture.phase!=='idle')capture.cancel('This step was cancelled when the page became hidden. Retry when ready.');document.querySelectorAll('audio').forEach(a=>a.pause());}});
-window.addEventListener('pagehide',()=>{capture.cancel('');document.querySelectorAll('audio').forEach(a=>{a.pause();a.removeAttribute('src');});samples.forEach(s=>URL.revokeObjectURL(s.url));samples=[];pendingSilent=null;lastCompleted='';failed=false;render();});
+document.addEventListener('visibilitychange',()=>{if(document.hidden){stopAnalysis();render();if(capture.phase!=='idle')capture.cancel('This step was cancelled when the page became hidden. Retry when ready.');document.querySelectorAll('audio').forEach(a=>a.pause());}});
+window.addEventListener('pagehide',()=>{stopAnalysis();capture.cancel('');document.querySelectorAll('audio').forEach(a=>{a.pause();a.removeAttribute('src');});samples.forEach(s=>URL.revokeObjectURL(s.url));samples=[];pendingSilent=null;lastCompleted='';failed=false;render();});
 function el(tag,text,cls){const node=document.createElement(tag);if(text!==undefined)node.textContent=text;if(cls)node.className=cls;return node;}
-function renderSummary(){const result=summary(samples);$('target-result').textContent=result.target;$('farthest-result').textContent=result.farthest ? result.farthest+' ft':'—';const latest=latestDistances(samples);const distances=TEST_DISTANCES;$('distance-table').replaceChildren();for(const d of distances){const s=latest.find(x=>x.distance===d);const row=el('tr');[d+' ft'+(d===6?' · target':''),s?(s.noSignal?'No speech detected — unsuccessful':s.listened?s.rating:'unreviewed'):'Untested',s?s.rms.toFixed(1)+' dBFS':'—'].forEach(t=>row.append(el('td',t)));$('distance-table').append(row);}$('chart').replaceChildren();const labels=[];for(const d of TEST_DISTANCES){const s=latest.find(x=>x.distance===d);const rating=s?(s.noSignal?'unclear':s.listened?s.rating:'unreviewed'):'untested';const bar=el('div',undefined,'chart-bar '+rating);bar.title=d+' ft: '+rating;if(TEST_DISTANCES.includes(d))bar.append(el('span',String(d)));$('chart').append(bar);if(s)labels.push(d+' feet '+rating);}$('chart').setAttribute('aria-label','Clarity review and no-signal outcomes by measured distance. '+(labels.join('; ')||'No speech samples.')+' Untested distances have no result. Table below provides values.');}
+function renderSummary(){
+ const automatic=automaticSummary(samples);$('auto-farthest').textContent=automatic.farthest?automatic.farthest+' ft':'None yet';$('auto-bar').replaceChildren();
+ for(const d of TEST_DISTANCES){const sample=samples.find(s=>s.kind==='speech'&&s.distance===d),result=sample?.automatic;const item=el('li',d+' ft: '+estimateLabel(result),'auto-segment auto-'+(result?.status||0));item.setAttribute('aria-label',d+' feet: '+estimateLabel(result));$('auto-bar').append(item);}
+const result=summary(samples);$('target-result').textContent=result.target;$('farthest-result').textContent=result.farthest ? result.farthest+' ft':'—';const latest=latestDistances(samples);const distances=TEST_DISTANCES;$('distance-table').replaceChildren();for(const d of distances){const s=latest.find(x=>x.distance===d);const row=el('tr');[d+' ft'+(d===6?' · target':''),s?(s.noSignal?'No speech detected — unsuccessful':s.listened?s.rating:'unreviewed'):'Untested',s?s.rms.toFixed(1)+' dBFS':'—'].forEach(t=>row.append(el('td',t)));$('distance-table').append(row);}$('chart').replaceChildren();const labels=[];for(const d of TEST_DISTANCES){const s=latest.find(x=>x.distance===d);const rating=s?(s.noSignal?'unclear':s.listened?s.rating:'unreviewed'):'untested';const bar=el('div',undefined,'chart-bar '+rating);bar.title=d+' ft: '+rating;if(TEST_DISTANCES.includes(d))bar.append(el('span',String(d)));$('chart').append(bar);if(s)labels.push(d+' feet '+rating);}$('chart').setAttribute('aria-label','Clarity review and no-signal outcomes by measured distance. '+(labels.join('; ')||'No speech samples.')+' Untested distances have no result. Table below provides values.');}
 function render(){
   renderTests();
   $('share-consent').checked=false;
@@ -103,6 +127,8 @@ function render(){
     audio.onplay=()=>document.querySelectorAll('audio').forEach(a=>{if(a!==audio)a.pause();});
     card.append(audio);
     if(s.kind==='speech'){
+      const autoResult=el('p','Automatic estimate: '+estimateLabel(s.automatic)+(Number.isFinite(s.automatic?.wer)?' · Word error rate '+Math.round(s.automatic.wer*100)+'%':'')+(s.automatic?.clippingWarning?' · Clipping warning (separate from phrase recognition).':''),'auto-result');card.append(autoResult);
+      const analyze=el('button',s.automatic?'Re-analyze locally':'Analyze locally');analyze.setAttribute('data-analysis','');analyze.disabled=autoBusy||capture.phase!=='idle'||!analyzer.ready;analyze.onclick=()=>analyzeSample(s);card.append(analyze);
       card.append(el('p','Words read: “'+phrase(TEST_DISTANCES.indexOf(s.distance)+1)+'”','hint'));
       const rating=el('div',undefined,'rating');const label=el('label','Your clarity rating (self-reported)');const select=el('select');select.setAttribute('aria-label','Clarity rating for '+s.distance+' feet');for(const [value,text] of [['unreviewed','Not reviewed'],['clear','Clear — every word understood'],['partial','Partial — some words uncertain'],['unclear','Unclear — words missing or unintelligible']]){const option=el('option',text);option.value=value;select.append(option);}select.value=s.rating;select.disabled=s.noSignal||!s.listened;label.append(select);rating.append(label);const hint=el('p',s.noSignal?'No speech detected at this distance — unsuccessful. This near-silence signal check cannot prove intelligibility. Retry this distance to replace the attempt.':s.listened?'Rate what you heard against the phrase. This is your self-reported review.':'Finish playback to enable your rating. Your rating is self-reported; the browser cannot verify what you heard.','hint');rating.append(hint);card.append(rating);
       audio.onended=()=>{s.listened=true;select.disabled=s.noSignal;if(s.noSignal){renderSummary();return;}hint.textContent='Rate what you heard against the phrase. This is your self-reported review.';renderSummary();};
@@ -110,14 +136,9 @@ function render(){
       const note=el('label','Review notes');note.className='sample-notes';const input=el('input');input.maxLength=300;input.placeholder='e.g. Last sentence muffled';input.value=s.reviewNotes;input.oninput=()=>s.reviewNotes=input.value;note.append(input);card.append(note);
     }
     const details=el('details');details.append(el('summary','Recorded setup'));details.append(el('p',Object.entries(s.notes).map(([k,v])=>`${k}: ${v||'not noted'}`).join(' · '),'hint'));card.append(details);
-    const actions=el('div',undefined,'sample-actions');if(s.noSignal){const retry=el('button','Retry '+s.distance+' feet');retry.onclick=()=>{if(capture.phase!=='idle'||submitting)return;pendingSilent=s;lastCompleted='';failed=false;render();return startStage(displayedStage());};actions.append(retry);}const del=el('button','Delete recording','danger');del.onclick=()=>{capture.cancel('');if(pendingSilent===s)pendingSilent=null;lastCompleted='';failed=false;audio.pause();audio.removeAttribute('src');URL.revokeObjectURL(s.url);samples=samples.filter(x=>x!==s);render();};actions.append(del);card.append(actions);$('samples').append(card);
+    const actions=el('div',undefined,'sample-actions');if(s.noSignal){const retry=el('button','Retry '+s.distance+' feet');retry.onclick=()=>{if(capture.phase!=='idle'||submitting)return;pendingSilent=s;lastCompleted='';failed=false;render();return startStage(displayedStage());};actions.append(retry);}const del=el('button','Delete recording','danger');del.onclick=()=>{stopAnalysis();capture.cancel('');if(pendingSilent===s)pendingSilent=null;lastCompleted='';failed=false;audio.pause();audio.removeAttribute('src');URL.revokeObjectURL(s.url);samples=samples.filter(x=>x!==s);render();};actions.append(del);card.append(actions);$('samples').append(card);
   }updateControls();
 }
-$('clear').onclick=()=>{capture.cancel('');failed=false;lastCompleted='';error('');document.querySelectorAll('audio').forEach(a=>{a.pause();a.removeAttribute('src');});samples.forEach(s=>URL.revokeObjectURL(s.url));samples=[];pendingSilent=null;render();$('clear-status').textContent='All samples and ratings deleted from this tab. Your setup notes remain.';};
+$('clear').onclick=()=>{stopAnalysis();capture.cancel('');failed=false;lastCompleted='';error('');document.querySelectorAll('audio').forEach(a=>{a.pause();a.removeAttribute('src');});samples.forEach(s=>URL.revokeObjectURL(s.url));samples=[];pendingSilent=null;render();$('clear-status').textContent='All samples and ratings deleted from this tab. Your setup notes remain.';};
 render();
 $('share-results').onclick=async()=>{const button=$('share-results');if(button.disabled||!complete()||capture.phase!=='idle'||submitting)return;if(!$('share-consent').checked){$('share-status').textContent='Submission is optional. Select the consent checkbox before submitting.';return;}try{const payload=sharedPayload(samples);submitting=true;updateControls();const response=await fetch('/api/nine-line-system-test/results',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});if(response.status!==201)throw Error(response.status===429?'Sharing is temporarily limited. Try again later.':'Shared storage is unavailable. Nothing was confirmed saved. Try again later.');const receipt=await response.json();if(receipt.message!=='Result stored privately.')throw Error('Storage was not confirmed. Try again later.');$('share-status').textContent='Results submitted privately to EMT919. Recordings and notes stayed on this phone.';$('share-consent').checked=false;}catch(e){$('share-status').textContent=e.message||'Could not confirm submission. Try again later.';}finally{submitting=false;updateControls();}};
-
-
-
-
-

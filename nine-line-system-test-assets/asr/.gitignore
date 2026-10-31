@@ -1,0 +1,4 @@
+# Materialized at build from the reviewed SHA-256 manifest, not duplicated in Git.
+models/
+vendor/
+*.partial
