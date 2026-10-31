@@ -18,6 +18,11 @@ const capture=createCapture({
   onState(phase,run){
     $('record-status').classList.toggle('active',phase==='recording');
     $('record-status').textContent=phase==='requesting'?'Requesting microphone access and preparing audio.':phase==='preparing'?'Microphone access ready — not recording. Get into position.':phase==='recording'?'● Recording — '+(run.stage===0?'stay quiet.':'read the script now.'):phase==='stopping'?'Microphone off — finishing recording.':'Microphone off — ready.';
+    if(phase==='speaking-cue')$('record-status').textContent='Spoken start cue — wait for recording indicator.';
+    if(phase==='settling')$('record-status').textContent='Cue finished — recording starts momentarily.';
+    if(phase==='completion-cue')$('record-status').textContent='Microphone off — recording complete.';
+    $('wake-status').textContent=run?.wakeStatus||'Screen-awake protection is requested only during a visible test step.';
+    $('cue-status').textContent=run?.cueUnavailable?'Local spoken cue unavailable. Follow the visual recording indicator.':'Spoken cues use an available local English voice. Device volume or mute may prevent hearing them; follow the screen.';
     $('countdown').textContent=phase==='preparing'?run.remaining+' seconds to get into position':phase==='recording'?run.remaining+' seconds of recording left':'';
     $('countdown').hidden=!['preparing','recording'].includes(phase);
     const level=phase==='recording'?Math.min(0,db(run.level||0)):-100;
@@ -47,7 +52,7 @@ function renderGuidance(){
   $('script-box').hidden=index===0||index===6;
   $('script').textContent=index>0&&index<6?phrase(index):'';
   $('preparation-label').hidden=index===0||index===6;
-  if(index!==shownStage){$('preparation').value=index===1?'5':index===2||index===3?'10':'20';shownStage=index;}
+  if(index!==shownStage){$('preparation').value=index===1?'5':'10';shownStage=index;}
   $('start').hidden=index===6;
   $('start').textContent=pendingSilent?(stageIndex()===6?'Continue to final results':'Continue to Step '+(stageIndex()+1)):(failed?'Retry':'Start')+' Step '+(index+1)+(index===0?' — baseline':' — '+TEST_DISTANCES[index-1]+' feet');
   $('retry-distance').hidden=!pendingSilent;$('retry-distance').textContent='Retry Step '+(index+1)+' — '+TEST_DISTANCES[index-1]+' feet';
@@ -116,6 +121,7 @@ function render(){
 $('clear').onclick=()=>{capture.cancel('');failed=false;lastCompleted='';error('');document.querySelectorAll('audio').forEach(a=>{a.pause();a.removeAttribute('src');});samples.forEach(s=>URL.revokeObjectURL(s.url));samples=[];pendingSilent=null;render();$('clear-status').textContent='All samples and ratings deleted from this tab. Your setup notes remain.';};
 render();
 $('share-results').onclick=async()=>{const button=$('share-results');if(button.disabled||!complete()||capture.phase!=='idle'||submitting)return;if(!$('share-consent').checked){$('share-status').textContent='Submission is optional. Select the consent checkbox before submitting.';return;}try{const payload=sharedPayload(samples);submitting=true;updateControls();const response=await fetch('/api/nine-line-system-test/results',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});if(response.status!==201)throw Error(response.status===429?'Sharing is temporarily limited. Try again later.':'Shared storage is unavailable. Nothing was confirmed saved. Try again later.');const receipt=await response.json();if(receipt.message!=='Result stored privately.')throw Error('Storage was not confirmed. Try again later.');$('share-status').textContent='Results submitted privately to EMT919. Recordings and notes stayed on this phone.';$('share-consent').checked=false;}catch(e){$('share-status').textContent=e.message||'Could not confirm submission. Try again later.';}finally{submitting=false;updateControls();}};
+
 
 
 
