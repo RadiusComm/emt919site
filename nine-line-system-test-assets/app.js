@@ -84,7 +84,7 @@ function render(){
   for(const s of [...samples].reverse()){
     const card=el('article',undefined,'sample');const heading=el('div',undefined,'sample-heading');heading.append(el('strong',s.kind==='baseline'?'Background baseline':s.distance+' feet · speech'));const time=el('time',new Date(s.created).toLocaleTimeString());time.dateTime=s.created;heading.append(time);card.append(heading);
     card.append(el('p',`${s.duration.toFixed(1)}s · RMS ${s.rms.toFixed(1)} dBFS · peak ${s.peak.toFixed(1)} dBFS · near-clip samples ${s.clipping.toFixed(2)}%`,'metrics'));
-    const audio=el('audio');audio.controls=true;audio.preload='none';audio.src=s.url;audio.setAttribute('aria-label',s.kind==='baseline'?'Play background baseline':'Play speech at '+s.distance+' feet');
+    const audio=el('audio');audio.controls=true;audio.setAttribute('controlsList','nodownload noremoteplayback');audio.disableRemotePlayback=true;audio.preload='none';audio.src=s.url;audio.setAttribute('aria-label',s.kind==='baseline'?'Play background baseline':'Play speech at '+s.distance+' feet');
     audio.onplay=()=>document.querySelectorAll('audio').forEach(a=>{if(a!==audio)a.pause();});
     card.append(audio);
     if(s.kind==='speech'){
@@ -100,6 +100,7 @@ function render(){
 $('clear').onclick=()=>{document.querySelectorAll('audio').forEach(a=>{a.pause();a.removeAttribute('src');});samples.forEach(s=>URL.revokeObjectURL(s.url));samples=[];render();$('clear-status').textContent='All samples and ratings deleted from this tab. Your setup notes remain.';};
 render();
 $('share-results').onclick=async()=>{const button=$('share-results');if(button.disabled)return;if(!$('share-consent').checked){$('share-status').textContent='Submission is optional. Select the consent checkbox before submitting.';return;}try{const payload=sharedPayload(samples);button.disabled=true;const response=await fetch('/api/nine-line-system-test/results',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});if(response.status!==201)throw Error(response.status===429?'Sharing is temporarily limited. Try again later.':'Shared storage is unavailable. Nothing was confirmed saved. Try again later.');const receipt=await response.json();if(receipt.message!=='Result stored privately.')throw Error('Storage was not confirmed. Try again later.');$('share-status').textContent='Results submitted privately to EMT919. Recordings and notes stayed on this phone.';$('share-consent').checked=false;}catch(e){$('share-status').textContent=e.message||'Could not confirm submission. Try again later.';}finally{button.disabled=false;}};
+
 
 
 
