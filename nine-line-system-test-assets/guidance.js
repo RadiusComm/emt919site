@@ -1,16 +1,22 @@
-// Local speech only; never send audio or cue text to a remote voice service.
-export function speakCue(text,done,unavailable){
-  const synth=globalThis.speechSynthesis;
-  let voice;try{voice=synth?.getVoices().find(v=>v.localService&&/^en\b/i.test(v.lang));}catch{unavailable(false);return ()=>{};}
-  if(!voice||!globalThis.SpeechSynthesisUtterance){unavailable(false);return ()=>{};}
-  let finished=false,timer;
-  const utterance=new SpeechSynthesisUtterance(text);utterance.voice=voice;utterance.lang=voice.lang;
-  function clear(){clearTimeout(timer);utterance.onend=null;utterance.onerror=null;}
-  function finish(ok){if(finished)return;finished=true;clear();if(!ok)try{synth.cancel();}catch{}if(ok)done();else unavailable(true);}
-  utterance.onend=()=>finish(true);utterance.onerror=()=>finish(false);
-  timer=setTimeout(()=>finish(false),5000);
-  try{synth.speak(utterance);}catch{finish(false);}
-  return ()=>{if(finished)return;finished=true;clear();try{synth.cancel();}catch{}};
+// Local Web Audio only. Successful scheduling cannot establish device audibility.
+export function playCue(context,kind,done,unavailable){
+ let finished=false,timer;const nodes=[];
+ const cleanup=stop=>{clearTimeout(timer);for(const {osc,gain} of nodes){osc.onended=null;if(stop)try{osc.stop();}catch{}try{osc.disconnect();gain.disconnect();}catch{}}};
+ const finish=ok=>{if(finished)return;finished=true;cleanup(!ok);if(ok)done();else unavailable();};
+ try{
+  if(context.state!=='running')throw Error('Audio output unavailable');
+  const now=context.currentTime;
+  const notes=kind==='start'?[[880,0,.18]]:[[660,0,.13],[440,.17,.18]];
+  for(const [frequency,offset,duration]of notes){
+   const osc=context.createOscillator(),gain=context.createGain();nodes.push({osc,gain});osc.type='sine';osc.frequency.setValueAtTime(frequency,now+offset);
+   gain.gain.setValueAtTime(0,now+offset);gain.gain.linearRampToValueAtTime(.12,now+offset+.012);gain.gain.exponentialRampToValueAtTime(.001,now+offset+duration);gain.gain.setValueAtTime(0,now+offset+duration+.005);
+   osc.connect(gain);gain.connect(context.destination);
+   osc.start(now+offset);osc.stop(now+offset+duration+.01);
+  }
+  nodes.at(-1).osc.onended=()=>finish(true);
+  timer=setTimeout(()=>finish(false),2500);
+ }catch{finish(false);}
+ return ()=>{if(finished)return;finished=true;cleanup(true);};
 }
 export function keepAwake(isActive,onStatus){
   let ended=false,sentinel;

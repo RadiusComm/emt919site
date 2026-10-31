@@ -1,7 +1,19 @@
-import { speakCue, keepAwake } from './guidance.js';
+import { playCue, keepAwake } from './guidance.js';
 // Timed local capture only. Permission/setup time never consumes the recording window.
 export function createCapture({onState,onComplete,onError}) {
-  let current=null,epoch=0,phase='idle';
+  let current=null,epoch=0,phase='idle',prepared=null;
+  const closeContext=context=>{if(context&&context.state!=='closed'){context.onstatechange=null;try{context.close().catch(()=>{});}catch{}}};
+  // Call directly in the Start/Retry click, BEFORE awaiting model preparation.
+  function prepareAudio(){
+    if(phase!=='idle'||document.hidden)return Promise.resolve(false);
+    if(prepared)return prepared.ready;
+    let context;try{
+      context=new (window.AudioContext||window.webkitAudioContext)();
+      const resumed=context.state==='suspended'?context.resume():Promise.resolve();
+      const audio={context,ready:Promise.resolve(resumed).then(()=>context.state==='running',()=>false)};
+      prepared=audio;return audio.ready;
+    }catch{closeContext(context);return Promise.resolve(false);}
+  }
   const state=()=>onState(phase,current);
   function release(run){
     if(!run)return;
@@ -13,7 +25,7 @@ export function createCapture({onState,onComplete,onError}) {
     if(run.context&&run.context.state!=='closed')run.context.close().catch(()=>{});
   }
   function cancel(message='Recording cancelled. Retry this step when ready.'){
-    epoch++;const run=current;current=null;phase='idle';
+    epoch++;const run=current;current=null;phase='idle';if(prepared){closeContext(prepared.context);prepared=null;}
     if(run){run.discard=true;try{if(run.recorder?.state!=='inactive')run.recorder?.stop();}catch{}release(run);}
     state();if(message)onError(message);
   }
@@ -29,20 +41,22 @@ export function createCapture({onState,onComplete,onError}) {
   function releaseTracks(run){
     if(run.context)run.context.onstatechange=null;
     run.stream?.getTracks().forEach(t=>{t.onended=null;t.stop();});
+    try{run.source?.disconnect();run.analyser?.disconnect();}catch{}
   }
   async function start(stage,notes,preparation=0){
     if(phase!=='idle'||document.hidden)return;
+    prepareAudio();const audio=prepared;prepared=null;
     const run={ticket:++epoch,stage,notes,seconds:stage===0?5:10,chunks:[],sum:0,count:0,peak:0,clipped:0,frames:0,lastFrame:null,maxGap:0,discard:false,remaining:stage===0?5:10};
-    current=run;phase='requesting';state();
+    run.context=audio?.context;current=run;phase='requesting';state();
     const live=()=>current===run&&!run.discard&&run.ticket===epoch;
     run.releaseWake=keepAwake(live,message=>{if(live()){run.wakeStatus=message;state();}});
     try{
+      if(!audio||!await audio.ready)throw Error('Audio context unavailable');
+      if(!live()){release(run);return;}
       run.stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false},video:false});
       if(!live()){release(run);return;}
       if(!run.stream.getAudioTracks().length)throw Error('No audio track');
       run.stream.getTracks().forEach(t=>t.onended=()=>fail(run,'The microphone disconnected. Retry this step.'));
-      run.context=new (window.AudioContext||window.webkitAudioContext)();
-      if(run.context.state==='suspended')await run.context.resume();
       if(!live()){release(run);return;}
       if(run.context.state!=='running')throw Error('Audio context unavailable');
       run.context.onstatechange=()=>{if(live()&&run.context.state!=='running')fail(run,'Audio capture was interrupted. Retry this step.');};
@@ -68,7 +82,7 @@ export function createCapture({onState,onComplete,onError}) {
         const noSignal=stage>0&&run.peak<=.0001;
         const finish=()=>{if(!live())return;release(run);current=null;phase='idle';state();onComplete({...run,blob,noSignal});};
         phase='completion-cue';state();
-        run.cancelCue=speakCue('Complete.',finish,finish);
+        run.cancelCue=playCue(run.context,'complete',finish,()=>{run.cueUnavailable=true;finish();});
       };
       run.recorder.onstart=()=>{
         if(!live()||phase!=='requesting')return;
@@ -99,23 +113,22 @@ export function createCapture({onState,onComplete,onError}) {
       };
       const afterPreparation=()=>{
         if(!live())return;clearInterval(run.clock);
-        if(stage===0){beginRecording();return;}
-        const settle=()=>{if(!live())return;phase='settling';state();run.settleTimer=setTimeout(()=>{if(!live())return;if(globalThis.speechSynthesis?.speaking){fail(run,'Spoken guidance has not stopped. Retry this step.');return;}beginRecording();},500);};
-        phase='speaking-cue';state();
-        run.cancelCue=speakCue('Start speaking now.',settle,mayHaveSpoken=>{if(!live())return;run.cueUnavailable=true;if(mayHaveSpoken)settle();else beginRecording();});
+        const settle=()=>{if(!live())return;phase='settling';state();run.settleTimer=setTimeout(()=>{if(live())beginRecording();},500);};
+        phase='start-cue';state();
+        run.cancelCue=playCue(run.context,'start',settle,()=>{if(!live())return;run.cueUnavailable=true;settle();});
       };
       if(stage>0){
         preparation=Number(preparation)===5?5:10;
         phase='preparing';run.preparedAt=performance.now();run.remaining=preparation;state();
         const prepare=()=>{if(!live()||phase!=='preparing')return;run.remaining=Math.max(0,Math.ceil(preparation-(performance.now()-run.preparedAt)/1000));state();if(run.remaining===0)afterPreparation();};
         run.clock=setInterval(prepare,100);
-      }else beginRecording();
+      }else afterPreparation();
     }catch(e){
       if(!live()){release(run);return;}
       const messages={NotAllowedError:'Microphone access was denied or blocked. Allow access in browser site settings, then retry this step.',NotFoundError:'No microphone was found. Connect or enable one, then retry.',NotReadableError:'The microphone is unavailable or in use. Close other recording apps, then retry.'};
       fail(run,messages[e.name]||'Could not start recording. Check microphone permission and browser support, then retry this step.');
     }
   }
-  return {start,cancel,get phase(){return phase;}};
+  return {start,prepareAudio,cancel,get phase(){return phase;}};
 }
 
