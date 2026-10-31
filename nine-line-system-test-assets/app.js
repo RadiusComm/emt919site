@@ -1,3 +1,4 @@
+import {createPublicRoster,PUBLIC_ROSTER_ENABLED} from './volume-roster.js';
 import { db } from './metrics.js';
 import { pickupMetrics, pickupScore } from './volume.js';
 import { MODEL_GROUPS, defaultOperatingSystem } from './models.js';
@@ -7,15 +8,16 @@ const TEST_DISTANCES=[5,10,20];
 const WORDS=['five','ten','twenty'];
 const fields=['make','model','manual','os','version','position','noise'];
 const captureNotes=()=>Object.fromEntries(fields.map(k=>[k,$(k).value.trim()]));
-let samples=[],seq=0,failed=false,lastCompleted='',shownStage=-1,submitting=false;
+let samples=[],seq=0,failed=false,lastCompleted='',shownStage=-1,submitting=false,activeStage=null;
 const stageIndex=()=>!samples.some(s=>s.kind==='baseline')?0:TEST_DISTANCES.findIndex(d=>!samples.some(s=>s.kind==='speech'&&s.distance===d))+1||4;
 const complete=()=>stageIndex()===4;
-const displayedStage=()=>stageIndex();
+const displayedStage=()=>capture.phase!=='idle'&&Number.isInteger(activeStage)?activeStage:stageIndex();
 const supported=!!(window.isSecureContext&&navigator.mediaDevices?.getUserMedia&&window.MediaRecorder&&(window.AudioContext||window.webkitAudioContext));
 function phrase(stage){return 'This is the '+WORDS[stage-1]+'-foot test. The plane flies west. I can hear every word clearly.';}
 function error(text){$('error').textContent=text;$('error').hidden=!text;}
 const capture=createCapture({
   onState(phase,run){
+    activeStage=run?.stage??null;
     $('record-status').classList.toggle('active',phase==='recording');
     $('record-status').textContent=phase==='requesting'?'Requesting microphone access and preparing audio.':phase==='preparing'?'Microphone access ready — not recording. Get into position.':phase==='recording'?'● Recording — '+(run.stage===0?'stay quiet.':'read the script now.'):phase==='stopping'?'Microphone off — finishing recording.':'Microphone off — ready.';
     if(phase==='start-cue')$('record-status').textContent='Start bell — wait for recording indicator.';
@@ -34,7 +36,7 @@ const capture=createCapture({
     let levels;try{levels=pickupMetrics(run,samples.find(s=>s.kind==='baseline')?.levels);}catch{failed=true;error('Audio levels could not be measured. Retry this step.');updateControls();return;}
     for(const old of samples.filter(s=>s.kind==='speech'&&s.distance===distance))URL.revokeObjectURL(old.url);
     samples=samples.filter(s=>!(s.kind==='speech'&&s.distance===distance));
-    const sample={id:++seq,kind:run.stage===0?'baseline':'speech',distance,notes:run.notes,created:new Date().toISOString(),duration:run.elapsed,levels,blob:run.blob,url:URL.createObjectURL(run.blob)};
+    const sample={id:++seq,kind:run.stage===0?'baseline':'speech',distance,notes:run.notes,created:new Date().toISOString(),duration:run.elapsed,levels,captureMetrics:{sum:run.sum,count:run.count,peak:run.peak,clipped:run.clipped},blob:run.blob,url:URL.createObjectURL(run.blob)};
     samples.push(sample);failed=false;lastCompleted=run.stage===0?'Background level measured.':distance+' feet — audio level measured.';error('');render();
 
   }
@@ -46,6 +48,8 @@ function renderTests(){
 }
 function renderGuidance(){
   const index=displayedStage(),busy=capture.phase!=='idle';
+  const finished=complete()&&!busy&&!failed;
+  for(const id of ['record-title','auto-status','completion-status','stage-instruction','recorder','cue-status','wake-status','progress-details'])$(id).hidden=finished;
   $('completion-status').textContent=lastCompleted;
   $('stage-heading').textContent=index===4?'All recording steps complete':'Step '+(index+1)+' of 4 — '+(index===0?'background baseline':TEST_DISTANCES[index-1]+' feet');
   $('stage-instruction').textContent=index===4?'Your three audio-level results are below. Play each recording to hear what was picked up.':index===0?'Stay quiet. Start records five seconds of room noise, then stops automatically.':'Measure '+TEST_DISTANCES[index-1]+' feet from this fixed phone. Read and remember the script. Start gives you preparation time, then records for ten seconds and stops.';
@@ -68,7 +72,7 @@ function updateControls(){
   $('start').disabled=busy||!supported||submitting;$('cancel').disabled=capture.phase==='idle';
   $('retry-distance').disabled=busy||submitting;
   $('clear').disabled=(!samples.length&&!busy)||submitting;
-  $('share-results').disabled=true;$('share-consent').disabled=true;
+  $('share-results').disabled=!PUBLIC_ROSTER_ENABLED||busy||!complete()||submitting;$('share-consent').disabled=!PUBLIC_ROSTER_ENABLED||busy||submitting;
   renderTests();renderGuidance();
 }
 function renderModelChoices(){
@@ -88,6 +92,7 @@ async function startStage(stage){
   if(capture.phase!=='idle'||submitting||!supported)return;
   if(!$('make').value||!$('model').value||!$('os').value)return error('Select phone make, model and operating system before starting.');
   if(samples.some(s=>fields.some(k=>s.notes[k]!==$(k).value.trim())))return error('The phone setup changed. Delete recordings and restart.');
+  $('share-consent').checked=false;
   document.querySelectorAll('audio').forEach(a=>a.pause());error('');lastCompleted='';
   capture.prepareAudio();
   if(capture.phase!=='idle'||document.hidden)return;
@@ -124,5 +129,5 @@ function render(){
  updateControls();
 }
 $('clear').onclick=()=>{capture.cancel('');failed=false;lastCompleted='';error('');document.querySelectorAll('audio').forEach(a=>{a.pause();a.removeAttribute('src');});samples.forEach(s=>URL.revokeObjectURL(s.url));samples=[];render();$('clear-status').textContent='All recordings and results deleted from this tab. Your setup notes remain.';};
+const roster=createPublicRoster({getSamples:()=>samples,isBusy:()=>capture.phase!=='idle',setBusy:value=>{submitting=value;updateControls();}});
 render();
-$('share-results').onclick=()=>{};
