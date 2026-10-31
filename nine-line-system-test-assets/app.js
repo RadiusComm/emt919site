@@ -58,6 +58,7 @@ function updateControls() {
   for (const el of [$('baseline-mode'),$('spoken-prompt'),$('distance'),...document.querySelectorAll('[data-distance]'),...fields.map($)]) el.disabled = busy;
   $('clear').disabled = !samples.length || busy;
   const hasBaseline=samples.some(s=>s.kind==='baseline');
+  if(!hasBaseline&&phase==='idle')mode='baseline';
   document.querySelectorAll('[data-distance]').forEach(b=>b.disabled=busy||!hasBaseline);
   $('baseline-mode').hidden=!hasBaseline;
   $('baseline-instructions').hidden=hasBaseline||busy;
@@ -129,7 +130,7 @@ async function start(armed=false) {
   }
 }
 function stop() { if (phase !== 'recording' || !active) return; phase='stopping'; const run=active; clearTimeout(run.limit); clearInterval(run.clock); cancelAnimationFrame(run.raf); $('record-status').textContent='Finishing sample · microphone off';updateControls();try{run.recorder.stop();release(run);}catch{cancel('Could not finish the sample. Please try again.');} }
-$('start').onclick=()=>start();$('stop').onclick=stop;$('cancel').onclick=()=>cancel();
+$('start').onclick=()=>{if(phase!=='idle')return;setMode('baseline');return start();};$('stop').onclick=stop;$('cancel').onclick=()=>cancel();
 document.addEventListener('visibilitychange',()=>{if(document.hidden && phase!=='idle')cancel('Recording cancelled when the page became hidden. Start a new sample when ready.');if(document.hidden)document.querySelectorAll('audio').forEach(a=>a.pause());});
 window.addEventListener('pagehide',()=>{cancel();document.querySelectorAll('audio').forEach(a=>{a.pause();a.removeAttribute('src');});samples.forEach(s=>URL.revokeObjectURL(s.url));samples=[];});
 function el(tag,text,cls){const node=document.createElement(tag);if(text!==undefined)node.textContent=text;if(cls)node.className=cls;return node;}
@@ -151,7 +152,7 @@ function render(){
       const note=el('label','Review notes');note.className='sample-notes';const input=el('input');input.maxLength=300;input.placeholder='e.g. Last sentence muffled';input.value=s.reviewNotes;input.oninput=()=>s.reviewNotes=input.value;note.append(input);card.append(note);
     }
     const details=el('details');details.append(el('summary','Recorded setup'));details.append(el('p',Object.entries(s.notes).map(([k,v])=>`${k}: ${v||'not noted'}`).join(' · '),'hint'));card.append(details);
-    const actions=el('div',undefined,'sample-actions');const del=el('button','Delete recording','danger');del.onclick=()=>{audio.pause();audio.removeAttribute('src');URL.revokeObjectURL(s.url);samples=samples.filter(x=>x!==s);render();};actions.append(del);card.append(actions);$('samples').append(card);
+    const actions=el('div',undefined,'sample-actions');const del=el('button','Delete recording','danger');del.onclick=()=>{if(s.kind==='baseline'&&phase!=='idle')cancel('Baseline deleted. Record room noise again.');audio.pause();audio.removeAttribute('src');URL.revokeObjectURL(s.url);samples=samples.filter(x=>x!==s);render();};actions.append(del);card.append(actions);$('samples').append(card);
   }updateControls();
 }
 $('clear').onclick=()=>{document.querySelectorAll('audio').forEach(a=>{a.pause();a.removeAttribute('src');});samples.forEach(s=>URL.revokeObjectURL(s.url));samples=[];render();$('clear-status').textContent='All samples and ratings deleted from this tab. Your setup notes remain.';};
