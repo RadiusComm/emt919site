@@ -90,6 +90,7 @@ function render(){
     audio.onplay=()=>document.querySelectorAll('audio').forEach(a=>{if(a!==audio)a.pause();});
     card.append(audio);
     if(s.kind==='speech'){
+      card.append(el('p','Words read: “'+phrase(TEST_DISTANCES.indexOf(s.distance)+1)+'”','hint'));
       const rating=el('div',undefined,'rating');const label=el('label','Your clarity rating (self-reported)');const select=el('select');select.setAttribute('aria-label','Clarity rating for '+s.distance+' feet');for(const [value,text] of [['unreviewed','Not reviewed'],['clear','Clear — every word understood'],['partial','Partial — some words uncertain'],['unclear','Unclear — words missing or unintelligible']]){const option=el('option',text);option.value=value;select.append(option);}select.value=s.rating;select.disabled=!s.listened;label.append(select);rating.append(label);const hint=el('p',s.listened?'Rate what you heard against the phrase. This is your self-reported review.':'Finish playback to enable your rating. Your rating is self-reported; the browser cannot verify what you heard.','hint');rating.append(hint);card.append(rating);
       audio.onended=()=>{s.listened=true;select.disabled=false;hint.textContent='Rate what you heard against the phrase. This is your self-reported review.';renderSummary();};
       select.onchange=()=>{s.rating=select.value;renderSummary();renderTests();renderGuidance();};
