@@ -1,0 +1,13 @@
+# Sound cues and distance-result bar candidate
+
+This intermediate candidate adds local rising/falling sound cues and a discrete final distance-result bar. It does not implement automatic intelligibility review and must not be represented as satisfying that later request.
+
+Sound cues are enabled in a visible checkbox and only requested after explicit Start/Retry. Web Audio creation/resume occurs synchronously in that gesture before awaiting microphone permission. The rising start cue finishes, then a 500ms settling pause plus reported base/output latency precedes MediaRecorder start and input analyser sampling. The lower falling cue runs only after recorder stop, track release and analyser disconnection. Actual recording windows remain 5 seconds for baseline and 10 for speech. Short sine cues use 15ms attack/40ms release and a 0.06 gain; the app never changes device volume or output route.
+
+Visual statuses distinguish preparation, start cue, settling, recording and stopped/end cue. Muted output cannot be detected or declared audible. Unsupported/failed output displays an unavailable warning and visual fallback; cue watchdog cleanup stops/disconnects queued output before fallback. Cancellation, hidden page, reset, interruption, denial and late permission/resume invalidate callbacks and close contexts/tracks. No speech recognition or server audio processing has been added.
+
+The final five-segment bar uses existing reviewed ratings only: clear green, partial amber, unclear/no-signal red, unreviewed neutral. Every segment has distance, text/icon and an accessible label. Farthest distance rated clear is a tested point, not an inferred continuous usable range; gaps remain explicit and unreviewed six feet never qualifies. New automatic ASR review will need separate validated estimates and unavailable/uncertain states; this bar does not derive clarity from level metrics.
+
+Checks: `node --test scripts/nine-line-test-*.test.mjs scripts/demo-officers.test.mjs`. Synthetic tone-node/timer tests check output graphs and ramps, start cue plus latency/settle exclusion, no analysis during cues, microphone off before end cue, unchanged 5/10-second windows, sound-off behavior, output failure/watchdog, repeated cancellation, permission/init ordering, stale callbacks and result-bar rating semantics. No actual phone audibility, output latency or hardware microphone success is claimed. No real audio or submissions are used in QA.
+
+Backend, payload schema, catalog, privacy and existing production pages/functions remain unchanged. Independent review and production publication are pending. Team distribution remains withheld.
