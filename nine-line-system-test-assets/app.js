@@ -1,5 +1,5 @@
 import { PHRASE, db, frameMetrics, latestDistances, summary } from './metrics.js';
-import { MODELS, defaultOperatingSystem } from './models.js';
+import { MODELS, matchingModelGroups, defaultOperatingSystem } from './models.js';
 import { sharedPayload } from './results.js';
 const $ = id => document.getElementById(id);
 let mode = 'baseline', phase = 'idle', epoch = 0, active = null, samples = [], seq = 0;
@@ -56,6 +56,7 @@ function updateControls() {
   $('start').disabled = busy || !supported; $('start').hidden = busy || samples.some(s=>s.kind==='baseline');
   $('stop').disabled = phase !== 'recording'; $('cancel').disabled = !busy;
   for (const el of [$('baseline-mode'),$('spoken-prompt'),$('distance'),...document.querySelectorAll('[data-distance]'),...fields.map($)]) el.disabled = busy;
+  $('model-search').disabled=busy||!MODELS[$('make').value]?.length;
   $('clear').disabled = !samples.length || busy;
   const hasBaseline=samples.some(s=>s.kind==='baseline');
   if(!hasBaseline&&phase==='idle')mode='baseline';
@@ -65,7 +66,21 @@ function updateControls() {
   renderGuidance();
 }
 function setMode(next) { if(phase!=='idle')return;mode=next; }
-$('make').onchange=()=>{const options=MODELS[$('make').value]||[];$('model').replaceChildren();for(const text of ['',...options,'Other']){const option=document.createElement('option');option.value=text;option.textContent=text||'Select model';$('model').append(option);}$('model').onchange();};
+function renderModelChoices(selected=$('model').value){
+  const make=$('make').value,groups=matchingModelGroups(make,$('model-search').value);
+  const matchCount=groups.reduce((n,[,models])=>n+models.length,0);
+  const addOption=(parent,value,label=value)=>{const option=document.createElement('option');option.value=value;option.textContent=label;parent.append(option);};
+  $('model').replaceChildren();addOption($('model'),'','Select model');
+  if(make==='Apple')groups.sort((a,b)=>Number(b[0])-Number(a[0]));
+  for(const [label,models] of groups){const group=document.createElement('optgroup');group.label=label;for(const model of models)addOption(group,model);$('model').append(group);}
+  if(selected&&selected!=='Other'&&MODELS[make]?.includes(selected)&&!groups.some(([,models])=>models.includes(selected))){const group=document.createElement('optgroup');group.label='Selected phone (outside filter)';addOption(group,selected);$('model').append(group);}
+  addOption($('model'),'Other','Other / model not listed');
+  $('model').value=selected==='Other'||MODELS[make]?.includes(selected)?selected:'';
+  $('model-matches').textContent=make?(matchCount+' of '+(MODELS[make]?.length||0)+' models shown. '+(matchCount?'Choose a model below.':'Use Other if your model is not listed.')):'Choose a phone make first.';
+  $('model-search').disabled=phase!=='idle'||!MODELS[make]?.length;
+}
+$('model-search').oninput=()=>{if(phase==='idle')renderModelChoices();};
+$('make').onchange=()=>{if(phase!=='idle')return;$('model-search').value='';$('manual').value='';renderModelChoices('');$('model').onchange();};
 $('model').onchange=()=>{$('manual-label').hidden=$('model').value!=='Other';$('os').value=defaultOperatingSystem($('make').value,$('model').value);$('version').value='';};
 $('os').onchange=()=>{$('version').value='';};
 $('baseline-mode').onclick=()=>{if(phase!=='idle')return;setMode('baseline');return start();};
