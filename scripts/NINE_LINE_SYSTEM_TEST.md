@@ -1,0 +1,17 @@
+# Nine Line microphone system test
+
+Canonical page: `/nine-line-system-test`, with isolated assets in `/nine-line-system-test-assets/`.
+The only new function route is POST `/api/nine-line-system-test/results`.
+Existing pages, forms, demo/CRM and content functions are unchanged.
+
+Recordings remain in tab memory, are deleted on reload/close, never upload, and need explicit Start/Stop and microphone permission. Playback is explicit. Stop/cancel/error/disconnect/hidden-page/navigation release microphone tracks; a late grant after cancel is released too. No persistent history, report download or audio export is provided. No account or installation is required.
+
+Distance is manually measured from 1–30 whole feet, including visible 2-foot and owner-selected 6-foot controls. Six feet is a setup-specific target, not a validated universal standard. Qualification requires playback and a human clarity rating; digital amplitude never passes it. Untested, incomplete, or unreviewed is not qualified. No operational or hardware certification is claimed. Browser capture can differ from the native Nine Line pipeline.
+
+Optional Submit results needs a separate unchecked consent box and click. The dedicated receiver validates and reconstructs exactly `{consent:true,model,results:[{distance,rms,peak,clipping,rating}]}`. Only fixed model categories are allowed (manual model maps to Other). No audio, names, email, phone, free text, OS/version, cookie, auth token, tracking identifier or visitor metadata is forwarded. Origin must match the current website; JSON bodies are streaming-limited to 12KB. No CORS header or public read endpoint is added. Netlify's existing infrastructure rate-limits by domain/IP (10 per minute) without app/database storage of those identifiers; Sites also atomically limits 500/day and 10,000 total records. Anonymous submissions are self-reported and can repeat; never infer validated compatibility rankings.
+
+The server forwards sanitized data to the existing owned Sites receiver, using its fixed public origin and no credentials. Only an actual HTTP 201 with the expected stored receipt produces success. Timeout/error/malformed receipts report unconfirmed storage and do not retry automatically. Submissions remain private in Sites D1 `DB.result_summaries`, accessed only through authenticated owner Sites database tools/settings. There is no email delivery, social sharing or CRM/form event. The `Test fixture / Synthetic` category is reserved for QA; always exclude it from model success analysis. No public aggregate page or success counts exist.
+
+Run `node --test scripts/nine-line-test-*.test.mjs scripts/demo-officers.test.mjs` plus `node --check netlify/functions/nine-line-system-test.mjs`.
+Frontend/mock tests cover synthetic signal metrics, manual qualification, denial/cancel/late permission, disconnection/navigation cleanup, device/setup isolation, OS defaults/manual overrides, removed-field/export checks, summary privacy and receipt-gated submission. Receiver tests cover malformed/oversized/private-field payloads, exact forwarding, no credentials/CORS, no login and upstream failures. Actual iPhone/Android hardware/distance tests are still required; browser/layout checks are not hardware certification.
+
