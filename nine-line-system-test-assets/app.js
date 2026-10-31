@@ -7,7 +7,7 @@ const TEST_DISTANCES=[2,6,10,15,20];
 const WORDS=['two','six','ten','fifteen','twenty'];
 const fields=['make','model','manual','os','version','position','noise'];
 const captureNotes=()=>Object.fromEntries(fields.map(k=>[k,$(k).value.trim()]));
-let samples=[],seq=0,failed=false,lastCompleted='',shownStage=-1,submitting=false,pendingSilent=null;
+let samples=[],seq=0,failed=false,lastCompleted='',shownStage=-1,submitting=false,pendingSilent=null,soundMessage='';
 const stageIndex=()=>!samples.some(s=>s.kind==='baseline')?0:TEST_DISTANCES.findIndex(d=>!samples.some(s=>s.kind==='speech'&&s.distance===d))+1||6;
 const complete=()=>stageIndex()===6&&!pendingSilent;
 const displayedStage=()=>pendingSilent?TEST_DISTANCES.indexOf(pendingSilent.distance)+1:stageIndex();
@@ -17,7 +17,9 @@ function error(text){$('error').textContent=text;$('error').hidden=!text;}
 const capture=createCapture({
   onState(phase,run){
     $('record-status').classList.toggle('active',phase==='recording');
-    $('record-status').textContent=phase==='requesting'?'Requesting microphone access and preparing audio.':phase==='preparing'?'Microphone access ready — not recording. Get into position.':phase==='recording'?'● Recording — '+(run.stage===0?'stay quiet.':'read the script now.'):phase==='stopping'?'Microphone off — finishing recording.':'Microphone off — ready.';
+    const labels={requesting:'Requesting microphone access and preparing audio.',preparing:'Microphone access ready — not recording. Get into position.','start-cue':'Start sound cue requested — wait to speak.',settling:'Waiting for sound to settle — not recording.','end-cue':'Recording ended. Microphone off — end sound cue requested.',stopping:'Microphone off — finishing recording.'};
+    $('record-status').textContent=phase==='recording'?'● Recording — '+(run.stage===0?'stay quiet.':'read the script now.'):labels[phase]||'Microphone off — ready.';
+    if(run?.soundWarning)soundMessage=run.soundWarning;
     $('countdown').textContent=phase==='preparing'?run.remaining+' seconds to get into position':phase==='recording'?run.remaining+' seconds of recording left':'';
     $('countdown').hidden=!['preparing','recording'].includes(phase);
     const level=phase==='recording'?Math.min(0,db(run.level||0)):-100;
@@ -25,6 +27,7 @@ const capture=createCapture({
   },
   onError(message){failed=true;lastCompleted='';error(message);updateControls();},
   onComplete(run){
+    soundMessage=run.soundWarning||'';
     const distance=run.stage===0?null:TEST_DISTANCES[run.stage-1];
     for(const old of samples.filter(s=>s.kind==='speech'&&s.distance===distance))URL.revokeObjectURL(old.url);
     samples=samples.filter(s=>!(s.kind==='speech'&&s.distance===distance));
@@ -58,6 +61,8 @@ function renderGuidance(){
 function updateControls(){
   const busy=capture.phase!=='idle';
   fields.forEach(k=>$(k).disabled=busy||samples.length>0);$('preparation').disabled=busy;
+  $('sound-cues').disabled=busy||submitting;
+  $('sound-status').textContent=soundMessage||($('sound-cues').checked?'Sounds on. Device mute, volume or output routing may prevent hearing them; follow the screen.':'Sounds off. Follow the visual preparation, recording and completion cues.');
   $('start').disabled=busy||!supported||submitting;$('cancel').disabled=!busy;
   $('retry-distance').disabled=busy||submitting;
   $('clear').disabled=(!samples.length&&!busy)||submitting;
@@ -82,16 +87,22 @@ function startStage(stage){
   if(capture.phase!=='idle'||submitting||!supported)return;
   if(!$('make').value||!$('model').value||!$('os').value)return error('Select phone make, model and operating system before starting.');
   if(samples.some(s=>fields.some(k=>s.notes[k]!==$(k).value.trim())))return error('The phone setup changed. Delete recordings and restart.');
-  document.querySelectorAll('audio').forEach(a=>a.pause());error('');lastCompleted='';
-  return capture.start(stage,captureNotes(),Number($('preparation').value));
+  document.querySelectorAll('audio').forEach(a=>a.pause());error('');lastCompleted='';soundMessage='';
+  return capture.start(stage,captureNotes(),Number($('preparation').value),$('sound-cues').checked);
 }
+$('sound-cues').onchange=()=>{if(capture.phase==='idle'){soundMessage='';updateControls();}};
 $('retry-distance').onclick=()=>{if(pendingSilent&&capture.phase==='idle'&&!submitting)return startStage(displayedStage());};
 $('cancel').onclick=()=>capture.cancel();
 if(!supported){$('support').hidden=false;$('support').textContent='Recording is unavailable here. Open this page directly over HTTPS in a browser with microphone, MediaRecorder and Web Audio support. Embedded previews may block access.';}
 document.addEventListener('visibilitychange',()=>{if(document.hidden){if(capture.phase!=='idle')capture.cancel('This step was cancelled when the page became hidden. Retry when ready.');document.querySelectorAll('audio').forEach(a=>a.pause());}});
 window.addEventListener('pagehide',()=>{capture.cancel('');document.querySelectorAll('audio').forEach(a=>{a.pause();a.removeAttribute('src');});samples.forEach(s=>URL.revokeObjectURL(s.url));samples=[];pendingSilent=null;lastCompleted='';failed=false;render();});
 function el(tag,text,cls){const node=document.createElement(tag);if(text!==undefined)node.textContent=text;if(cls)node.className=cls;return node;}
-function renderSummary(){const result=summary(samples);$('target-result').textContent=result.target;$('farthest-result').textContent=result.farthest ? result.farthest+' ft':'—';const latest=latestDistances(samples);const distances=TEST_DISTANCES;$('distance-table').replaceChildren();for(const d of distances){const s=latest.find(x=>x.distance===d);const row=el('tr');[d+' ft'+(d===6?' · target':''),s?(s.noSignal?'No speech detected — unsuccessful':s.listened?s.rating:'unreviewed'):'Untested',s?s.rms.toFixed(1)+' dBFS':'—'].forEach(t=>row.append(el('td',t)));$('distance-table').append(row);}$('chart').replaceChildren();const labels=[];for(const d of TEST_DISTANCES){const s=latest.find(x=>x.distance===d);const rating=s?(s.noSignal?'unclear':s.listened?s.rating:'unreviewed'):'untested';const bar=el('div',undefined,'chart-bar '+rating);bar.title=d+' ft: '+rating;if(TEST_DISTANCES.includes(d))bar.append(el('span',String(d)));$('chart').append(bar);if(s)labels.push(d+' feet '+rating);}$('chart').setAttribute('aria-label','Clarity review and no-signal outcomes by measured distance. '+(labels.join('; ')||'No speech samples.')+' Untested distances have no result. Table below provides values.');}
+function renderSummary(){
+  $('distance-status-bar').replaceChildren();
+  const latestResults=latestDistances(samples);
+  const barLabels={clear:'✓ Clear',partial:'△ Partial',unclear:'✕ Unsuccessful',unreviewed:'○ Not reviewed',untested:'— Untested'};
+  for(const distance of TEST_DISTANCES){const sample=latestResults.find(s=>s.distance===distance);const outcome=sample?(sample.noSignal?'unclear':sample.listened?sample.rating:'unreviewed'):'untested';const segment=el('li',undefined,'distance-segment '+outcome);segment.append(el('strong',distance+' ft'),el('span',barLabels[outcome]));segment.setAttribute('aria-label',distance+' feet: '+(sample?.noSignal?'No speech detected — unsuccessful':barLabels[outcome]));$('distance-status-bar').append(segment);}
+  const result=summary(samples);$('target-result').textContent=result.target;$('farthest-result').textContent=result.farthest ? result.farthest+' ft':'—';const latest=latestDistances(samples);const distances=TEST_DISTANCES;$('distance-table').replaceChildren();for(const d of distances){const s=latest.find(x=>x.distance===d);const row=el('tr');[d+' ft'+(d===6?' · target':''),s?(s.noSignal?'No speech detected — unsuccessful':s.listened?s.rating:'unreviewed'):'Untested',s?s.rms.toFixed(1)+' dBFS':'—'].forEach(t=>row.append(el('td',t)));$('distance-table').append(row);}$('chart').replaceChildren();const labels=[];for(const d of TEST_DISTANCES){const s=latest.find(x=>x.distance===d);const rating=s?(s.noSignal?'unclear':s.listened?s.rating:'unreviewed'):'untested';const bar=el('div',undefined,'chart-bar '+rating);bar.title=d+' ft: '+rating;if(TEST_DISTANCES.includes(d))bar.append(el('span',String(d)));$('chart').append(bar);if(s)labels.push(d+' feet '+rating);}$('chart').setAttribute('aria-label','Clarity review and no-signal outcomes by measured distance. '+(labels.join('; ')||'No speech samples.')+' Untested distances have no result. Table below provides values.');}
 function render(){
   renderTests();
   $('share-consent').checked=false;
