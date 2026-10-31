@@ -1,3 +1,4 @@
+import { speakCue, keepAwake } from './guidance.js';
 // Timed local capture only. Permission/setup time never consumes the recording window.
 export function createCapture({onState,onComplete,onError}) {
   let current=null,epoch=0,phase='idle';
@@ -5,6 +6,7 @@ export function createCapture({onState,onComplete,onError}) {
   function release(run){
     if(!run)return;
     clearTimeout(run.deadline);clearTimeout(run.watchdog);clearInterval(run.clock);
+    clearTimeout(run.settleTimer);run.cancelCue?.();run.releaseWake?.();
     if(run.context)run.context.onstatechange=null;
     run.stream?.getTracks().forEach(t=>{t.onended=null;t.stop();});
     try{run.source?.disconnect();run.analyser?.disconnect();}catch{}
@@ -29,10 +31,11 @@ export function createCapture({onState,onComplete,onError}) {
     run.stream?.getTracks().forEach(t=>{t.onended=null;t.stop();});
   }
   async function start(stage,notes,preparation=0){
-    if(phase!=='idle')return;
+    if(phase!=='idle'||document.hidden)return;
     const run={ticket:++epoch,stage,notes,seconds:stage===0?5:10,chunks:[],sum:0,count:0,peak:0,clipped:0,frames:0,lastFrame:null,maxGap:0,discard:false,remaining:stage===0?5:10};
     current=run;phase='requesting';state();
     const live=()=>current===run&&!run.discard&&run.ticket===epoch;
+    run.releaseWake=keepAwake(live,message=>{if(live()){run.wakeStatus=message;state();}});
     try{
       run.stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false},video:false});
       if(!live()){release(run);return;}
@@ -57,13 +60,15 @@ export function createCapture({onState,onComplete,onError}) {
       run.recorder.onstop=()=>{
         if(!live())return;
         if(phase!=='stopping'){fail(run,'Recording ended early. Retry this step.');return;}
-        release(run);
+        clearTimeout(run.watchdog);releaseTracks(run);
         const blob=new Blob(run.chunks,{type:run.recorder.mimeType||run.chunks[0]?.type||'audio/webm'});
         // A blob alone is insufficient: require sustained finite analyser data and the full window.
         if(!blob.size||run.frames<run.seconds*5||!run.count||run.maxGap>1000||run.elapsed<run.seconds-.05||run.elapsed>run.seconds+1){fail(run,'No complete usable recording was captured. Check the microphone and retry this step.');return;}
         // A complete silent attempt is a negative distance result, not an invalid capture.
         const noSignal=stage>0&&run.peak<=.0001;
-        current=null;phase='idle';state();onComplete({...run,blob,noSignal});
+        const finish=()=>{if(!live())return;release(run);current=null;phase='idle';state();onComplete({...run,blob,noSignal});};
+        phase='completion-cue';state();
+        run.cancelCue=speakCue('Complete.',finish,finish);
       };
       run.recorder.onstart=()=>{
         if(!live()||phase!=='requesting')return;
@@ -92,10 +97,17 @@ export function createCapture({onState,onComplete,onError}) {
       run.recorder.start(250);
       }catch{fail(run,'Could not begin recording. Retry this step.');}
       };
+      const afterPreparation=()=>{
+        if(!live())return;clearInterval(run.clock);
+        if(stage===0){beginRecording();return;}
+        const settle=()=>{if(!live())return;phase='settling';state();run.settleTimer=setTimeout(()=>{if(!live())return;if(globalThis.speechSynthesis?.speaking){fail(run,'Spoken guidance has not stopped. Retry this step.');return;}beginRecording();},500);};
+        phase='speaking-cue';state();
+        run.cancelCue=speakCue('Start speaking now.',settle,mayHaveSpoken=>{if(!live())return;run.cueUnavailable=true;if(mayHaveSpoken)settle();else beginRecording();});
+      };
       if(stage>0){
-        if(![5,10,20].includes(preparation))throw Error('Invalid preparation time');
+        preparation=Number(preparation)===5?5:10;
         phase='preparing';run.preparedAt=performance.now();run.remaining=preparation;state();
-        const prepare=()=>{if(!live()||phase!=='preparing')return;run.remaining=Math.max(0,Math.ceil(preparation-(performance.now()-run.preparedAt)/1000));state();if(run.remaining===0)beginRecording();};
+        const prepare=()=>{if(!live()||phase!=='preparing')return;run.remaining=Math.max(0,Math.ceil(preparation-(performance.now()-run.preparedAt)/1000));state();if(run.remaining===0)afterPreparation();};
         run.clock=setInterval(prepare,100);
       }else beginRecording();
     }catch(e){
@@ -106,3 +118,4 @@ export function createCapture({onState,onComplete,onError}) {
   }
   return {start,cancel,get phase(){return phase;}};
 }
+
