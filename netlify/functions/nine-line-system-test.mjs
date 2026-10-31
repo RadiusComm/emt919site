@@ -25,10 +25,10 @@ export function createHandler(requestFetch=fetch) {
    // Fixed server-to-server destination. Neither visitor cookies nor identity headers are forwarded.
    const response=await requestFetch(upstreamOrigin+'/api/results',{method:'POST',headers:{'Content-Type':'application/json',Origin:upstreamOrigin},body:JSON.stringify(sanitized),signal:AbortSignal.timeout(10000),redirect:'error'});
    if(response.status===429)return reply(429,'Collection limit reached.');
-   if(response.status!==201)return reply(503,'Could not confirm storage. Keep your local report.');
-   const receipt=await response.text();if(receipt.length>1000 || JSON.parse(receipt).message!=='Result stored privately.')return reply(503,'Could not confirm storage. Keep your local report.');
+   if(response.status!==201)return reply(503,'Could not confirm storage. Try again later.');
+   const receipt=await response.text();if(receipt.length>1000 || JSON.parse(receipt).message!=='Result stored privately.')return reply(503,'Could not confirm storage. Try again later.');
    return reply(201,'Result stored privately.');
-  }catch{return reply(503,'Could not confirm storage. Keep your local report.');}
+  }catch{return reply(503,'Could not confirm storage. Try again later.');}
  };
 }
 export default createHandler();

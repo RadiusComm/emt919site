@@ -6,3 +6,10 @@ export const MODELS = {
 };
 // Reserved fixture is used only by deployment QA, and is excluded from device analysis.
 export const sharedModels = [...Object.entries(MODELS).flatMap(([make,models])=>[...models.map(model=>make+' / '+model),make+' / Other']),'Test fixture / Synthetic'];
+// UI default only; the tester can override it. Never infer an OS version or inspect user agent.
+export function defaultOperatingSystem(make,model) {
+  if(make==='Other Android')return 'Android';
+  if(model==='Other' || (model && !MODELS[make]?.includes(model)))return '';
+  if(make==='Apple')return 'iOS';
+  return make==='Samsung'||make==='Google'?'Android':'';
+}
