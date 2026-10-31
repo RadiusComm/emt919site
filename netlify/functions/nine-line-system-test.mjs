@@ -32,4 +32,5 @@ export function createHandler(requestFetch=fetch) {
  };
 }
 export default createHandler();
-export const config={path:route,rateLimit:{action:'rate_limit',aggregateBy:['domain','ip'],windowSize:60,windowLimit:10}};
+export const config={path:'/api/nine-line-system-test/results',rateLimit:{action:'rate_limit',aggregateBy:['domain','ip'],windowSize:60,windowLimit:10}};
+

@@ -8,3 +8,5 @@ header{background:#08111f;color:white;max-width:none;border-bottom:1px solid #27
 .check{min-height:48px;align-items:center}@media(max-width:540px){input,select{font-size:16px}}
 @media(max-width:360px){header .wordmark{flex-shrink:0}header .pill{white-space:normal;min-width:0;text-align:center;line-height:1.4}}
 .mode-switch .selected:hover:not(:disabled){background:#1452c4;color:#fff}
+@media(min-width:541px){.intro{margin-inline:-20px}}
+
