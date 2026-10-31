@@ -61,8 +61,9 @@ export function createCapture({onState,onComplete,onError}) {
         const blob=new Blob(run.chunks,{type:run.recorder.mimeType||run.chunks[0]?.type||'audio/webm'});
         // A blob alone is insufficient: require sustained finite analyser data and the full window.
         if(!blob.size||run.frames<run.seconds*5||!run.count||run.maxGap>1000||run.elapsed<run.seconds-.05||run.elapsed>run.seconds+1){fail(run,'No complete usable recording was captured. Check the microphone and retry this step.');return;}
-        if(stage>0&&run.peak<=.0001){fail(run,'No audio signal was detected in this speech step. Check the microphone, speak the phrase and retry. This is a signal check, not a clarity score.');return;}
-        current=null;phase='idle';state();onComplete({...run,blob});
+        // A complete silent attempt is a negative distance result, not an invalid capture.
+        const noSignal=stage>0&&run.peak<=.0001;
+        current=null;phase='idle';state();onComplete({...run,blob,noSignal});
       };
       run.recorder.onstart=()=>{
         if(!live()||phase!=='requesting')return;

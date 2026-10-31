@@ -12,8 +12,8 @@ export function latestDistances(samples) {
 }
 export function summary(samples) {
   const latest = latestDistances(samples), target = latest.find(s => s.distance === 6);
-  const clear = latest.filter(s => s.rating === 'clear' && s.listened);
+  const clear = latest.filter(s => !s.noSignal && s.rating === 'clear' && s.listened);
   return { farthest: clear.length ? Math.max(...clear.map(s => s.distance)) : null,
-    target: !target ? 'Untested' : !target.listened || target.rating === 'unreviewed' ? 'Needs review' : target.rating === 'clear' ? 'Clear · reviewed' : 'Not qualified' };
+    target: !target ? 'Untested' : target.noSignal ? 'Not qualified' : !target.listened || target.rating === 'unreviewed' ? 'Needs review' : target.rating === 'clear' ? 'Clear · reviewed' : 'Not qualified' };
 }
 export function validDistance(n) { return Number.isInteger(n) && n >= 1 && n <= 30; }
