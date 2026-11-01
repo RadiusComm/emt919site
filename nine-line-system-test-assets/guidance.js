@@ -6,10 +6,11 @@ export function playCue(context,kind,done,unavailable){
  try{
   if(context.state!=='running')throw Error('Audio output unavailable');
   const now=context.currentTime;
-  const notes=kind==='start'?[[880,0,.18]]:[[660,0,.13],[440,.17,.18]];
+  // Non-overlapping sine pulses: bounded peak 0.45 (-6.9 dBFS), soft attack/release.
+  const notes=kind==='start'?[[880,0,.28],[1175,.38,.28]]:[[1175,0,.24],[880,.34,.24],[660,.68,.24]];
   for(const [frequency,offset,duration]of notes){
    const osc=context.createOscillator(),gain=context.createGain();nodes.push({osc,gain});osc.type='sine';osc.frequency.setValueAtTime(frequency,now+offset);
-   gain.gain.setValueAtTime(0,now+offset);gain.gain.linearRampToValueAtTime(.12,now+offset+.012);gain.gain.exponentialRampToValueAtTime(.001,now+offset+duration);gain.gain.setValueAtTime(0,now+offset+duration+.005);
+   gain.gain.setValueAtTime(0,now+offset);gain.gain.linearRampToValueAtTime(.45,now+offset+.02);gain.gain.setValueAtTime(.45,now+offset+.12);gain.gain.exponentialRampToValueAtTime(.001,now+offset+duration);gain.gain.setValueAtTime(0,now+offset+duration+.005);
    osc.connect(gain);gain.connect(context.destination);
    osc.start(now+offset);osc.stop(now+offset+duration+.01);
   }

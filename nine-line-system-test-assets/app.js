@@ -24,7 +24,7 @@ const capture=createCapture({
     if(phase==='settling')$('record-status').textContent='Cue finished — recording starts momentarily.';
     if(phase==='completion-cue')$('record-status').textContent='Microphone off — recording complete.';
     $('wake-status').textContent=run?.wakeStatus||'Screen-awake protection is requested only during a visible test step.';
-    $('cue-status').textContent=run?.cueUnavailable?'Sound cue unavailable. Follow the visual recording indicator.':'A bell starts each recording; a chime ends it. Turn up your volume and follow the recording indicator.';
+    $('cue-status').textContent=run?.cueUnavailable?'Sound cue unavailable. Follow the visual recording indicator.':'A bell starts each recording; a chime ends it. Use a comfortable media volume and follow the recording indicator.';
     $('countdown').textContent=phase==='preparing'?run.remaining+' seconds to get into position':phase==='recording'?run.remaining+' seconds of recording left':'';
     $('countdown').hidden=!['preparing','recording'].includes(phase);
     const level=phase==='recording'?Math.min(0,db(run.level||0)):-100;

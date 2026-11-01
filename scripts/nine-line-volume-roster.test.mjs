@@ -20,6 +20,31 @@ test('public proxy retains method/origin/JSON/12KB guards and never forwards den
 class E{constructor(tag='div'){this.tagName=tag;this.children=[];this.textContent='';this.checked=false;this.disabled=false;}append(...v){this.children.push(...v)}replaceChildren(...v){this.children=v}}
 function ui(fetcher,enabled=true){const ids=Object.fromEntries(['roster-refresh','roster-status','roster-list','share-results','share-consent','share-status'].map(x=>[x,new E()]));const note={make:'Apple',model:'iPhone 16',manual:''};const samples=[{kind:'baseline',notes:note,captureMetrics:raw(.01)},...[5,10,20].map(distance=>({kind:'speech',distance,notes:note,captureMetrics:raw(),blob:'private'}))];let busy=false;const controller=createPublicRoster({document:{getElementById:id=>ids[id],createElement:t=>new E(t)},requestFetch:fetcher,getSamples:()=>samples,isBusy:()=>busy,setBusy:v=>busy=v,enabled});return {ids,controller,samples,get busy(){return busy}};}
 const flush=()=>new Promise(r=>setImmediate(r));
-test('roster renders only real validated rows and numeric expansion, no audio nodes',async()=>{const h=ui(async()=>Response.json(roster()));await flush();assert.equal(h.ids['roster-list'].children.length,1);const details=h.ids['roster-list'].children[0].children[0];assert.equal(details.children[0].textContent,'Apple / iPhone 16 — 7.0 / 10');assert.equal(details.children.length,5);assert.ok(details.children.slice(2).every(n=>n.textContent.includes('dBFS')));assert.ok(!JSON.stringify(details).includes('audio'));});
+test('roster renders only real validated rows and numeric expansion, no audio nodes',async()=>{const h=ui(async()=>Response.json(roster()));await flush();assert.equal(h.ids['roster-list'].children.length,1);const details=h.ids['roster-list'].children[0].children[0];assert.deepEqual(details.children[0].children.map(n=>n.textContent),['Apple / iPhone 16','7/10','Distance pickup']);assert.equal(details.children.length,5);assert.ok(details.children.slice(2).every(n=>n.textContent.includes('dBFS')));assert.ok(!JSON.stringify(details).includes('audio'));});
 test('public submission requires explicit consent, omits identity, and prevents duplicate in-flight clicks',async()=>{let posts=0,release;const h=ui(async(url,opts)=>{if(opts.method==='GET')return Response.json({version:3,scorePolicyVersion:1,truncated:0,rows:[]});posts++;assert.equal(opts.credentials,'omit');assert.equal(opts.referrerPolicy,'no-referrer');assert.deepEqual(JSON.parse(opts.body),payload());return new Promise(r=>release=()=>r(Response.json(receipt(),{status:201})))});await flush();await h.ids['share-results'].onclick();assert.equal(posts,0);h.ids['share-consent'].checked=true;const p=h.ids['share-results'].onclick();await h.ids['share-results'].onclick();assert.equal(posts,1);assert.equal(h.busy,true);release();await p;assert.equal(h.busy,false);assert.equal(h.ids['share-consent'].checked,false);assert.match(h.ids['share-status'].textContent,/Published/);});
 test('roster errors/empty state never invent scores; failed submission remains unconfirmed',async()=>{const h=ui(async()=>Response.json({version:3,scorePolicyVersion:1,truncated:0,rows:[]}));await flush();assert.match(h.ids['roster-status'].textContent,/No public/);assert.equal(h.ids['roster-list'].children.length,0);h.ids['share-consent'].checked=true;await h.ids['share-results'].onclick();assert.match(h.ids['share-status'].textContent,/not confirmed/);const disabled=ui(async()=>{throw Error('must not call')},false);assert.equal(disabled.ids['roster-refresh'].disabled,true);});
+
+test('submission copy is concise while explicit consent and submit controls remain',async()=>{
+ const {readFile}=await import('node:fs/promises');
+ const html=await readFile(new URL('../nine-line-system-test.html',import.meta.url),'utf8');
+ assert.ok(!html.includes('Optional: add this device test to the public roster'));
+ assert.ok(!html.includes('Anonymous submissions cannot be individually retrieved'));
+ assert.ok(html.includes('Shares your device model and scores publicly. No audio is uploaded.'));
+ assert.match(html,/<input id="share-consent" type="checkbox" disabled>/);
+ assert.ok(html.includes('I agree to publish this model and these numeric test results for everyone to see.'));
+ assert.match(html,/<button id="share-results" disabled>Submit results<\/button>/);
+});
+
+test('collapsed rating rounds real score only; precise average and ranking stay unchanged',async()=>{
+ const response=roster();response.rows[0].score=4.4;
+ const h=ui(async()=>Response.json(response));await flush();
+ const details=h.ids['roster-list'].children[0].children[0];
+ assert.equal(details.open,undefined);
+ assert.equal(details.children[0].children[1].textContent,'4/10');
+ assert.match(details.children[1].textContent,/4.4\/10 precise average/);
+ assert.equal(response.rows[0].score,4.4);
+ for(const [score,expected] of [[1,'1/10'],[4.5,'5/10'],[10,'10/10']]){
+  const r=roster();r.rows[0].score=score;const h=ui(async()=>Response.json(r));await flush();
+  assert.equal(h.ids['roster-list'].children[0].children[0].children[0].children[1].textContent,expected);
+ }
+});
