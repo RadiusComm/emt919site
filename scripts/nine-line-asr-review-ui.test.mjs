@@ -1,0 +1,42 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {readFile} from 'node:fs/promises';
+class E{constructor(tag='div'){this.tagName=tag;this.children=[];this.attrs={};this.value='';this.textContent='';this.hidden=false;this.disabled=false;this.checked=false;this.paused=true;this.style={};this.classList={toggle(){},add(){},remove(){}};}append(...x){this.children.push(...x)}replaceChildren(...x){this.children=x}setAttribute(k,v){this.attrs[k]=v}removeAttribute(k){delete this.attrs[k]}pause(){this.paused=true;this.onpause?.()}async play(){this.paused=false;this.onplay?.()}click(){return this.disabled?undefined:this.onclick?.()}}
+let serial=0;
+async function boot(options={}){
+ globalThis.fetch=options.requestFetch|| (async()=>Response.json({version:3,scorePolicyVersion:1,truncated:0,rows:[]}));
+ const html=await readFile(new URL('../nine-line-system-test.html',import.meta.url),'utf8');const ids=Object.fromEntries([...html.matchAll(/id="([^"]+)"/g)].map(m=>[m[1],new E()]));let workerLoads=0,workerAnalyses=0,loadMessage=null,workerInstance=null;let now=0,nextTimer=0,timers=new Map(),requests=0,analysisReads=0,signal=.1,empty=false,noStart=false,noStop=false;
+ globalThis.Worker=class {constructor(){workerInstance=this}postMessage(message){if(message.type==='load'){workerLoads++;loadMessage=message;if(!options.holdLoad)this.onmessage?.({data:{id:message.id,type:'ready'}});}else{workerAnalyses++;if(options.holdFinalAnalysis&&workerAnalyses===3)return;if(options.failAnalysis)queueMicrotask(()=>this.onmessage?.({data:{id:message.id,type:'error',message:'fixture failure'}}));else queueMicrotask(()=>this.onmessage?.({data:{id:message.id,type:'result',text:options.phrase?.(workerAnalyses)||''}}));}}terminate(){}};
+ globalThis.OfflineAudioContext=class {constructor(channels,length){this.length=length;this.destination={}}createBufferSource(){return{connect(){},start(){}}}async startRendering(){return{getChannelData:()=>new Float32Array(this.length).fill(.1)}}};
+ const events={},streams=[],contexts=[],recorders=[],utterances=[],locks=[],meter=new E();
+ globalThis.SpeechSynthesisUtterance=class{constructor(text){this.text=text}};
+ globalThis.speechSynthesis=options.voice?{getVoices:()=>[{localService:true,lang:'en-US'}],speak(u){utterances.push(u);if(!options.holdVoice)setTimeout(()=>u.onend?.(),300)},cancel(){}}:undefined;
+ const add=(fn,ms,repeat)=>{const id=++nextTimer;timers.set(id,{fn,at:now+ms,repeat:repeat?ms:0});return id;};
+ globalThis.setTimeout=(fn,ms)=>add(fn,ms,false);globalThis.clearTimeout=id=>timers.delete(id);globalThis.setInterval=(fn,ms)=>add(fn,ms,true);globalThis.clearInterval=id=>timers.delete(id);Object.defineProperty(globalThis,'performance',{value:{now:()=>now},configurable:true});
+ const flush=()=>new Promise(r=>setImmediate(r));
+ async function advance(ms){const end=now+ms;while(true){let due=[...timers].filter(([,t])=>t.at<=end).sort((a,b)=>a[1].at-b[1].at||a[0]-b[0])[0];if(!due)break;const [id,t]=due;now=t.at;if(t.repeat)t.at+=t.repeat;else timers.delete(id);t.fn();await flush();}now=end;await flush();}
+ function stream(){const track={stopped:false,stop(){this.stopped=true}};const s={getTracks:()=>[track],getAudioTracks:()=>[track],track};streams.push(s);return s;}
+ let mic=async()=>stream();Object.defineProperty(globalThis,'navigator',{value:{mediaDevices:{getUserMedia(){requests++;return mic();}}},configurable:true});
+ if(options.wake)navigator.wakeLock={request:options.wake===true?async()=>{const lock={released:false,release(){this.released=true;return Promise.resolve()},addEventListener(){}};locks.push(lock);return lock;}:options.wake};
+ globalThis.document={getElementById:id=>ids[id]||null,createElement:tag=>new E(tag),querySelector:()=>meter,querySelectorAll:q=>q==='audio'?ids.samples.children.flatMap(c=>c.children.filter(x=>x.tagName==='audio')):[],addEventListener:(k,fn)=>events[k]=fn,hidden:false};
+ globalThis.window={isSecureContext:true,addEventListener:(k,fn)=>events[k]=fn};
+ class MR{static isTypeSupported(){return true}constructor(s){this.state='inactive';this.mimeType='audio/webm';this.stream=s;recorders.push(this)}start(){this.state='recording';if(!noStart)queueMicrotask(()=>this.onstart?.())}stop(){if(this.state==='inactive')return;this.state='inactive';if(!noStop)queueMicrotask(()=>{this.ondataavailable?.({data:new Blob(empty?[]:['synthetic QA audio'])});this.onstop?.();})}}
+ class AC{async decodeAudioData(){return{duration:10}}constructor(){this.state=options.suspended?'suspended':'running';contexts.push(this)}resume(){return options.resume?options.resume(this):(this.state='running',Promise.resolve())}createMediaStreamSource(){return{connect(){},disconnect(){}}}createAnalyser(){return{fftSize:2048,getFloatTimeDomainData(d){analysisReads++;d.fill(signal)},disconnect(){}}}close(){this.state='closed';return Promise.resolve()}}
+ globalThis.MediaRecorder=window.MediaRecorder=MR;globalThis.AudioContext=window.AudioContext=AC;Object.defineProperty(globalThis,'localStorage',{get(){throw Error('Persistence forbidden')},configurable:true});
+ ids.make.value='Apple';ids.model.value='iPhone 16';ids.os.value='iOS';ids.preparation.value='5';
+ await import('../nine-line-system-test-assets/app.js?linear='+serial++);
+ return{workerLoads:()=>workerLoads,workerAnalyses:()=>workerAnalyses,releaseLoad:()=>workerInstance.onmessage?.({data:{id:loadMessage.id,type:'ready'}}),ids,events,streams,contexts,recorders,utterances,locks,advance,flush,stall:ms=>{now+=ms;for(const t of timers.values())t.at=Math.max(t.at,now);},analysisReads:()=>analysisReads,requests:()=>requests,timerCount:()=>timers.size,setMic:f=>mic=f,stream,setSignal:v=>signal=v,setEmpty:v=>empty=v,setNoStart:v=>noStart=v,setNoStop:v=>noStop=v};
+}
+async function baseline(h){await h.ids.start.click();await h.advance(5500);}
+async function speech(h,prep=5){h.ids.preparation.value=String(prep);await h.ids.start.click();await h.advance(prep*1000+10500);}
+async function full(h){await baseline(h);for(let i=0;i<3;i++)await speech(h);}
+
+test('completed Repeat model timeout remains visible without discarding previous recordings',async()=>{
+ const options={};const h=await boot(options);await full(h);assert.equal(h.ids.recorder.hidden,true);
+ document.hidden=true;h.events.visibilitychange();document.hidden=false;
+ options.holdLoad=true;
+ const card=h.ids.samples.children[0];const pending=card.children.at(-1).click();await h.flush();
+ assert.equal(h.ids.recorder.hidden,false);assert.equal(h.ids.cancel.disabled,false);
+ await h.advance(180001);await pending;
+ assert.equal(h.ids.recorder.hidden,false);assert.equal(h.ids.error.hidden,false);assert.match(h.ids.error.textContent,/could not prepare/);
+ assert.equal(h.ids['test-progress'].textContent,'4/4 recording steps complete');assert.equal(h.timerCount(),0);
+ assert.ok(h.contexts.every(c=>c.state==='closed'));
+});

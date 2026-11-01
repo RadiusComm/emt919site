@@ -6,18 +6,18 @@ export function createLocalAnalyzer({onProgress=()=>{},WorkerClass=globalThis.Wo
  }
  function request(type,extra={},transfer=[]){
   if(pending)return Promise.reject(Error('Local analysis is already running.'));
-  return new Promise((resolve,reject)=>{const id=++next;pending={id,resolve,reject,timer:setTimeout(()=>stop('Local analysis timed out. Retry or use manual listening.'),type==='load'?180000:120000)};try{worker.postMessage({id,type,...extra},transfer);}catch(error){clearTimeout(pending.timer);pending=null;reject(error);}});
+  return new Promise((resolve,reject)=>{const id=++next;pending={id,resolve,reject,timer:setTimeout(()=>stop('Local word recognition timed out. Retry; playback remains available.'),type==='load'?180000:120000)};try{worker.postMessage({id,type,...extra},transfer);}catch(error){clearTimeout(pending.timer);pending=null;reject(error);}});
  }
  async function load(){
   if(ready)return;if(!WorkerClass)throw Error('This browser cannot run local analysis.');
   if(worker)throw Error('Model preparation is already running.');
   worker=new WorkerClass(new URL('./worker.js',import.meta.url),{type:'module'});const ownWorker=worker;
-  worker.onerror=()=>{if(worker===ownWorker)stop('Local model could not load. Manual listening remains available.');};
-  worker.onmessage=({data})=>{if(worker!==ownWorker||!pending||data.id!==pending.id)return;if(data.type==='progress'){onProgress(data);return;}const task=pending;pending=null;clearTimeout(task.timer);if(data.type==='error'){task.reject(Error(data.message));return;}if(data.type==='ready')ready=true;task.resolve(data);};
+  worker.onerror=()=>{if(worker===ownWorker)stop('Local model could not load. Retry; playback remains available.');};
+  worker.onmessage=({data})=>{if(worker!==ownWorker||!pending||data.id!==pending.id)return;if(data.type==='progress'){onProgress(data);return;}const task=pending;pending=null;clearTimeout(task.timer);if(data.type==='error'){stop();task.reject(Error(data.message));return;}if(data.type==='ready')ready=true;task.resolve(data);};
   try{await request('load');}catch(error){if(worker===ownWorker)stop();throw error;}
  }
  async function analyze(blob){
-  if(!ready)throw Error('Enable local analysis first.');
+  if(!ready)throw Error('Prepare local word recognition first.');
   const ticket=next;
   const Audio=globalThis.AudioContext||globalThis.webkitAudioContext;
   const context=new Audio();let decoded,mono;

@@ -1,4 +1,5 @@
 [build]
+  command = "python3 scripts/fetch-asr-assets.py"
   publish = "."
 
 [functions]

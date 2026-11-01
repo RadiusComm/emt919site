@@ -1,0 +1,9 @@
+{
+  "file": "qa/generated-five.wav",
+  "source": "FFmpeg lavfi libflite speech synthesis, voice slt; literal text only, no microphone or audio input",
+  "text": "This is the five foot test. The plane flies west. I can hear every word clearly.",
+  "sampleRate": 16000,
+  "channels": 1,
+  "bytes": 164718,
+  "sha256": "71aae3f0d3531aba3f7f5f381f2172b5dce3a577d583ffc0711d67bd2c9fa232"
+}

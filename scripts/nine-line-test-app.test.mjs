@@ -3,8 +3,8 @@ class E{constructor(tag='div'){this.tagName=tag;this.children=[];this.attrs={};t
 let serial=0;
 async function boot(options={}){
  globalThis.fetch=options.requestFetch|| (async()=>Response.json({version:3,scorePolicyVersion:1,truncated:0,rows:[]}));
- const html=await readFile(new URL('../nine-line-system-test.html',import.meta.url),'utf8');const ids=Object.fromEntries([...html.matchAll(/id="([^"]+)"/g)].map(m=>[m[1],new E()]));let now=0,nextTimer=0,timers=new Map(),requests=0,analysisReads=0,signal=.1,empty=false,noStart=false,noStop=false;
- globalThis.Worker=class {postMessage(message){if(message.type==='load')this.onmessage?.({data:{id:message.id,type:'ready'}});else queueMicrotask(()=>this.onmessage?.({data:{id:message.id,type:'result',text:''}}));}terminate(){}};
+ const html=await readFile(new URL('../nine-line-system-test.html',import.meta.url),'utf8');const ids=Object.fromEntries([...html.matchAll(/id="([^"]+)"/g)].map(m=>[m[1],new E()]));let workerLoads=0,workerAnalyses=0,loadMessage=null,workerInstance=null;let now=0,nextTimer=0,timers=new Map(),requests=0,analysisReads=0,signal=.1,empty=false,noStart=false,noStop=false;
+ globalThis.Worker=class {constructor(){workerInstance=this}postMessage(message){if(message.type==='load'){workerLoads++;loadMessage=message;if(!options.holdLoad)this.onmessage?.({data:{id:message.id,type:'ready'}});}else{workerAnalyses++;if(options.holdFinalAnalysis&&workerAnalyses===3)return;if(options.failAnalysis)queueMicrotask(()=>this.onmessage?.({data:{id:message.id,type:'error',message:'fixture failure'}}));else queueMicrotask(()=>this.onmessage?.({data:{id:message.id,type:'result',text:options.phrase?.(workerAnalyses)||''}}));}}terminate(){}};
  globalThis.OfflineAudioContext=class {constructor(channels,length){this.length=length;this.destination={}}createBufferSource(){return{connect(){},start(){}}}async startRendering(){return{getChannelData:()=>new Float32Array(this.length).fill(.1)}}};
  const events={},streams=[],contexts=[],recorders=[],utterances=[],locks=[],meter=new E();
  globalThis.SpeechSynthesisUtterance=class{constructor(text){this.text=text}};
@@ -23,7 +23,7 @@ async function boot(options={}){
  globalThis.MediaRecorder=window.MediaRecorder=MR;globalThis.AudioContext=window.AudioContext=AC;Object.defineProperty(globalThis,'localStorage',{get(){throw Error('Persistence forbidden')},configurable:true});
  ids.make.value='Apple';ids.model.value='iPhone 16';ids.os.value='iOS';ids.preparation.value='5';
  await import('../nine-line-system-test-assets/app.js?linear='+serial++);
- return{ids,events,streams,contexts,recorders,utterances,locks,advance,flush,stall:ms=>{now+=ms;for(const t of timers.values())t.at=Math.max(t.at,now);},analysisReads:()=>analysisReads,requests:()=>requests,timerCount:()=>timers.size,setMic:f=>mic=f,stream,setSignal:v=>signal=v,setEmpty:v=>empty=v,setNoStart:v=>noStart=v,setNoStop:v=>noStop=v};
+ return{workerLoads:()=>workerLoads,workerAnalyses:()=>workerAnalyses,releaseLoad:()=>workerInstance.onmessage?.({data:{id:loadMessage.id,type:'ready'}}),ids,events,streams,contexts,recorders,utterances,locks,advance,flush,stall:ms=>{now+=ms;for(const t of timers.values())t.at=Math.max(t.at,now);},analysisReads:()=>analysisReads,requests:()=>requests,timerCount:()=>timers.size,setMic:f=>mic=f,stream,setSignal:v=>signal=v,setEmpty:v=>empty=v,setNoStart:v=>noStart=v,setNoStop:v=>noStop=v};
 }
 async function baseline(h){await h.ids.start.click();await h.advance(5500);}
 async function speech(h,prep=5){h.ids.preparation.value=String(prep);await h.ids.start.click();await h.advance(prep*1000+10500);}
@@ -59,7 +59,7 @@ test('deleting/resetting during preparation cancels work and returns to baseline
 test('pagehide releases active microphone and all in-memory audio',async()=>{const h=await boot();await baseline(h);await h.ids.start.click();h.events.pagehide();await h.advance(60000);assert.ok(h.streams.every(s=>s.track.stopped));assert.equal(h.timerCount(),0);assert.equal(h.requests(),2);});
 
 
-test('public submission enables after complete trials but requires explicit public consent and numeric-only payload',async()=>{let sent;const h=await boot({requestFetch:async(url,options)=>{if(options.method==='POST'){sent=JSON.parse(options.body);return Response.json({message:'Result published publicly.',version:3,score:1},{status:201});}return Response.json({version:3,scorePolicyVersion:1,truncated:0,rows:[]});}});assert.equal(h.ids['share-results'].disabled,true);await full(h);assert.equal(h.ids['share-results'].disabled,false);await h.ids['share-results'].click();assert.equal(sent,undefined);h.ids['share-consent'].checked=true;await h.ids['share-results'].click();assert.equal(sent.version,3);assert.equal(sent.consentPublic,true);assert.equal(sent.results.length,3);assert.ok(!JSON.stringify(sent).includes('blob'));assert.match(h.ids['share-status'].textContent,/Published/);});
+test('recognition submission cannot accidentally publish to legacy volume receiver',async()=>{let posts=0;const h=await boot({requestFetch:async(url,options)=>{if(options.method==='POST')posts++;return Response.json({version:3,scorePolicyVersion:1,truncated:0,rows:[]});}});await full(h);h.ids['share-consent'].checked=true;await h.ids['share-results'].click();assert.equal(posts,0);assert.equal(h.ids['share-results'].disabled,true);});
 
 test('make/model catalog and Other-only manual entry survive, setup locks after baseline and resets on clear',async()=>{const h=await boot();assert.equal(h.ids['model-search'],undefined);h.ids.make.value='Samsung';h.ids.make.onchange();assert.equal(h.ids.model.children.filter(g=>g.tagName==='optgroup').flatMap(g=>g.children).length,209);h.ids.model.value='Other';h.ids.model.onchange();assert.equal(h.ids['manual-label'].hidden,true);h.ids.make.value='Other';h.ids.make.onchange();assert.equal(h.ids['manual-label'].hidden,false);assert.equal(h.ids.os.value,'');h.ids.model.value='Other';h.ids.os.value='Android';await baseline(h);assert.equal(h.ids.make.disabled,true);h.ids.clear.click();assert.equal(h.ids.make.disabled,false);});
 
@@ -72,3 +72,27 @@ test('a stalled page cannot mark an overrun or sparsely analysed recording compl
 
 
 test('late wake grant after cancellation releases immediately and preserves baseline',async()=>{let grant;const h=await boot({wake:()=>new Promise(r=>grant=r)});await h.ids.start.click();h.ids.cancel.click();let released=false;grant({release(){released=true;return Promise.resolve()}});await h.flush();assert.ok(released);assert.equal(h.ids['test-progress'].textContent,'0/4 recording steps complete');assert.ok(h.streams.every(s=>s.track.stopped));});
+
+test('model preparation is explicit Start only and cancellation prevents late microphone capture',async()=>{
+ const h=await boot({holdLoad:true});assert.equal(h.workerLoads(),0);assert.equal(h.requests(),0);
+ const pending=h.ids.start.click();assert.equal(h.workerLoads(),1);assert.equal(h.requests(),0);
+ assert.match(h.ids['recognition-status'].textContent,/66 MB/);
+ await h.ids.start.click();assert.equal(h.workerLoads(),1);
+ h.ids.cancel.click();h.releaseLoad();await pending;await h.advance(10000);
+ assert.equal(h.requests(),0);assert.equal(h.timerCount(),0);
+});
+test('complete inference yields recognition score; failures remain incomplete and retryable',async()=>{
+ const phrase=n=>'This is the '+['five','ten','twenty'][n-1]+' foot test. The plane flies west. I can hear every word clearly.';
+ const h=await boot({phrase});await full(h);await h.flush();assert.equal(h.workerLoads(),1);assert.equal(h.workerAnalyses(),3);assert.equal(h.ids['pickup-score'].textContent,'10.0 / 10');
+ const failed=await boot({failAnalysis:true});await full(failed);await failed.flush();assert.equal(failed.ids['pickup-score'].textContent,'Word recognition incomplete');
+ assert.ok(failed.ids.samples.children.every(c=>c.children.some(x=>x.textContent==='Retry word check')));
+});
+
+test('final analysis keeps Cancel visible and cancellation leaves an honest retryable result',async()=>{
+ const h=await boot({holdFinalAnalysis:true});await full(h);
+ assert.equal(h.ids.recorder.hidden,false);assert.equal(h.ids.cancel.disabled,false);
+ h.ids.cancel.click();await h.flush();
+ assert.equal(h.ids['pickup-score'].textContent,'Word recognition incomplete');
+ assert.ok(h.ids.samples.children.at(-1).children.some(c=>c.textContent==='Retry word check'));
+ assert.equal(h.timerCount(),0);
+});

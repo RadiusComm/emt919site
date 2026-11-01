@@ -21,7 +21,7 @@ header{background:#08111f;color:white;max-width:none;border-bottom:1px solid #27
 .pickup-playback{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.pickup-playback meter{flex:1;min-width:120px;height:24px}.pickup-playback .hint{flex-basis:100%}
 
 /* A visible overall pickup rating; detailed levels remain collapsed by default. */
-#roster-list summary{font-size:16px;line-height:1.5;padding:16px 0}
+#roster-list summary,#recognition-roster-list summary{font-size:16px;line-height:1.5;padding:16px 0}
 .roster-model{font-weight:700;overflow-wrap:anywhere}
 .roster-rating{display:inline-block;font-size:28px;color:#1452c4;margin-left:12px;white-space:nowrap}
 .roster-rating-label{display:block;font-size:12px;color:var(--muted)}
