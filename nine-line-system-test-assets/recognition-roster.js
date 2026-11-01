@@ -12,7 +12,7 @@ export function createRecognitionRoster({getSamples,isBusy,setBusy,document=glob
     for(const r of row.results)details.append(el('p',r.distance+' feet: mean word-error rate '+(r.meanWer*100).toFixed(1)+'% · mean trial score '+r.meanScore.toFixed(1)+'/10 · distance declaration matched in '+r.distanceMatchedCount+' of '+row.testCount+' tests'));
     item.append(details);$('recognition-roster-list').append(item);
    }
-   $('recognition-roster-status').textContent=roster.rows.length?(roster.truncated?'Showing the top 100 models.':'Highest mean word-recognition score first. Legacy level scores are separate.'):'No public word-recognition scores have been submitted yet.';
+   $('recognition-roster-status').textContent=roster.rows.length?(roster.truncated?'Showing the top 100 models.':'Highest mean word-recognition score first.'):'No public word-recognition scores have been submitted yet.';
   }catch{$('recognition-roster-status').textContent='Public device scores are unavailable. Try Refresh later.';}
   finally{loading=false;$('recognition-roster-refresh').disabled=false;}
  }

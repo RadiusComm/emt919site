@@ -11,3 +11,14 @@ test('recognition roster displays separate numeric score and expanded distances 
 test('consent is separate; exact completed numeric results only; repeat clicks suppressed',async()=>{let posts=0,finish;const h=boot(async(url,options)=>{if(options.method==='GET')return Response.json(roster());posts++;return new Promise(r=>finish=()=>r(Response.json(receipt(),{status:201})));},{enabled:true});await flush();await h.ids['share-results'].onclick();assert.equal(posts,0);h.ids['share-consent'].checked=true;const first=h.ids['share-results'].onclick();await h.ids['share-results'].onclick();assert.equal(posts,1);assert.equal(h.busy,true);finish();await first;assert.equal(h.busy,false);assert.equal(h.ids['share-consent'].checked,false);assert.match(h.ids['share-status'].textContent,/transcripts stayed/);});
 test('unavailable or conflicting trial blocks submission despite consent',async()=>{for(const change of [{status:3},{status:4,protocolMismatch:1},{status:1,protocolMismatch:1}]){let posts=0;const h=boot(async(u,o)=>{if(o.method==='POST')posts++;return Response.json(roster());},{enabled:true});await flush();Object.assign(h.ss[0].automatic,change);h.ids['share-consent'].checked=true;await h.ids['share-results'].onclick();assert.equal(posts,0);assert.match(h.ids['share-status'].textContent,/retry/);}});
 test('legacy receipt fails closed, keeps consent, no automatic retry',async()=>{let posts=0;const h=boot(async(u,o)=>{if(o.method==='GET')return Response.json(roster());posts++;return Response.json({message:'Result published publicly.',version:3,score:10},{status:201});},{enabled:true});await flush();h.ids['share-consent'].checked=true;await h.ids['share-results'].onclick();assert.equal(posts,1);assert.equal(h.ids['share-consent'].checked,true);assert.match(h.ids['share-status'].textContent,/not confirmed/);});
+
+test('canonical page removes legacy roster UI and initialization but retains recognition and consent',async()=>{
+ const {readFile}=await import('node:fs/promises');
+ const html=await readFile(new URL('../nine-line-system-test.html',import.meta.url),'utf8');
+ const app=await readFile(new URL('../nine-line-system-test-assets/app.js',import.meta.url),'utf8');
+ assert.ok(!html.includes('Legacy volume-score roster'));
+ assert.ok(!/id="roster-(title|refresh|status|list)"/.test(html));
+ assert.ok(!app.includes('createPublicRoster'));
+ for(const id of ['recognition-roster-list','share-results','share-consent'])assert.ok(html.includes('id="'+id+'"'));
+ assert.ok(app.includes('createRecognitionRoster'));
+});

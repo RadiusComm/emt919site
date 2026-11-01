@@ -1,7 +1,6 @@
 import {createRecognitionRoster,RECOGNITION_ROSTER_ENABLED} from './recognition-roster.js';
 import {createRecognitionSession} from './asr/session.js';
 import {recognitionScore,estimateLabel,uncertain} from './asr/scoring.js';
-import {createPublicRoster} from './volume-roster.js';
 import { db } from './metrics.js';
 import { pickupMetrics } from './volume.js';
 import { MODEL_GROUPS, defaultOperatingSystem } from './models.js';
@@ -156,6 +155,5 @@ function render(){
 }
 $('clear').onclick=()=>{cancelRecognition();capture.cancel('');failed=false;lastCompleted='';error('');document.querySelectorAll('audio').forEach(a=>{a.pause();a.removeAttribute('src');});samples.forEach(s=>URL.revokeObjectURL(s.url));samples=[];render();$('clear-status').textContent='All recordings and results deleted from this tab. Your setup notes remain.';};
 recognition=createRecognitionSession({onChange:()=>updateControls()});
-const roster=createPublicRoster({allowSubmission:false,getSamples:()=>samples,isBusy:()=>capture.phase!=='idle',setBusy:value=>{submitting=value;updateControls();}});
 const wordRoster=createRecognitionRoster({getSamples:()=>samples,isBusy:()=>capture.phase!=='idle'||starting||recognition.busy,setBusy:value=>{submitting=value;updateControls();}});
 render();
