@@ -1,6 +1,6 @@
 import {recognitionPayloadFromSamples,validateRecognitionRoster,validateRecognitionReceipt} from './recognition-contract.js';
 // Enable only after the additive upstream deployment is verified and rollout approved.
-export const RECOGNITION_ROSTER_ENABLED=false;
+export const RECOGNITION_ROSTER_ENABLED=true;
 const base='/api/nine-line-system-test/';
 async function json(response,limit){const reader=response.body?.getReader();if(!reader)throw Error('Missing response');const chunks=[];let size=0;while(true){const {value,done}=await reader.read();if(done)break;size+=value.byteLength;if(size>limit){await reader.cancel();throw Error('Oversized response');}chunks.push(value);}const bytes=new Uint8Array(size);let i=0;for(const chunk of chunks){bytes.set(chunk,i);i+=chunk.byteLength;}return JSON.parse(new TextDecoder().decode(bytes));}
 export function createRecognitionRoster({getSamples,isBusy,setBusy,document=globalThis.document,requestFetch=globalThis.fetch,enabled=RECOGNITION_ROSTER_ENABLED,allowSubmission=true}){

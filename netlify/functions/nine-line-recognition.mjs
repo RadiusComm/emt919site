@@ -22,5 +22,5 @@ export function createHandler(requestFetch=fetch,{enabled=false}={}){return asyn
   return reply(read?200:201,result);
  }catch{return reply(503,'Public roster is unavailable. Nothing was confirmed published.');}
 };}
-export default createHandler(fetch,{enabled:false});
+export default createHandler(fetch,{enabled:true});
 export const config={path:['/api/nine-line-system-test/recognition-results','/api/nine-line-system-test/recognition-roster'],rateLimit:{action:'rate_limit',aggregateBy:['domain','ip'],windowSize:60,windowLimit:10}};
