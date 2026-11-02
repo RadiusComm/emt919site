@@ -1,5 +1,15 @@
 # Nine Line microphone system test
 
+## Current submission UI (November 2, 2026)
+
+The current tester has a baseline plus speech at 5, 10 and 20 feet and uses recognition policy 2/schema 4. The public summary section is headed **Tested devices**. One explicit **Submit** action grants public-display permission through the adjacent field-specific notice. There is no checkbox or separate delete-all control. Submit is unavailable until all four recordings and valid recognition trials are complete; stopping a recording never submits.
+
+Only the existing allowlisted model category and numeric recognition summary are sent. Audio, transcripts, free-text setup notes and device/OS details are not uploaded. A validated HTTP 201 receipt clears in-memory recordings and local results, revokes their object URLs, preserves setup notes and resets the test to baseline. Errors, timeouts and invalid receipts preserve the current tab's recordings for explicit retry. Pending submission blocks repeat clicks and test changes; the receiver's existing same-day deduplication remains unchanged. Reload/navigation still clears tab data independently of submission. Reload to restart after changing the phone or room.
+
+Run `node --test scripts/nine-line-*.test.mjs scripts/demo-officers.test.mjs`. Run `node scripts/nine-line-submit-browser.mjs` for isolated Chrome checks with synthetic capture/recognition and a localhost-only mocked receiver; `QA_BROWSER` optionally selects Chrome and `QA_REPORT_DIR` selects an evidence directory outside the published tree. Browser checks cover failure/retry, duplicate clicks, receipt-gated cleanup, navigation, the heading and 320/390/768/1440-pixel layouts. They do not submit production results or certify physical phone audio quality.
+
+The older implementation notes below describe earlier versions and their former separate-checkbox workflow.
+
 Canonical page: `/nine-line-system-test`, with isolated assets in `/nine-line-system-test-assets/`.
 The only new function route is POST `/api/nine-line-system-test/results`.
 Existing pages, forms, demo/CRM and content functions are unchanged.

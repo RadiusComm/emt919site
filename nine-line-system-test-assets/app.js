@@ -75,8 +75,8 @@ function updateControls(){
   fields.forEach(k=>$(k).disabled=busy||samples.length>0);$('preparation').disabled=busy;
   $('start').disabled=busy||!supported||submitting;$('cancel').disabled=!busy;
   $('retry-distance').disabled=busy||submitting;
-  $('clear').disabled=(!samples.length&&!busy)||submitting;
-  $('share-results').disabled=!RECOGNITION_ROSTER_ENABLED||busy||recognitionScore(samples)===null||submitting;$('share-consent').disabled=!RECOGNITION_ROSTER_ENABLED||busy||submitting;
+  document.querySelectorAll('[data-retry]').forEach(b=>b.disabled=busy||submitting);
+  $('share-results').disabled=!RECOGNITION_ROSTER_ENABLED||!complete()||busy||recognitionScore(samples)===null||submitting;
   renderTests();renderGuidance();
 }
 function renderModelChoices(){
@@ -95,8 +95,8 @@ $('start').onclick=()=>{
 async function startStage(stage){
   if(capture.phase!=='idle'||starting||recognition.busy||submitting||!supported)return;
   if(!$('make').value||!$('model').value||!$('os').value)return error('Select phone make, model and operating system before starting.');
-  if(samples.some(s=>fields.some(k=>s.notes[k]!==$(k).value.trim())))return error('The phone setup changed. Delete recordings and restart.');
-  $('share-consent').checked=false;
+  if(samples.some(s=>fields.some(k=>s.notes[k]!==$(k).value.trim())))return error('The phone setup changed. Reload this page to restart the test.');
+  $('share-status').textContent='Complete the test, then select Submit to publish these results.';
   document.querySelectorAll('audio').forEach(a=>a.pause());error('');lastCompleted='';
   capture.prepareAudio();
   const ticket=recognitionEpoch;starting=true;updateControls();
@@ -111,7 +111,7 @@ function cancelRecognition(){
  for(const sample of samples)if(sample.analysisPending){sample.analysisPending=false;sample.automatic=uncertain(sample.levels.clipping);}
 }
 async function analyzeSample(sample){
- if(recognition.busy||capture.phase!=='idle')return;
+ if(recognition.busy||capture.phase!=='idle'||submitting)return;
  const ticket=recognitionEpoch;sample.analysisPending=true;render();
  const result=await recognition.analyze(sample);
  if(ticket!==recognitionEpoch||!samples.includes(sample))return;
@@ -120,13 +120,14 @@ async function analyzeSample(sample){
 $('cancel').onclick=()=>{cancelRecognition();capture.cancel();render();};
 if(!supported){$('support').hidden=false;$('support').textContent='Recording is unavailable here. Open this page directly over HTTPS in a browser with microphone, MediaRecorder and Web Audio support. Embedded previews may block access.';}
 document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelRecognition();render();if(capture.phase!=='idle')capture.cancel('This step was cancelled when the page became hidden. Retry when ready.');else capture.cancel('');document.querySelectorAll('audio').forEach(a=>a.pause());}});
-window.addEventListener('pagehide',()=>{cancelRecognition();capture.cancel('');document.querySelectorAll('audio').forEach(a=>{a.pause();a.removeAttribute('src');});samples.forEach(s=>URL.revokeObjectURL(s.url));samples=[];lastCompleted='';failed=false;render();});
+function clearLocalRecordings(){cancelRecognition();capture.cancel('');document.querySelectorAll('audio').forEach(a=>{a.pause();a.removeAttribute('src');});samples.forEach(s=>URL.revokeObjectURL(s.url));samples=[];lastCompleted='';failed=false;error('');render();}
+window.addEventListener('pagehide',()=>{clearLocalRecordings();$('share-status').textContent='Complete the test, then select Submit to publish these results.';});
 function el(tag,text,cls){const node=document.createElement(tag);if(text!==undefined)node.textContent=text;if(cls)node.className=cls;return node;}
 function levelText(value){return value<=-100?'Below −100 dBFS':value.toFixed(1)+' dBFS';}
 function relativeText(levels){return levels.deltaDb===null?'Comparison unavailable — background or test level too low':(levels.deltaDb>=0?'+':'')+levels.deltaDb.toFixed(1)+' dB vs background';}
 function render(){
  document.querySelectorAll('audio').forEach(a=>a.pause());
- renderTests();$('share-consent').checked=false;$('samples').replaceChildren();
+ renderTests();$('samples').replaceChildren();
  for(const distance of TEST_DISTANCES){
   const sample=samples.find(s=>s.kind==='speech'&&s.distance===distance);
   const card=el('article',undefined,'sample');card.append(el('h3','Audio at '+distance+' feet'));
@@ -138,7 +139,7 @@ function render(){
   if(sample.automatic?.score!==null&&Number.isFinite(sample.automatic?.score))card.append(el('p','Word-match score: '+sample.automatic.score.toFixed(1)+' / 10 · '+Math.round(Math.max(0,1-sample.automatic.wer)*100)+'% match · '+sample.automatic.substitutions+' changed, '+sample.automatic.deletions+' missing, '+sample.automatic.insertions+' extra words'));
   if(sample.automatic?.distanceMatched===0&&sample.automatic?.status!==4)card.append(el('p','Distance wording was not recognized. This may reflect recognition error.','hint'));
   if(!sample.analysisPending&&(!sample.automatic||sample.automatic.status===3)){
-   const analyze=el('button','Retry word check');analyze.disabled=!!recognition.busy||capture.phase!=='idle';analyze.onclick=()=>analyzeSample(sample);card.append(analyze);
+   const analyze=el('button','Retry word check');analyze.setAttribute('data-retry','');analyze.disabled=!!recognition.busy||capture.phase!=='idle'||submitting;analyze.onclick=()=>analyzeSample(sample);card.append(analyze);
   }
   const playback=el('div',undefined,'pickup-playback');
   const meter=el('meter');meter.min=-100;meter.max=0;meter.value=sample.levels.rmsDb;meter.setAttribute('aria-label','Average recording level at '+distance+' feet');meter.textContent=levelText(sample.levels.rmsDb);playback.append(meter);
@@ -147,13 +148,12 @@ function render(){
   play.onclick=async()=>{if(capture.phase!=='idle')return;if(!audio.paused){audio.pause();return;}document.querySelectorAll('audio').forEach(a=>{if(a!==audio)a.pause();});try{await audio.play();playbackStatus.textContent='';}catch{playbackStatus.textContent='Playback unavailable. Try again or repeat this distance.';}};
   audio.onplay=()=>{play.textContent='Pause '+distance+' feet';};audio.onpause=audio.onended=()=>{play.textContent='Play '+distance+' feet';};audio.onerror=()=>{playbackStatus.textContent='Playback unavailable. Repeat this distance.';};
   playback.append(play,playbackStatus);card.append(audio,playback);
-  const retry=el('button','Repeat '+distance+' feet');retry.disabled=capture.phase!=='idle'||starting||recognition.busy;retry.onclick=()=>startStage(TEST_DISTANCES.indexOf(distance)+1);card.append(retry);$('samples').append(card);
+  const retry=el('button','Repeat '+distance+' feet');retry.setAttribute('data-retry','');retry.disabled=capture.phase!=='idle'||starting||recognition.busy||submitting;retry.onclick=()=>startStage(TEST_DISTANCES.indexOf(distance)+1);card.append(retry);$('samples').append(card);
  }
  const baseline=samples.find(s=>s.kind==='baseline');
  const score=recognitionScore(samples);$('pickup-score').textContent=score===null?'Word recognition incomplete':score.toFixed(1)+' / 10';$('score-note').textContent=score===null?'Complete all three word checks; retry unavailable or distance-mismatch trials.':'Automatic word matching—not a guarantee of human understanding or call quality.';$('baseline-result').textContent=baseline?'Background average: '+levelText(baseline.levels.rmsDb):'Background not recorded.';
  updateControls();
 }
-$('clear').onclick=()=>{cancelRecognition();capture.cancel('');failed=false;lastCompleted='';error('');document.querySelectorAll('audio').forEach(a=>{a.pause();a.removeAttribute('src');});samples.forEach(s=>URL.revokeObjectURL(s.url));samples=[];render();$('clear-status').textContent='All recordings and results deleted from this tab. Your setup notes remain.';};
 recognition=createRecognitionSession({onChange:()=>updateControls()});
-const wordRoster=createRecognitionRoster({getSamples:()=>samples,isBusy:()=>capture.phase!=='idle'||starting||recognition.busy,setBusy:value=>{submitting=value;updateControls();}});
+const wordRoster=createRecognitionRoster({getSamples:()=>samples,isComplete:complete,onSubmitted:submittedSamples=>{if(samples===submittedSamples)clearLocalRecordings();},isBusy:()=>capture.phase!=='idle'||starting||recognition.busy,setBusy:value=>{submitting=value;updateControls();}});
 render();

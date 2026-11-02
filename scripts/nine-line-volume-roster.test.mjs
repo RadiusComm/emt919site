@@ -29,10 +29,10 @@ test('submission copy is concise while explicit consent and submit controls rema
  const html=await readFile(new URL('../nine-line-system-test.html',import.meta.url),'utf8');
  assert.ok(!html.includes('Optional: add this device test to the public roster'));
  assert.ok(!html.includes('Anonymous submissions cannot be individually retrieved'));
- assert.ok(html.includes('Shares your device model and scores publicly. No audio is uploaded.'));
- assert.match(html,/<input id="share-consent" type="checkbox" disabled>/);
- assert.ok(html.includes('I agree to publish this model and these numeric test results for everyone to see.'));
- assert.match(html,/<button id="share-results" disabled>Submit results<\/button>/);
+ assert.ok(html.includes('By selecting Submit, you agree to publish'));
+ assert.ok(!html.includes('type="checkbox"'));assert.match(html,/By selecting Submit, you agree to publish/);
+ assert.ok(html.includes('aria-describedby="submit-notice"'));
+ assert.match(html,/<button id="share-results" aria-describedby="submit-notice" disabled>Submit<\/button>/);
 });
 
 test('collapsed rating rounds real score only; precise average and ranking stay unchanged',async()=>{
