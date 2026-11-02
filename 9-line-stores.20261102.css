@@ -1,0 +1,14 @@
+/* Official, unmodified store artwork; styles are scoped to the download groups. */
+.nine-store-downloads { margin-top:24px; }
+.nine-store-downloads .nine-store-label { margin:0 0 4px; font:600 15px/1.6 "Inter",Arial,sans-serif; letter-spacing:0; text-transform:none; }
+.nine-store-links { display:flex; align-items:center; flex-wrap:wrap; gap:0 4px; margin-left:-10px; }
+.nine-store-links a { display:inline-flex; align-items:center; justify-content:center; flex:0 0 auto; min-height:60px; padding:10px; border-radius:4px; text-decoration:none; }
+.nine-store-links img { display:block; max-width:none; object-fit:contain; }
+.nine-store-links .nine-play-link { padding:0; }
+.nine-store-links a:focus-visible { outline:3px solid #0755eb; outline-offset:2px; }
+.nine-store-downloads .nine-store-note { margin:0; font:400 13px/1.6 "Inter",Arial,sans-serif; color:#455c74; }
+.nine-store-downloads--hero { color:#fff; }
+.nine-store-downloads--hero .nine-store-note { color:#d0deef; }
+.nine-store-downloads--hero .nine-store-links a:focus-visible { outline-color:#fff; }
+.product-path .nine-store-downloads { margin-top:20px; }
+@media(max-width:360px) { .nine-store-links { gap:0; } }
